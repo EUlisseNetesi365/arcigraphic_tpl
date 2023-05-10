@@ -8,7 +8,7 @@
             <!--/ Image Top Page -->
             <!-- Section -->
             {% set items = json_decode(products) %}
-            {# <div class="container my-10">
+ <div class="container my-10">
                 <div class="row align-items-center">
                     <figure class="col-12 col-md-6 figure h-75">
                         <img class="img-fluid" src="{{ basepath }}/templates/images/index/mucchietti-1.png" alt="" />
@@ -18,9 +18,11 @@
                         <h2 class="text-white">{{ lang.caption_text }}</h2>
                     </div>
                 </div>
-            </div> #}
+            </div>
+
             <!-- Block categories -->
-            {#{% include template ~ "/index/components/block-categories.twig" %}#}
+{% include template ~ "/index/components/block-categories.twig" %}
+
             <!-- /Block categories -->
             <!-- Services -->
             {% include template ~ "/index/components/services.twig" %}
@@ -72,20 +74,28 @@
                 </a>
             {% endif %}
             <!-- /Slider 3 -->
-            {#        <section class="shadow promozione_societa_sportiva"> #}
-            {#            <h3 class="text-warning bold">SEI UNA SOCIETÀ SPORTIVA?</h3> #}
-            {#            <p class="text-white mb-0">clicca qui e richiedi il tuo preventivo personalizzato<p> #}
-            {#        </section> #}
+        <section class="shadow promozione_societa_sportiva">
 
-            {# <section class="shadow promozione_societa_sportiva"> #}
-            {# <h3>SEI UNA SOCIETÀ SPORTIVA?</h3> #}
-            {# <p>clicca qui e richiedi il tuo preventivo personalizzato<p> #}
+            <h3 class="text-warning bold">SEI UNA SOCIETÀ SPORTIVA?</h3>
+
+            <p class="text-white mb-0">clicca qui e richiedi il tuo preventivo personalizzato<p>
+
+        </section>
 
 
-            {# </section> #}
+ <section class="shadow promozione_societa_sportiva">
+
+ <h3>SEI UNA SOCIETÀ SPORTIVA?</h3>
+
+ <p>clicca qui e richiedi il tuo preventivo personalizzato<p>
+
+
+
+ </section>
+
 
             <!-- upsidedown -->
-            {# <section class="container-lg upsidedown d-flex flex-column flex-md-row justify-content-between">
+ <section class="container-lg upsidedown d-flex flex-column flex-md-row justify-content-between">
             <div class="d-flex flex-column p-2 p-md-4">
             <img class="img-fluid" src="{{basepath}}/templates/img/arcigraphic-piu-arcisport-gadget.jpg" />
             <div>
@@ -122,15 +132,24 @@
                     <div class="swiper-button-prev"></div>
                 </div>
             </section>
-            #}
-            {# <section class="full-width"> #}
-            {# <div class="container d-flex align-items-center"> #}
-            {# <div style="margin-top:4.5rem" class="d-flex flex-column"> #}
-            {# <p>Free deliveries for orders up to 80 euros</p> #}
-            {# <h2 class="fw-bolder">UP TO 30% OFF</h2> #}
-            {# <span>Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum <b>Lorem ispum</b></span> #}
-            {#  <a  style="color:black;background:white;max-width:fit-content;border:1px solid gray"class="btn_hero nav-link" href="{{uripath}}/shop">compra ora <i class="zmdi ps-4  zmdi-arrow-right"></i></a> #}
-            {# </div> #}
+
+
+ <section class="full-width">
+
+ <div class="container d-flex align-items-center">
+
+ <div style="margin-top:4.5rem" class="d-flex flex-column">
+
+ <p>Free deliveries for orders up to 80 euros</p>
+
+ <h2 class="fw-bolder">UP TO 30% OFF</h2>
+
+ <span>Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum <b>Lorem ispum</b></span>
+
+  <a  style="color:black;background:white;max-width:fit-content;border:1px solid gray"class="btn_hero nav-link" href="{{uripath}}/shop">compra ora <i class="zmdi ps-4  zmdi-arrow-right"></i></a>
+
+ </div>
+
         </div>
     </section>
 <!-- /Page Content -->
