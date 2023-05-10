@@ -1,0 +1,199 @@
+<script>
+    const searchBar = Vue.createApp({
+        data () {
+            return {
+                attributes: [],
+                filteredSuggestions: [],
+                results: [],
+                showResults: parseInt({{ result_items }}),
+                suggestions: [],
+                textSearch: '',
+                value: ""
+            }
+        },
+        methods: {
+            closeSearchBox() {
+                const searchBox = document.getElementById("searchBox");
+                searchBox.classList.remove("overlay");
+                this.filteredSuggestions = [];
+                this.value = '';
+                this.results = [];
+            },
+            debounceSearch(callback) {
+                //this.typing = "You are typing";
+                //this.searchResults = null
+                clearTimeout(this.debounce);
+                this.debounce = setTimeout(() => {
+                    callback();
+                }, 600);
+            },
+            handleSuggestion(word) {
+                this.filteredSuggestions = this.suggestions.filter(item => {
+                    return item?.variant_name?.toLowerCase().includes(word.toLowerCase());
+                });
+                this.textSearch = word;
+                this.debounceSearch(()=>this.handleSearch(word));
+            },
+            getSuggestions() {
+                fetch("{{ basepath }}/search", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({value_search: ''}),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.length !== 0) {
+                            this.suggestions = result;
+                        }
+                    });
+            },
+            handleSearch(words) {
+                fetch("{{ basepath }}/search", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({value_search: words.toString()}),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.length !== 0) {
+                            this.results = result.slice(0, this.showResults);
+                            const arr = this.results.map(item => {
+                                const attributes = JSON.parse(item.primary_attributes);
+                                return attributes[0].attribute_value;
+                            })
+                            this.attributes = arr.filter((item, i, ar) => ar.map(el => el.value).indexOf(item.value) === i);
+                        } else {
+                            this.results = result;
+                        }
+                    })
+            },
+            numberFormat(data) {
+                const euro = Intl.NumberFormat("it-IT", {
+                    style: "currency",
+                    currency: "EUR",
+                });
+                return euro.format(data);
+            },
+            openSearchBox() {
+                const searchBox = document.getElementById("searchBox");
+                searchBox.classList.add("overlay");
+
+            },
+            setTextSearch(value) {
+                this.textSearch = value;
+            },
+            setValue(value) {
+                this.value = value;
+                this.handleSearch(value);
+                this.filteredSuggestions = [];
+            }
+        },
+        mounted() {
+            const self = this;
+            const input = document.getElementById("words");
+            const button = document.querySelector(".search-btn");
+            const close = document.querySelector(".search-close");
+
+            this.getSuggestions();
+
+            window.addEventListener('resize', () => {
+                if(window.innerWidth <= '800') {
+                    button.addEventListener('click', self.openSearchBox);
+                }
+            })
+            window.addEventListener('DOMContentLoaded', () => {
+                if (window.innerWidth <= '1360') {
+                    button.addEventListener('click', () => {
+                        self.openSearchBox();
+                        input.focus();
+                    });
+
+                }
+            });
+
+            close.addEventListener('click', self.closeSearchBox);
+            input.addEventListener('input', (e) => {
+                self.openSearchBox();
+                button.addEventListener('click', self.handleSearch);
+            });
+
+        },
+        delimiters: ["{_", "_}"],
+    });
+    searchBar.mount("#searchBox");
+</script>
+<script>
+
+    /*    const search = Vue.createApp({
+            data() {
+                return {
+                    typing: null,
+                    debounce: null,
+                    searchQuery: null,
+                    searchResults: null
+                }
+            },
+            watch: {
+                // whenever searchQuery changes, this function will run
+                searchQuery(newQuery, oldQuery) {
+                    if (newQuery) {
+                        this.searchResults = null;
+                        fetch(`${window.BASEPATH}/search`, {
+                            method: "POST",
+                            mode: "cors",
+                            body: JSON.stringify({
+                                language: `{{ lang_layout.locale }}`,
+                            value_search: this.searchQuery,
+                        }), // Adding headers to the request
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                        },
+                    })
+                        .then((res) => res.json())
+                        .then((res) => console.log(res))
+                        .then((data) => this.searchResults = data)
+
+
+                }
+            }
+        },
+        methods: {
+            debounceSearch(e) {
+                this.typing = "You are typing";
+                this.searchResults = null
+                clearTimeout(this.debounce);
+                this.debounce = setTimeout(() => {
+                    this.typing = null;
+                    this.searchQuery = e.target.value;
+                }, 600);
+            }
+
+        },
+        created() {
+        },
+        mounted() {
+            document.querySelector(".search-icon") &&
+            document.querySelector(".search-icon").addEventListener("click", function () {
+                document.querySelector(".search-box input").classList.toggle("show-input");
+                document.querySelector(".search-box ").classList.toggle("show-input");
+            });
+
+            window.addEventListener("mouseup", function (event) {
+                let pol =
+                    document.querySelector(".search-box") &&
+                    document.querySelector(".search-box");
+                if (event.target != pol && event.target.parentNode != pol) {
+                    pol.classList.remove("show-input");
+                    document.querySelector(".search-box  input").classList.remove("show-input");
+                }
+            });
+        },
+        delimiters: ["{_", "_}"],
+    }).mount('#search')*/
+</script>

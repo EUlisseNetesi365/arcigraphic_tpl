@@ -1,0 +1,66 @@
+{% extends template ~ "/layout/layout.twig" %}
+{% block content %}
+    <section class="mt-0" style="padding-top: 1.5rem">
+    <div class="py-6 bg-img-cover bg-dark bg-overlay-gradient-dark position-relative overflow-hidden mb-4 bg-pos-center-center"
+         style="background-image: url('{{ basepath }}/templates/arcigraphic/img/azienda/azienda.jpg')">
+        <div class="container position-relative z-index-8 customTop" data-aos="fade-right" data-aos-delay="300">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item breadcrumb-light"><a href="{{ uripath }}">Home</a></li>
+                    {% if category_breadcrumbs is defined %}
+                        {% for breadcrumb in category_breadcrumbs %}
+                            <li class="breadcrumb-item breadcrumb-light"><a style="color: {{ breadcrumb.color }}" href="{{ breadcrumb.link }}">{{ breadcrumb.text }}</a></li>
+                        {% endfor %}
+                    {% else %}
+
+                        <li class="breadcrumb-item breadcrumb-light"><a style="color: #009fe2" href="{{ uripath }}/contact_us">{{ lang.contact_us }}</a></li>
+                        {#                                <li class="breadcrumb-item breadcrumb-light"><a href="#">Activities</a></li>#}
+                        {#                                <li class="breadcrumb-item active breadcrumb-light" aria-current="page">Clothing</li>#}
+
+                    {% endif %}
+                </ol>
+
+            </nav>                {#<h1 class="fw-bold display-6 mb-4 text-white">Latest Arrivals (121)</h1>#}
+            <div class="col-12 col-md-6">
+                {#                    <p class="lead text-white mb-0">#}
+                {#                        Move, stretch, jump and hike in our latest waterproof arrivals. We've got you covered for your#}
+                {#                        hike or climbing sessions, from Gortex jackets to lightweight waterproof pants. Discover our#}
+                {#                        latest range of outdoor clothing.#}
+                {#                    </p>#}
+            </div>
+        </div>
+    </div>
+    </section>
+    <section class="container" style="padding-top: 8.5rem">
+        <div class="row g-5">
+            <p>{{lang.contact_body}}</p>
+         <div class="col-12 col-md-4">
+            <div class="d-flex align-items-center">
+                <img class="img-fluid bg-dark" width="160" src="/arcigraphic/templates/img/arcigraphic-fooder.png">
+            </div>
+             <p></p>
+             <p><strong>{{lang.sede}}</strong><br>Contrada Santa Chiarella, 84025 Eboli (Sa)</p>
+             <p><br><br></p>
+{#             <p><span>Siamo aperti dal lunedì al venerdì dalle <strong>9.00</strong> alle <strong>18.00</strong></span></p>#}
+{#             <p><br><br></p>#}
+             <p><strong>Tel:</strong>&nbsp;<a href="tel:"><span>0828030438</span></a></p>
+             <p></p>
+             <p><strong>Whatsapp:</strong>&nbsp;<a href="https://wa.me/3385445148" target="_blank" rel="noreferrer noopener">3385445148</a></p>
+             <p></p>
+             <p><strong>E-mail:</strong>&nbsp;<a href="mailto:info@arcigraphic.com"><span>info@arcigraphic.com</span></a></p>
+{#             <p><br><br></p>#}
+{#             <p><strong>Partita IVA:</strong> 02367490600</p>#}
+         </div>
+         <div class="col-12 col-md-8">
+             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4539.2053385748095!2d15.026918155207852!3d40.59555189041512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133be06412a0a081%3A0x82bda019407de0cd!2sArcigraphic%20srl%20%7C%20Produzione%20abbigliamento%20sportivo%20e%20da%20lavoro!5e0!3m2!1sit!2sit!4v1679407149112!5m2!1sit!2sit" style="border:10px; position: center; width: 100%; height: 100%" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+         </div>
+            <div class="col-12 col-md-12">
+                <div class="card">
+                    <div class="card-body p-0 p-md-3">
+                        {% include template ~ "/contact_us/components/form-contact.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,55 @@
+<div id="offcanvasCart" class="offcanvas offcanvas-end" tabindex="-1"  aria-labelledby="offcanvasCartLabel">
+    <div class="offcanvas-header d-flex align-items-center">
+        <h5 class="offcanvas-title fw-bolder" id="offcanvasCartLabel">{{ lang_layout.your_cart }}</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-3">
+        <div class="d-flex flex-column justify-content-between w-100 h-100">
+            <div>
+                <!-- CartCheckout ProgressBar-->
+                <div class="mt-4 mb-5">
+                    <p class="mb-2 fs-6">
+                        <i class="ri-truck-line align-bottom me-2"></i>
+                        <span class="fw-semibold"> {{ lang_layout.missing }} {_ numberFormat(diffPrice) _} {{ lang_layout.to_free_delivery }}</span>
+                        
+                    </p>
+                    <div class="progress f-h-1">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-blue" role="progressbar" :style="'width: ' + progress + '%'" :aria-valuenow="cartData.subtotal" aria-valuemin="0" :aria-valuemax="cartData.minPrice"></div>
+                    </div>
+                </div>
+                <!--/ CartCheckout ProgressBar-->
+                <template v-if="cartData.numberItems == 0"><p>{{ lang_layout.empty_cart }}</p></template>
+                <template v-else>
+                    <!-- CartCheckout Product-->
+                    <div v-for="item in cartData.items" class="row mx-0 pb-4 mb-4 border-bottom">
+                        <div class="col-3">
+                            <picture class="d-block bg-light">
+                                <img class="img-fluid" :src="'{{ basepath }}' + JSON.parse(item.variant_images)[0].image" :alt="JSON.parse(item.variant_images)[0].alt">
+                            </picture>
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <h6 class="justify-content-between d-flex align-items-start mb-2">{_ item.name _}<i @click="deleteItem(item.v4w_id)" class="ri-close-line"></i></h6>
+                                <small class="d-flex align-baseline text-muted">
+                                    <input id="displayColor" name="displayColor" class="input-color-circle" type="color" :value="JSON.parse(item.custom_value).color" disabled>
+                                    &nbsp;/&nbsp;{_ JSON.parse(item.secondary_attributes)[0].attribute_value.value _}
+                                </small>
+                                {#<small class="d-block text-muted fw-bolder">Size: Medium</small>#}
+                                <small class="d-block text-muted fw-bolder">{{ lang_layout.qty }}:&nbsp;{_ item.quantity _}</small>
+                            </div>
+                            <p class="fw-bolder text-end m-0">{_ numberFormat(item.total_price) _}</p>
+                        </div>
+                    </div>
+                    <!-- CartCheckout Product-->
+                </template>
+            </div>
+            <div class="border-top pt-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="m-0 fw-bolder">{{ lang_layout.subtotal }}</p>
+                    <p class="m-0 fw-bolder">{_ numberFormat(cartData.subtotal) _}</p>
+                </div>
+                <a href="{{ uripath }}/cart" class="btn btn-dark fw-bolder d-block text-center transition-all opacity-50-hover">{{ lang_layout.link_cart }}</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,206 @@
+<form id="formAddAddress" class="needs-validation">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-check form-group form-check-custom form-radio-custom mb-3">
+                <input class="form-check-input" type="radio" name="is_private" id="isPrivate" value="1" checked>
+                <label class="form-check-label" for="isPrivate">
+                    <span class="align-items-start w-100">
+                        <span class="mb-0 fw-bolder d-block">{{ lang.private }}</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-check form-group form-check-custom form-radio-custom mb-3">
+                <input class="form-check-input" type="radio" name="is_private"
+                       id="isCompany" value="0">
+                <label class="form-check-label" for="isCompany">
+                    <span class="align-items-start w-100">
+                        <span class="mb-0 fw-bolder d-block">{{ lang.company }}</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- First Name-->
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="name" class="form-label">{{ lang.name }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control" name="name"
+                       id="name" :required="isAddPrivateRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Last Name-->
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="surname" class="form-label">{{ lang.last_name }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control" name="surname"
+                       id="surname" :required="isAddPrivateRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+        <!-- Email Pec-->
+        <div v-show="showAddCompany" class="col-sm-6">
+            <div class="form-group">
+                <label for="pec" class="form-label">{{ lang.email_pec }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="email" class="form-control" name="pec" id="pec" placeholder="you@example.com">
+            </div>
+        </div>
+
+        <!-- Company Name-->
+        <div v-show="showAddCompany" class="col-sm-6">
+            <div class="form-group">
+                <label for="companyName" class="form-label">{{ lang.company_name }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control"
+                       name="company_name" id="companyName" :required="isAddCompanyRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+        <!-- Code Sdi-->
+        <div v-show="showAddCompany" class="col-sm-6">
+            <div class="form-group">
+                <label for="codeSdi" class="form-label">{{ lang.code_sdi }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="sdi" id="codeSdi">
+            </div>
+        </div>
+
+        <!-- Birthdate -->
+        <div v-show="showAddPrivate" class="col-sm-6">
+            <div class="form-group">
+                <label for="birthdate" class="form-label">{{ lang.birthdate }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="date" class="form-control" name="birthdate" id="birthdate">
+            </div>
+        </div>
+
+        <!-- Address-->
+        <div class="col-12">
+            <div class="form-group">
+                <label for="address" class="form-label">{{ lang.address }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control"
+                       name="address" id="address"
+                       placeholder="{{ lang.example_address }}" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Country-->
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="country" class="form-label">{{ lang.country }}</label>
+                <select class="form-select" name="country"
+                        id="country" required>
+                    <option value="">{{ lang.select }}</option>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Province-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="province" class="form-label ">{{ lang.province }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control"
+                       name="province" id="province" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- State-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="city" class="form-label ">{{ lang.city }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control"
+                       name="city" id="city" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Post Code-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="zipCode" class="form-label">{{ lang.zip_code }}</label>
+                <input type="text" class="form-control"
+                       name="zip_code" id="zipCode" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Location Gps-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="gpsLocation" class="form-label">{{ lang.gps }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="gps_location" id="gpsLocation" placeholder="{{ lang.gps_example }}">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Phone 1-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="phone1" class="form-label">{{ lang.phone1 }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="phone1" id="phone1">
+            </div>
+        </div>
+
+        <!-- Phone 2-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="phone2" class="form-label">{{ lang.phone2 }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="phone2" id="phone2">
+            </div>
+        </div>
+
+        <!-- Fiscal Code-->
+        <div v-show="showAddPrivate" class="col-md-6">
+            <div class="form-group">
+                <label for="fiscalCode" class="form-label">{{ lang.fiscal_code }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$"
+                       class="form-control" name="fiscal_code" id="fiscalCode">
+            </div>
+        </div>
+
+        <!-- Vat Number-->
+        <div v-show="showAddCompany" class="col-md-6">
+            <div class="form-group">
+                <label for="vatNumber" class="form-label">{{ lang.vat_number }}</label>
+                <input type="text" class="form-control" min="4" name="vat_number"
+                       id="vatNumber" :required="isAddCompanyRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Note-->
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="note" class="form-label">{{ lang.note }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <textarea type="text" class="form-control" name="note" id="note" rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- Default Info-->
+        <div class="col-sm-6">
+            <div class="form-check form-group mb-3">
+                <input class="form-check-input" type="checkbox" name="shipping_is_default" id="isDefaultShipping"
+                       value="1">
+                <label class="form-check-label" for="isDefaultShipping">{{ lang.is_default_ship }}</label>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-check form-group mb-3">
+                <input class="form-check-input" type="checkbox" name="billing_is_default" id="isDefaultBilling"
+                       value="1">
+                <label class="form-check-label" for="isDefaultBilling">{{ lang.is_default_invoice }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="error-display alert d-none"></div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-dark px-5 text-white">{{ lang.save }}</button>
+    </div>
+</form>

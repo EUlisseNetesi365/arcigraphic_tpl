@@ -1,0 +1,45 @@
+<!-- Card Product-->
+<div v-for="item in results" class="card-search col-12 col-sm-6 col-md-3 col-lg-3 product ps-2 pb-2">
+    <div class="product-grid">
+        <div class="product-image">
+            <a :href="'{{ basepath }}' + item.v_alias" class="image">
+                <img :src="'{{ basepath }}' + JSON.parse(item.variant_images)[0].image" :alt="JSON.parse(item.variant_images)[0].alt">
+            </a>
+            {#        <div class="badge fixed text-center text-uppercase">-25%</div>
+                    <ul class="product-links">
+                        <li>
+                            <a data-tip="quick add" href="#">
+                                <button class=" btn btn-sm color color-red rounded-circle mx-2" value="red"></button>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-tip="quick add" href="#">
+                                <button class="btn btn-sm color color-blue rounded-circle mx-2" value="blue"></button>
+                            </a>
+                        </li>
+                    </ul>#}
+        </div>
+        <div class="product-content">
+            <div class="justify-content-between align-items-center">
+                <div><small class="title-index brands badge rounded-pill bg-secondary">{_ item.brand_name _}</small></div>
+                <h3 class="title-index"><a :href="'{{ basepath }}' + item.v_alias">{_ item.variant_name _}</a></h3>
+            </div>
+            <div class="text-center">
+                <div class="fw-bolder price">{_ numberFormat(JSON.parse(item.secondary_attributes)[0].price) _}</div>
+            </div>
+            <div class="text-center">
+                <div class="price">{{ lang_layout.available }}</div>
+            </div>
+            <div class="text-center">
+                <ul class="rating p-0 mb-0">
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star"></li>
+                    <li class="far fa-star"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Card Product-->

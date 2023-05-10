@@ -1,0 +1,169 @@
+{% set item = json_decode(singleprod) %}
+
+{#<script>#}
+{#    const primaries = document.querySelectorAll(".primary-attributes");#}
+
+{#    primaries.forEach(el => {#}
+{#       el.addEventListener('change', function () {#}
+{#           const data = [];#}
+{#           primaries.forEach(attr => data.push(parseInt(attr.value)));#}
+{#           getVariantId({{ item[0].p_id }}, data);#}
+{#       });#}
+{#    });#}
+{#    function getVariantId(id, data) {#}
+{#        console.log(id);#}
+{#        fetch("{{ basepath }}/get-vid", {#}
+{#            method: "POST",#}
+{#            mode: "cors",#}
+{#            body: JSON.stringify({#}
+{#                p_id: id,#}
+{#                data: data#}
+{#            }),#}
+{#            headers: {#}
+{#                "Content-type": "application/json; charset=UTF-8",#}
+{#            },#}
+{#        })#}
+{#            .then((res) => res.json())#}
+{#            .then(result => {#}
+{#                if (result.code === 6) {#}
+
+{#                }#}
+{#                if (result.success === 1) {#}
+{#                    location.href = "{{ uripath }}/product/"+ parseInt(result.variantid);#}
+{#                }#}
+{#            });#}
+{#    }#}
+{#   /* var demoTrigger = document.querySelector('.demo-trigger');#}
+{#var paneContainer = document.querySelector('.detail');*/#}
+
+{#/*demoTrigger && new Drift(demoTrigger, {#}
+{#  paneContainer: paneContainer,#}
+{#  inlinePane: false,#}
+{#});*/#}
+{#</script>#}
+<script>
+const {createApp} = Vue
+//let variable = {{pri_attr[0].attribute_value.value}}
+   createApp({
+        data() {
+            return {
+                showColors:2,
+                color:null,
+                colletto: 0,
+                manica: 0,
+                rifiniture: 0,
+                size: null,
+                goTo: [],
+                values: [],
+                lengthValue: 0,
+                primary: null
+            }
+        },
+        methods: {
+            async setColletto(data){
+                document.querySelector(".selectedSystem")
+                && await document.querySelector(".selectedSystem").classList.remove("selectedSystem");
+                this.colletto = await data
+            },
+            async setManica(data){
+                document.querySelector(".selectedSystemManica")
+                && await document.querySelector(".selectedSystemManica").classList.remove("selectedSystemManica");
+                this.manica = await data
+            },
+            async setRifiniture(data){
+                document.querySelector(".selectedSystemRifiniture")
+                && await document.querySelector(".selectedSystemRifiniture").classList.remove("selectedSystemRifiniture");
+                this.rifiniture = await data
+            },
+            setColor(e) {
+                this.color = e.target.value
+                const svgs = document.querySelectorAll('.apply-color');
+                svgs.forEach(svg => {
+                    svg.getSVGDocument().getElementById('path0').setAttribute('fill', this.color);
+                });
+            },
+            addSelected(id, value, productId){
+                if(typeof value != 'number'){
+                    value = parseInt(value);
+                }
+                let values = [[], []];
+                if(this.values.length > 0) {
+                    console.log('before loop');
+                    console.log(this.values);
+
+                    for (let i = 0; i < this.values[1].length; i++) {
+                        if (this.values[0][i] == id) {
+                            values[0][i] = id;
+                            values[1][i] = value;
+                        }else{
+                            values[0][i] = this.values[0][i];
+                            values[1][i] = this.values[1][i];
+                        }
+                    }
+                    this.values = values
+                    console.log('after loop');
+                    console.log(this.values);
+                    this.getVariantId(productId, this.values[1])
+                }
+            },
+            getVariantId(id, data) {
+                console.log(id);
+                fetch("{{ basepath }}/get-vid", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({
+                        p_id: id,
+                        data: data // [1,2,26,22,56]
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.code === 6) {
+                        }
+                        if (result.success === 1) {
+                            location.href = "{{ uripath }}/product/"+ parseInt(result.variantid);
+                        }
+                    });
+            },
+            setShowColors(data){
+                this.showColors = data;
+            },
+            selectSize(size){
+                var sizes = document.getElementsByClassName("btn-size");
+                this.size = size;
+                for (var i = 0; i < sizes.length; i++) {
+
+                }
+            },
+            replaceSpaces(string, separator){
+              let final = string.replace(/\s/g, separator);
+              return final.toLowerCase();
+            }
+        },
+        mounted(){
+            document.querySelectorAll(".select").forEach((item)=> item.classList.add("selectedSystem"))
+            document.querySelectorAll(".selectManica").forEach((item)=> item.classList.add("selectedSystemManica"))
+            document.querySelectorAll(".selectRifinitura").forEach((item)=> item.classList.add("selectedSystemRifiniture"))
+            //this.lengthValue =  document.getElementById('hidden-length').value;
+            // this.values.length = this.lengthValue;
+            let jsonPrimary = document.getElementById('hidden-primary').value;
+            this.primary = JSON.parse(jsonPrimary);
+            let values = [];
+            let idArray = [];
+            let valuesArray = [];
+            values.push(idArray);
+            values.push(valuesArray);
+            for(let i  = 0; i < this.primary.length; i++){
+                values[0].push(this.primary[i].attribute.id)
+                values[1].push(this.primary[i].attribute_value.id)
+            }
+            this.values = values;
+
+        },
+        delimiters: ["{_", "_}"],
+    }).mount('#product-options');
+
+</script>

@@ -1,0 +1,50 @@
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        (new FormValidator(document.getElementById("formInfoRequest"), handleInfoRequest)).initialize();
+    });
+
+    function handleInfoRequest (event, validator) {
+        const button_submit = validator.form.querySelector("button[type='submit']");
+        button_submit.disabled = true;
+
+        fetch("{{ basepath }}/info_rq", {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify(validator.getEntries()),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+        .then((res) => res.json())
+        .then(result => {
+            console.log(result);
+            const display = document.querySelector("#formInfoRequest .error-display");
+            if (result.msg) {
+                display.classList.remove("d-none", "alert-primary", "alert-success");
+                switch (parseInt(result.code)) {
+                    case 1:
+                        display.classList.add("alert-primary");
+                        display.innerHTML = "{{ lang_layout.error_send_info }}";
+                        break;
+                    case 2:
+                        display.classList.add("alert-primary");
+                        display.innerHTML = "{{ lang_layout.error_invalid_email_info }}";
+                        break;
+                    case 3:
+                        display.classList.add("alert-primary");
+                        display.innerHTML = "{{ lang_layout.error_send_info }}";
+                        break;
+                    case 0:
+                        if (result.success === 1) {
+                            display.classList.add("alert-success");
+                            display.innerHTML = "{{ lang_layout.success_send_info }}";
+                            button_submit.disabled = false;
+                        }
+                        break;
+                }
+            }
+        });
+    }
+
+</script>

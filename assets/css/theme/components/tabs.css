@@ -1,0 +1,28 @@
+/* From theme bundle */
+.nav-tabs,
+.nav-tabs .nav-link {
+    border: 0;
+}
+.tab-pane {
+    padding-top: 1rem;
+}
+.nav-tabs-border .nav-link {
+    position: relative;
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: 2rem;
+}
+.nav-tabs-border .nav-link:after {
+    content: "";
+    display: block;
+    height: 2px;
+    background: #1c212c;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+}
+.nav-tabs-border .nav-link.active:after {
+    opacity: 1;
+}

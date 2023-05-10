@@ -1,0 +1,241 @@
+<script>
+    /*const cartData = {
+        install(app, options) {
+            app.mixin({
+                data () {
+                    return {
+                        items: []
+                    }
+                }
+            });
+        }
+    };*/
+    const cartData = {
+        items: 0,
+        numberItems: 0,
+        minPrice: 80.00,
+        subtotal: null,
+        shipping: null,
+        total: null,
+    }
+
+    const cart = Vue.createApp({
+        data()  {
+            return {
+                cartData: cartData,
+                progress: 0,
+                showBadge: false,
+                diffPrice: 0,
+                //loading:false
+            }
+        },
+
+        methods: {
+                 /*getAnswer() {
+
+                 this.loading = true
+
+                    try {
+
+                        fetch("{{ basepath }}/search", {
+                            method: "POST",
+                            mode: "cors",
+                            body: JSON.stringify({
+                                language: "en",
+                                value_search: this.searchQuery,
+                            }), // Adding headers to the request
+                            headers: {
+                                "Content-type": "application/json; charset=UTF-8",
+                            },
+                        })
+                            .then((res) => res.json())
+                            .then((res) => console.log(res))
+
+              } catch (error) {
+               console.log(error)
+              }
+            },*/
+            addToCart(sizeEls, quantity, colorEl, el) {
+                const size = Array.from(sizeEls).filter((size) => size.classList.contains("selected"));
+                if (size.length === 0) {
+                    this.showPopOverError(el, "{{ lang_layout.error_size }}")
+                } else {
+                    let color = '';
+                    (!colorEl.value || colorEl.value === ' ') ? color = document.getElementById("base").value : color = colorEl.value;
+                    fetch("{{ basepath }}/add_to_cart", {
+                        method: "POST",
+                        mode: "cors",
+                        body: JSON.stringify({
+                            v4warehouses_id: parseInt(size[0].value),
+                            quantity: parseFloat(quantity),
+                            color: '{"color":"' + color + '"}'
+                        }), // Adding headers to the request
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                        },
+                    })
+                        .then((res) => res.json())
+                        .then(result => {
+                            if (result.code === 6) {
+                                this.showPopOverError(el, "{{ lang_layout.not_available }}");
+                            }
+                            if (result.success === 1) {
+                                if (parseInt(result.items.length) !== 0) {
+                                    this.setDataToView(result.items);
+                                    this.showBadge = true;
+                                } else {
+                                    this.showBadge = false;
+                                    this.cartData.numberItems = 0;
+                                }
+                                this.showPopOver("{{ lang_layout.added_item }}");
+                            }
+                        });
+                }
+            },
+            changeQuantity(id, quantity, el) {
+                fetch("{{ basepath }}/edit_item_cart", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({
+                        v4warehouses_id: parseInt(id),
+                        quantity: parseFloat(quantity),
+                    }), // Adding headers to the request
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.code === 6) {
+                            /*this.messageError = "{{ lang.product_available }}";
+                            this.showError = true;*/
+                            this.showPopOverError(el, "{{ lang_layout.not_available }}");
+                        }
+                        if (result.success === 1) {
+                            /*this.messageError = "";
+                            this.showError = false;*/
+                            this.setDataToView(result.items);
+                        }
+                    });
+            },
+            deleteItem(id) {
+                fetch("{{ basepath }}/del_from_cart", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({
+                        v4warehouses_id: id,
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.success === 1) {
+                            if (parseInt(result.items.length) !== 0) {
+                                this.setDataToView(result.items);
+                            } else {
+                                this.showBadge = false;
+                                this.setDataToView(result.items);
+                                //this.messageEmpty = "{{ lang.cart_empty }}";
+                                //badgeCart.classList.replace("d-block", "d-none");
+                            }
+                        }
+                    });
+            },
+            getCart() {
+                fetch("{{ basepath }}/view_cart", {
+                    method: "POST",
+                    mode: "cors",
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.success === 1) {
+                            if (parseInt(result.items.length) !== 0) {
+                                this.setDataToView(result.items);
+                                this.showBadge = true;
+                            } else {
+                                this.showBadge = false;
+                                this.cartData.numberItems = 0;
+                            }
+                        }
+                    });
+            },
+            numberFormat(data) {
+                const euro = Intl.NumberFormat("it-IT", {
+                    style: "currency",
+                    currency: "EUR",
+                });
+                return euro.format(data);
+            },
+            setDataToView(data) {
+                this.cartData.items = data;
+                this.cartData.numberItems = data.length;
+                if (data.length === 0) {
+                    this.cartData.subtotal = 0;
+                    this.cartData.shipping = 0;
+                    this.cartData.total = 0;
+                    this.progress = 0;
+                    this.diffPrice = this.cartData.minPrice;
+                } else {
+                    this.cartData.subtotal = data[0].subtotal;
+                    this.cartData.shipping = data[0].shipping;
+                    this.cartData.total = data[0].total;
+                    this.progress = (100 * this.cartData.subtotal) / this.cartData.minPrice;
+                    this.diffPrice = this.cartData.subtotal >= this.cartData.minPrice ? 0 : this.cartData.minPrice - this.cartData.subtotal;
+                }
+            },
+            showCartOffCanvas () {
+                const offcanvasCart = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('offcanvasCart'));
+                offcanvasCart.show();
+            },
+            hideCartOffCanvas () {
+                const offcanvasCart = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('offcanvasCart'));
+                offcanvasCart.hide();
+            },
+            showPopOver(message) {
+                const template = '<div class="popover bg-primary p-0" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-header"></h3><div class="popover-body text-secondary"></div></div>'
+
+                const popover = bootstrap.Popover.getOrCreateInstance(document.getElementById('popover'), {
+                    placement: 'left',
+                    content: message,
+                    template: template,
+                    trigger: 'manual'
+                });
+                popover.show();
+
+                setTimeout(function () {
+                    popover.dispose()
+                }, 2000);
+            },
+            showPopOverError(el, message) {
+                const template = '<div class="popover bg-primary p-0" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-header"></h3><div class="popover-body text-white"></div></div>'
+
+                const popover = bootstrap.Popover.getOrCreateInstance(el, {
+                    placement: 'left',
+                    content: message,
+                    template: template,
+                });
+                popover.show();
+
+                setTimeout(function () {
+                    popover.dispose()
+                }, 1500);
+            }
+        },
+        created() {
+            this.getCart();
+        },
+        mounted() {
+            //this.hideCartOffCanvas();
+            try {
+
+            document.getElementById('popover').addEventListener('click', this.showCartOffCanvas);
+            } catch(e){
+                
+            }
+            //this.getCart();
+        },
+        delimiters: ["{_", "_}"],
+    }).mount('#cartOffCanvas')
+</script>

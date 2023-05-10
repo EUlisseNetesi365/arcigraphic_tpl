@@ -1,0 +1,169 @@
+{% extends template ~ "/layout/layout.twig" %}
+{% block content %}
+    {% set listall = json_decode(attributes) %}
+    {% set itemdata = json_decode(singleprod) %}
+    {% if itemdata.success > 0 %}
+        {% set item = itemdata.data %}
+        {% set sec_attr = json_decode(item[0].secondary_attributes) %}
+        {% set pri_attr = json_decode(item[0].primary_attributes) %}
+        {% set images = json_decode(item[0].variant_images) %}
+        {% set description = item[0].variant_description %}
+        {% set keywords = json_decode(item[0].cat_attributes_values) %}
+    {% endif %}
+    <section class="mt-0" style="padding-top: 1.5rem">
+        <div class="py-6 bg-img-cover bg-dark bg-overlay-gradient-dark position-relative overflow-hidden mb-4 bg-pos-center-center"
+             style="background-image: url('{{ basepath }}/templates/arcigraphic/img/azienda/azienda.jpg')">
+            <div class="container position-relative z-index-8 customTop" data-aos="fade-right" data-aos-delay="300">
+                <!-- Breadcrumbs-->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+
+                        <li class="breadcrumb-item"><a href="{{ basepath }}/">Home</a></li>
+                        {% if category_breadcrumbs is defined %}
+{#                            <pre>{{ category_breadcrumbs|length }}</pre>#}
+                            {% for breadcrumb in category_breadcrumbs %}
+                                  <li class="breadcrumb-item"><a style="color: {{ breadcrumb.color }} " href="{{ basepath ~ breadcrumb.link }}">{{ breadcrumb.text }}</a></li>
+                            {% endfor %}
+                            <li class="breadcrumb-item"><a style="color: #009fe2" href="#">{{ item[0].product_name }}</a></li>
+                        {% else %}
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        {% endif %}
+
+                    </ol>
+                </nav>            <!-- /Breadcrumbs-->
+            </div>
+        </div>
+    </section>
+    <section class="" style="padding-top: 8.5rem">
+        <!-- Page Content Goes Here -->
+    {% if itemdata.success > 0 %}
+        <!-- Product Top-->
+        <section class="container">
+            <div class="row g-5">
+                <!-- Images Section-->
+                <div class="col-12 col-lg-7">
+                    {% include template ~ "/products/components/images-section.twig" %}
+                </div>
+                <!-- /Images Section-->
+                <!-- Product Info Section-->
+                <div class="col-12 col-lg-5">
+                    <div class="pb-3">
+                        <!-- Product Name, Review, Brand, Price-->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <p class="small fw-bolder text-uppercase tracking-wider text-muted mb-0 lh-1">{{ json_decode(item[0].cat_attributes_values)['values'] }}</p>
+                            <div class="d-flex justify-content-start align-items-center">
+                                <!-- Review Stars Small-->
+                                <div class="rating position-relative d-table">
+                                    <div class="position-absolute stars" style="width: 80%">
+                                        <i class="ri-star-fill text-dark mr-1"></i>
+                                        <i class="ri-star-fill text-dark mr-1"></i>
+                                        <i class="ri-star-fill text-dark mr-1"></i>
+                                        <i class="ri-star-fill text-dark mr-1"></i>
+                                        <i class="ri-star-fill text-dark mr-1"></i>
+                                    </div>
+                                    <div class="stars">
+                                        <i class="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                        <i class="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                        <i class="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                        <i class="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                        <i class="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                    </div>
+                                </div>
+                                {# <small class="text-muted d-inline-block ms-2 fs-bolder">(1288)</small> #}
+                            </div>
+                        </div>
+                        <h1 class="mb-2 fs-2 fw-bold">{{ item[0].variant_name }}</h1>
+                        <div class="d-flex justify-content-start align-items-center detail">
+                            {% if sec_attr[0].promo_price != null %}
+                                <p class="lead fw-bolder m-0 fs-3 lh-1 text-danger me-2">{{ sec_attr[0].promo_price|number_format(2, '.', ',') }} {{ sec_attr[0].currency_value }}</p>
+                                <s class="lh-1 me-2"><span
+                                            class="fw-bolder m-0">{{ sec_attr[0].price|number_format(2, '.', ',') }} {{ sec_attr[0].currency_value }}</span></s>
+                            {% else %}
+                                <p class="lead fw-bolder m-0 fs-3 lh-1 text-danger me-2">{{ sec_attr[0].price|number_format(2, '.', ',') }} {{ sec_attr[0].currency_value }}</p>
+                            {% endif %}
+                            {% if sec_attr[0].available != null %}
+                                <p class="lead fw-bolder m-0 fs-6 lh-1 text-success">{{ lang.available }}</p>
+                            {% else %}
+                                <p class="lead fw-bolder m-0 fs-6 lh-1 text-danger">{{ lang.not_available }}</p>
+                            {% endif %}
+                            {#                            <p class="lead fw-bolder m-0 fs-6 lh-1 text-success">Save $10.00</p>#}
+                        </div>
+                        <div class="border-top mt-4 mb-3">
+                            <h4 class="mt-4">{{ item[0].unimis_value }}</h4>
+                        </div>
+                        <!-- Product Options-->
+                        <div class="border-top mt-4 mb-3" id="product-options">
+                            {% include template ~ "/products/components/product-options.twig" %}
+                        </div>
+                        <!-- /Product Options-->
+                    </div>
+                    <div id="showMessage" class="d-none">
+                        <span id="message"></span>
+                    </div>
+                    <!-- Add To CartCheckout-->
+                    <div class="d-flex justify-content-between mt-3">
+                        <button type="button" class="btn btn-dark btn-dark-chunky flex-grow-1 me-2 text-white"
+                                onclick="cart.addToCart(document.getElementsByName('sizeButton'), document.getElementById('quantity').value, document.getElementById('customColor'), this)"
+                                {% if sec_attr[0].available == null %} disabled {% endif %}>
+                            {{ lang.add_to_cart }}
+                        </button>
+
+                    </div>
+                    <!-- /Add To CartCheckout-->
+
+                    <!-- Socials-->
+                    {# <div class="my-4">
+                         <div class="d-flex justify-content-start align-items-center">
+                             <p class="fw-bolder lh-1 mb-0 me-3">Share</p>
+                             <ul class="list-unstyled p-0 m-0 d-flex justify-content-start lh-1 align-items-center mt-1">
+                                 <li class="me-2"><a class="text-decoration-none" href="#" role="button"><i
+                                                 class="ri-facebook-box-fill"></i></a></li>
+                                 <li class="me-2"><a class="text-decoration-none" href="#" role="button"><i
+                                                 class="ri-instagram-fill"></i></a></li>
+                                 <li class="me-2"><a class="text-decoration-none" href="#" role="button"><i
+                                                 class="ri-pinterest-fill"></i></a></li>
+                                 <li class="me-2"><a class="text-decoration-none" href="#" role="button"><i
+                                                 class="ri-twitter-fill"></i></a></li>
+                             </ul>
+                         </div>
+                     </div>#}
+                    <!-- Socials-->
+
+                    <!-- Special Offers-->
+                    {#<div class="bg-light rounded py-2 px-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex border-0 px-0 bg-transparent">
+                                <i class="ri-truck-line"></i>
+                                <span class="fs-6 ms-3">Standard delivery free for orders over $99. Next day delivery $9.99</span>
+                            </li>
+                        </ul>
+                    </div>#}
+                    <!-- /Special Offers-->
+                    </div>
+            </div>
+
+            <!-- / Product Info Section-->
+        </section>
+        <!-- / Product Top-->
+        <section>
+            <!-- Product Tabs-->
+            {% include template ~ "/products/components/details.twig" %}
+            <!-- / Product Tabs-->
+        </section>
+        <!-- Related Products-->
+        {#<div class="container my-8">#}
+            {#            <h3 class="fs-4 fw-bold mb-5 text-center">{{ lang.also_like }}</h3> #}
+            <!-- Swiper Latest -->
+            {#           {% include template ~ '/components/slide-categories.twig' %} #}
+            <!-- / Swiper Latest-->
+        {#</div>#}
+        <!--/ Related Products-->
+    {% else %}
+        <div class="container text-center">
+            <h3>{{ lang.empty }}</h3>
+        </div>
+    {% endif %}
+
+        <!-- /Page Content -->
+    </section>
+{% endblock %}

@@ -1,0 +1,50 @@
+
+<section>
+{#    {% for primary in pri_attr|reduce((unique, item) => item in unique ? unique : unique|merge([item]), []) %}#}
+{#        <p>--------------------------</p>#}
+{#    <pre>{{ dump(primary) }}</pre>#}
+{#    {% endfor %}#}
+
+<h6><b>MATERIALI</b></h6>
+<div class="d-flex flex-wrap justify-content-between">
+<div  class="container p-0">
+<div  class="row">
+<div  class="col-md-12">
+    <select name="material" id="material" class="form-select">
+        {% for key, primary in pri_attr|reduce((unique, item) => item in unique ? unique : unique|merge([item]), []) %}
+        {% if primary.attribute.value == "Materiale" %}
+            {% set is_default = json_decode(primary.attribute_value.is_default) %}
+            <option value="{{primary.attribute_value.id }}" {% if is_default == 1 %} selected {% endif %}>{{ primary.attribute_value.value}}</option>
+            <input type="hidden" value="{{primary.attribute.id}}">
+        {% endif %}
+        {% endfor %}
+    </select>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{#  <pre>{{dump(pri_attr)}}</pre>#}
+{#  {% if pri_attr[0].attribute_value.lenght > 1  %}#}
+{#  <div class="form-check p-0">#}
+{#  <label class="form-check-label" for="flexCheckDefault">#}
+{#    Materiale#}
+{#  </label>#}
+{#  <select  class="form-select ">#}
+{#  {% for attr in pri_attr[0].attribute_value %}#}
+{#  <option disabled value="">Scegli</option>#}
+{#  {% endfor %}#}
+{#  <option selected value="1">Personalizzato</option>#}
+{#</select>#}
+{#</div>#}
+{#  {% else %}#}
+{#  <div class="form-check p-0">#}
+{#  <label class="form-check-label" for="flexCheckDefault">#}
+{#    Materiale#}
+{#  </label>#}
+{#  <select  class="form-select ">#}
+{#  <option value="{{pri_attr[0].attribute_value.id}}">{{pri_attr[0].attribute_value.value}}</option>#}
+{#</select>#}
+{#</div>#}
+{#  {% endif %}#}

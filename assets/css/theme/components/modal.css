@@ -1,0 +1,29 @@
+/* From Theme bundle */
+.modal-drawer {
+    padding: 0 !important;
+}
+.modal-drawer .modal-header {
+    border-radius: 0 !important;
+}
+.modal-drawer.fade .modal-dialog {
+    transform: none !important;
+}
+.modal-drawer.fade .modal-content {
+    transition: opacity 0.2s linear, transform 0.3s ease-in !important;
+    opacity: 0;
+    transform: translateX(100%) !important;
+}
+.modal-drawer.fade .modal-content.modal-drawer-left {
+    transform: translateX(-100%) !important;
+}
+.modal-drawer.fade.show .modal-content {
+    opacity: 1;
+    transform: translateX(0) !important;
+}
+.modal-title {
+    font-weight: 600;
+}
+.modal-header {
+    border-bottom: 0;
+    padding-bottom: 0;
+}

@@ -1,0 +1,13 @@
+<section class="container-lg position-relative">
+    <h5 class="swiper_title">{{ products[0].sector_name }}</h5>
+    <span class="container-lg border_bottom"></span>
+    {% if products|length <= 4 %}
+        <!-- Product -->
+        {% include template ~ "/index/components/slider/row-card-products.twig" %}
+        <!-- / Product -->
+    {% else %}
+        <!-- Swiper -->
+        {% include template ~ "/index/components/slider/swiper-products.twig" %}
+        <!-- / Swiper -->
+    {% endif %}
+</section>

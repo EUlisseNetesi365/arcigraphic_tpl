@@ -1,0 +1,65 @@
+<div class="col-12 col-sm-6 col-md-4 product">
+    <!-- Products-->
+    <div class="product-grid">
+        <div class="product-image">
+{#            <pre>{{ dump(sec_attr[0].variant4_whouse_id) }}</pre>#}
+            <a href="{% if product.v_alias %}{{ basepath ~ product.v_alias }}{% else %}{{ uripath }}/product/{{ product.v_id }}{% endif %}" class="image">
+                {% if img_attr[0].image != null  %}
+                    <img class="pic-1" src="{{ basepath ~ img_attr[0].image }}">
+                    <img class="pic-2" src="{{ basepath ~ img_attr[1].image }}">
+                {% else %}
+                    <img class="pic-1" src="{{ basepath }}/templates/arcigraphic/assets/images/logos/arcigraphic-fooder-small.png">
+                {% endif %}
+            </a>
+            {#
+            <div class="badge fixed text-center text-uppercase">-23%</div>
+                            <li>
+                        <ul class="product-links">
+
+                                <a data-tip="quick add" href="#">
+                                    <button class=" btn btn-sm color color-red rounded-circle mx-2" value="red"></button>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-tip="quick add" href="#">
+                                    <button class="btn btn-sm color color-blue rounded-circle mx-2" value="blue"></button>
+                                </a>
+                            </li>
+                        </ul>
+             #}
+        </div>
+         <div class="product-content">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="title-index brands">{{ items[loop.index0].brand_name }}</h3>
+                <h3 class="title-index"><a href="{% if product.v_alias %}{{ basepath ~ product.v_alias }}{% else %}{{ uripath }}/product/{{ product.v_id }}{% endif %}">{{ items[loop.index0].product_name }}</a></h3>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                {% if sec_attr[0].promo_price != null %}
+                    <div class="text-muted fw-bolder" style="margin-right: 1rem;"><s>{{sec_attr[0].price|number_format(2, '.', ',')}} {{ sec_attr[0].currency_value }}</s></div>
+                    <div class="text-danger price">{{sec_attr[0].promo_price|number_format(2, '.', ',')}} {{ sec_attr[0].currency_value }}</div>
+                {% else %}
+                    <div class="text-danger price">{{sec_attr[0].price|number_format(2, '.', ',')}} {{ sec_attr[0].currency_value }}</div>
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                 {% if sec_attr[0].available != null %}
+                     <div class="price">{{ lang_layout.item_available }}</div>
+                 {% else %}
+                     <div class="fw-bold text-danger">{{ lang_layout.item_not_available }}</div>
+                 {% endif %}
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <ul class="rating p-0 mb-0">
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star"></li>
+                    <li class="far fa-star"></li>
+                    <li class="far fa-star"></li>
+                    <li class="far fa-star"></li>
+                </ul>
+                {% if sec_attr[0].available != null %}<a class="cart-button" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ loop.index0 }}" ><i class="fa-solid fa-cart-plus fa-lg"></i></a>{% endif %}
+            </div>
+         </div>
+    </div>
+    <!-- / Products-->
+</div>
+{% include template ~ "/categories/components/cart-product-modal.twig" %}

@@ -1,0 +1,77 @@
+{% extends template ~ "/layout/layout.twig" %}
+{% block content %}
+    {% set items = json_decode(products) %}
+    {% set keywords = json_decode(items[0].search) %}
+    <section class="mt-0" style="padding-top: 1.5rem;z-index:-1">
+        <div class="py-6 bg-img-cover bg-dark bg-overlay-gradient-dark position-relative overflow-hidden mb-4 bg-pos-center-center"
+             style="background-image: url({{ basepath }}/templates/arcigraphic/img/azienda/azienda.jpg);">
+            <div class="container position-relative " data-aos="fade-right" data-aos-delay="300" style="position:fixed;z-index:8">
+            <div class="container position-relative breadcrumb-custom-size" >
+                <!-- Breadcrumbs-->
+                <nav aria-label="breadcrumb ">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ basepath }}/">Home</a></li>
+                        {% if category_breadcrumbs is defined %}
+                            {% for breadcrumb in category_breadcrumbs %}
+                                <li class="breadcrumb-item"><a style="color:  {{ breadcrumb.color}}" href="{{ basepath ~ breadcrumb.link }}">{{ breadcrumb.text }}</a></li>
+                            {% endfor %}
+                            <li class="breadcrumb-item"><a style="color:  {{ breadcrumb.color }}" href="#">{{ item[0].product_name }}</a></li>
+                        {% else %}
+                            <li class="breadcrumb-item"><a style="color:  {{ breadcrumb.color }}" href="{{ basepath }}/">Home</a></li>
+                        {% endif %}
+                    </ol>
+                </nav>
+                <!-- /Breadcrumbs-->
+            </div>
+            </div>
+        </div>
+    </section>
+    <section id="dataDisplay" class="mt-0" style="padding-top: 8.5rem">
+        <div class="container">
+            <div class="row">
+                {% if filter %}
+                    <!-- Products Aside/Sidebar -->
+                    {% include template ~ "/categories/components/filter.twig" %}
+                    <!-- / Products Aside/Sidebar -->
+                {% endif %}
+                <!-- Products -->
+                <div class="col-12 col-lg-9">
+                    <!-- Top Toolbar-->
+                    {% if filter %}
+                        {% include template ~ "/categories/components/filter/top-toolbar.twig" %}
+                    {% endif %}
+                    <!-- / Top Toolbar-->
+                    <!-- Loader -->
+                    {% if filter %}
+                        <div v-if="loader" class="d-flex justify-content-center">
+                            <div id="loader" v-if="loader"></div>
+                        </div>
+                    {% endif %}
+                    <!-- /Loader -->
+                    <!-- Container Products -->
+                    <div v-show="showCards" class="row g-4 mb-5" id="product-list">
+{#                            {% for product in items %}#}
+{#                                {% set sec_attr = json_decode(product.secondary_attributes) %}#}
+{#                                {% set pri_attr = json_decode(product.primary_attributes) %}#}
+{#                                {% set img_attr = json_decode(product.variant_images) %}#}
+                            <!-- Product -->
+                            {% if filter %}
+                                {% include template ~ "/categories/components/card-product.twig" %}
+                            {% endif %}
+                            <!-- / Product -->
+{#                            {% endfor  %}#}
+                    </div>
+                    <div v-show="!showCards" class="container text-center mb-5">
+                        <h3>{{ lang.empty }}</h3>
+                    </div>
+                    <!-- / Container Products -->
+                    <!-- Pagination -->
+                    {% include template ~ "/categories/components/pagination.twig" %}
+                    <!-- Pagination -->
+                </div>
+                <!-- /Products -->
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

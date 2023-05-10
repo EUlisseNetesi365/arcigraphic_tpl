@@ -1,0 +1,33 @@
+/* From theme bundle */
+.border-top-white-opacity {
+    border-top: 1px solid hsla(0, 0%, 100%, 0.15);
+}
+.border-bottom-white-opacity {
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.15);
+}
+.border-white-opacity {
+    border: 1px solid hsla(0, 0%, 100%, 0.15);
+}
+.rounded-lg {
+    border-radius: 0.3rem !important;
+}
+.rounded-xl {
+    border-radius: 20px !important;
+}
+.rounded-0-top-start {
+    border-top-left-radius: 0 !important;
+}
+.rounded-0-bottom-start {
+    border-bottom-left-radius: 0 !important;
+}
+.rounded-0-top-end {
+    border-top-right-radius: 0 !important;
+}
+.rounded-0-bottom-end {
+    border-bottom-right-radius: 0 !important;
+}
+@media (min-width: 992px) {
+    .border-lg-bottom {
+        border-bottom: 1px solid #e9eaea;
+    }
+}

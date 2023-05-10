@@ -1,0 +1,73 @@
+<div class="col-12 col-lg-10 mx-auto">
+    <div class="row g-5">
+        <div class="col-12">
+            <h4>{{ lang.title_info }}</h4>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p>{{ lang.title_sub_info }}</p>
+                <ul class="list-group list-group-horizontal flex-fill">
+                    <li class="list-group-item border-0">{{ lang_layout.username }}:</li>
+                    <li class="list-group-item border-0">{_ user.user _}</li>
+
+                </ul>
+                <div>
+                    <button id="showFormPassword" type="button" class="btn btn-dark btn-sm">{{ lang.modify_password }}</button>
+                    <form v-show="showFormPassword" id="formChangePassword" class="needs-validation mt-4">
+                        <!-- Password -->
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="password" class="form-label">{{ lang.password }}</label><br />
+                                <small>{{ lang_layout.sublabel_password }}</small>
+                                <div class="input-group">
+                                    <input type="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$" class="form-control" name="password" id="password" required>
+                                    <i onclick="showPassword(this)" class="input-group-text ri-eye-fill"></i>
+                                </div>
+                                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+                            </div>
+                        </div>
+                        <!-- Confirm Password -->
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-label">{{ lang.confirm_password }}</label>
+                                <div class="input-group">
+                                    <input type="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$" data-equalTo="password" class="form-control" name="confirm_password" id="confirmPassword" required>
+                                    <i onclick="showPassword(this)" class="input-group-text ri-eye-fill"></i>
+                                </div>
+                                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+                            </div>
+                        </div>
+                        <div class="error-display alert d-none"></div>
+                        <button type="submit" class="btn btn-dark btn-sm">{{ lang.save }}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6">
+                <p>{{ lang.title_sub_emails }}</p>
+                <ul class="list-group list-group-flush">
+                    <li v-for="email in emails" class="list-group-item">
+                        <input :id="`email-${email.id}`" class="form-check-input me-1" @change="handleLoginEmail" type="radio" :data-vid="email.id" name="isLogin" :checked="email.is_login == 1" :disabled="email.confirmed == 0">
+                        <label :for="`email-${email.id}`">{_ email.address _}</label>
+                        <small v-if="email.confirmed == 0" class="text-danger">&nbsp;&nbsp;{{ lang.wait_confirm }}</small>
+                    </li>
+                </ul>
+                <div>
+                    <button id="showAddEmail" type="button" class="btn btn-dark btn-sm">{{ lang.add_new_email }}</button>
+                    <form v-show="showFormEmail" id="formAddEmail" class="needs-validation mt-4">
+                        <!-- Email-->
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="email" class="form-label">{{ lang.email }}</label>
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="you@example.com" required>
+                                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+                            </div>
+                        </div>
+                        <div class="error-display alert d-none"></div>
+                        <button class="btn btn-dark btn-sm text-white" type="submit">{{ lang.add }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

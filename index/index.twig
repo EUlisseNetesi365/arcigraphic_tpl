@@ -1,0 +1,137 @@
+{% extends template ~ "/layout/layout.twig" %}
+{% block content %}
+    <section class="mt-0 pt-5 pt-lg-10">
+    <!-- Page Content Goes Here -->
+        <div id="index">
+            <!-- Image Top Page -->
+            {% include template ~ "/index/components/my-swiper-hero.twig" %}
+            <!--/ Image Top Page -->
+            <!-- Section -->
+            {% set items = json_decode(products) %}
+            {# <div class="container my-10">
+                <div class="row align-items-center">
+                    <figure class="col-12 col-md-6 figure h-75">
+                        <img class="img-fluid" src="{{ basepath }}/templates/images/index/mucchietti-1.png" alt="" />
+                    </figure>
+                    <div class="col-12 col-md-6 bg-primary">
+                        <h1 class="text-white">{{ lang.title_caption }}</h1>
+                        <h2 class="text-white">{{ lang.caption_text }}</h2>
+                    </div>
+                </div>
+            </div> #}
+            <!-- Block categories -->
+            {#{% include template ~ "/index/components/block-categories.twig" %}#}
+            <!-- /Block categories -->
+            <!-- Services -->
+            {% include template ~ "/index/components/services.twig" %}
+            <!-- /Services -->
+            <!-- Slider 1 -->
+            {% if carousel1 != 0 %}
+                {% set products = json_decode(carousel1) %}
+                {% include template ~ "/index/components/slider-products.twig" %}
+            {% endif %}
+            {% if alias1 != 0 %}
+                <a href="{{ basepath ~ alias1 }}" class="btn btn-warning display-table  mx-auto mt-6  btn-sm">
+                    {{ lang.show_all }}
+                </a>
+            {% endif %}
+            <!-- /Slider 1 -->
+
+            <a href="{{ uripath }}/contact_us" class="btn-sm" style="text-decoration:none">
+                <section class="shadow promozione_societa_sportiva">
+                    <h3 class="text-warning bold">{{ lang.banner_info_start }}</h3>
+                    <p class="text-white mb-0">{{ lang.banner_info_start_down }}<p>
+                </section>
+            </a>
+
+            <!-- Slider 2 -->
+            {% if carousel2 != 0 %}
+                {% set products = json_decode(carousel2) %}
+                {% include template ~ "/index/components/slider-products.twig" %}
+            {% endif %}
+            {% if alias2 != 0 %}
+                <a href="{{ basepath ~ alias2 }}" class="btn btn-warning display-table  mx-auto mt-6  btn-sm">
+                    {{ lang.show_all }}
+                </a>
+            {% endif %}
+            <!-- /Slider 2 -->
+
+            <section class="shadow punta_in_alto">
+                <h3 class="text-warning bold">{{ lang.banner_info_bottom }}</h3>
+                <p class="text-white mb-0">{{ lang.banner_info_bottom_down }}<p>
+            </section>
+
+            <!-- Slider 3 -->
+            {% if carousel3 != 0 %}
+                {% set products = json_decode(carousel3) %}
+                {% include template ~ "/index/components/slider-products.twig" %}
+            {% endif %}
+            {% if alias3 != 0 %}
+                <a href="{{ basepath ~ alias3 }}" class="btn btn-warning display-table  mx-auto mt-6  btn-sm">
+                    {{ lang.show_all }}
+                </a>
+            {% endif %}
+            <!-- /Slider 3 -->
+            {#        <section class="shadow promozione_societa_sportiva"> #}
+            {#            <h3 class="text-warning bold">SEI UNA SOCIETÀ SPORTIVA?</h3> #}
+            {#            <p class="text-white mb-0">clicca qui e richiedi il tuo preventivo personalizzato<p> #}
+            {#        </section> #}
+
+            {# <section class="shadow promozione_societa_sportiva"> #}
+            {# <h3>SEI UNA SOCIETÀ SPORTIVA?</h3> #}
+            {# <p>clicca qui e richiedi il tuo preventivo personalizzato<p> #}
+
+
+            {# </section> #}
+
+            <!-- upsidedown -->
+            {# <section class="container-lg upsidedown d-flex flex-column flex-md-row justify-content-between">
+            <div class="d-flex flex-column p-2 p-md-4">
+            <img class="img-fluid" src="{{basepath}}/templates/img/arcigraphic-piu-arcisport-gadget.jpg" />
+            <div>
+            <h2>BIG SALE UP TO 30% OFF FOR A NEW COSTUMER</h2>
+            <small>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem ipsum</small>
+            <h5>Compra ora</h5>
+            </div>
+            </div>
+
+            <div class="d-flex flex-column flex-md-column-reverse p-2  p-md-4" >
+            <img class="img-fluid" src="{{basepath}}/templates/img/ABOUT-ARCIGRAPHIC.jpg" />
+            <div>
+            <h2>POSITIVITY AND OPTIMISM IS WHAT MAKE US DIFFERENT</h2>
+            <small>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem ipsum lorem ipsumLorem </small>
+            <h5>Compra ora</h5>
+            </div>
+            </div>
+            </section>
+            <section class="position-relative">
+                <div class="swiper mySwiperBottom">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                        <div class="swiper-slide"><img src="https://plchldr.co/i/500x350" alt="plchldr.co"/></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </section>
+            #}
+            {# <section class="full-width"> #}
+            {# <div class="container d-flex align-items-center"> #}
+            {# <div style="margin-top:4.5rem" class="d-flex flex-column"> #}
+            {# <p>Free deliveries for orders up to 80 euros</p> #}
+            {# <h2 class="fw-bolder">UP TO 30% OFF</h2> #}
+            {# <span>Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum <b>Lorem ispum</b></span> #}
+            {#  <a  style="color:black;background:white;max-width:fit-content;border:1px solid gray"class="btn_hero nav-link" href="{{uripath}}/shop">compra ora <i class="zmdi ps-4  zmdi-arrow-right"></i></a> #}
+            {# </div> #}
+        </div>
+    </section>
+<!-- /Page Content -->
+{% endblock %}

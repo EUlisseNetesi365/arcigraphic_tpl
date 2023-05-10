@@ -1,0 +1,168 @@
+<!-- Navbar -->
+<div id="navbar-container" class=" w-100 z-index-30 transparent">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg mx-0 p-0 flex-column border-0 w-100 z-index-30 transition-all">
+        <div class="w-100 pb-lg-0">
+            <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Logo-->
+                <a class="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0" href="{{ basepath }}/">
+                    <!-- Start of Logo-->
+                    <div id="end-navbar" class="d-flex align-items-center">
+                        {# <div class="f-w-6 d-flex align-items-center me-2 lh-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 194 194"><path fill="currentColor" class="svg-logo-white" d="M47.45,60l1.36,27.58,53.41-51.66,50.87,50,3.84-26L194,100.65V31.94A31.94,31.94,0,0,0,162.06,0H31.94A31.94,31.94,0,0,0,0,31.94v82.57Z"/><path fill="currentColor" class="svg-logo-dark" d="M178.8,113.19l1,34.41L116.3,85.92l-14.12,15.9L88.07,85.92,24.58,147.53l.93-34.41L0,134.86v27.2A31.94,31.94,0,0,0,31.94,194H162.06A31.94,31.94,0,0,0,194,162.06V125.83Z"/></svg>
+                        </div>
+                        <span class="fs-5">Petshop</span> #}
+                        <img class="d-none d-md-inline-block" height="50" src="{{ basepath }}/templates/{{ template }}/assets/images/logos/arcigraphic-fooder.png">
+                        <img class="d-md-none" height="50" src="{{ basepath }}/templates/{{ template }}/assets/images/logos/arcigraphic-fooder-small.png">
+                    </div>
+                    <!-- / Logo-->
+                </a>
+                <!-- / Logo-->
+                <!-- Main Navigation-->
+                {% include template ~ "/layout/components/menu.twig" %}
+                <!-- / Main Navigation-->
+                <!-- Navbar Icons-->
+                <div class="flex-shrink-0">
+                <ul class="list-unstyled mb-0 d-flex align-items-center navbar-list">
+                    <!-- Navbar Wishlist-->
+                    {#                    <li class="ms-1 d-inline-block">#}
+                    {#                        <button class="btn btn-link px-2 text-decoration-none d-flex align-items-center disable-child-pointer"#}
+                    {#                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasWishlist"#}
+                    {#                                aria-controls="offcanvasWishlist">#}
+                    {#                            <i class="ri-heart-line ri-lg align-middle"></i>#}
+                    {#                        </button>#}
+                    {#                    </li>#}
+                    <!-- /Navbar Wishlist-->
+                    {#<li id="search" class="nav-item ">
+                        <i class="zmdi search-icon zmdi-search pe-1 nav-link"></i>
+                        <form action="" class="search-box ">
+                            <input type="text" v-model="searchQuery" @input="debounceSearch" class="searchTerm"
+                                   name="search"
+                                   placeholder="What are you looking for?">
+                            <button type="submit" class="searchButton">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <div v-if="searchResults !== null" class="d-block results show position-absolute b-0 l-0 ">
+                                <div v-if=" searchResults !== null">
+                                    <div v-for="(item,index) in searchResults">
+                                        <h1>{_ item.brand_name _}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>#}
+                    <!-- Navbar Search-->
+                    <li class="ms-1 d-inline-block">
+                        {#<button class="btn btn-link px-2 text-decoration-none d-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
+                            <i class="ri-search-2-line ri-lg align-middle"></i>
+                        </button>#}
+                        {% include template ~ "/layout/components/search-overlay.twig" %}
+                    </li>
+                    <!-- /Navbar Search-->
+                    <!-- Navbar Login-->
+                    {% if username %}
+                        <li class="ms-1 d-inline-block">
+                            <div class="dropdown">
+                                <button class="dropdown-toggle border-0 bg-white" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ri-user-line ri-lg align-middle text-primary"></i>
+                                    {{ username }}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item"
+                                           href="{{ uripath }}/profile">{{ lang_layout.profile }}</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{{ uripath }}/logout">{{ lang_layout.log_out }}</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    {% else %}
+                        <li class="ms-1 d-inline-block">
+                            <a id="btnModal"
+                               class="btn btn-link px-2 text-decoration-none d-flex align-items-center trigger-btn"
+                               data-bs-toggle="modal" data-bs-target="#loginModal">
+                                <i class="ri-user-line ri-lg align-middle"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <!-- /Navbar Login-->
+
+
+                    <!-- Dropdown Menu -->
+                    <li class="ms-1 d-inline-block position-relative">
+                        <div class="dropdown" id="language-dropdown">
+                            <button class="dropdown-toggle border-0 bg-white" type="button" id="dropdownMenuLanguage"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <span id="show-language"
+                                      class="fi fi-{% if language =="en" %}gb{% else %}{{ language }}{% endif %} fis"></span>
+                            </button>
+                            <ul style="color:#1c212c" class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="dropdownMenuLanguage">
+                                <li style="color:#1c212c"><a style="color:#1c212c !important"
+                                                             class="dropdown-item dropdown-language" href="it"><span
+                                                class="fi fi-it fis me-2"></span>{{ lang_layout.italian }}</a></li>
+                                <li style="color:#1c212c"><a style="color:#1c212c !important"
+                                                             class="dropdown-item dropdown-language" href="en"><span
+                                                class="fi fi-gb fis me-2"></span>{{ lang_layout.english }}</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- /Dropdown Menu -->
+                    <!-- Navbar Cart-->
+                    <li v-cloak id="cartOffCanvas" class="ms-1 d-inline-block position-relative">
+                        {#{% if index is empty %}#}
+                            <button class="btn btn-link px-2 text-decoration-none d-flex align-items-center disable-child-pointer"
+                                    id="popover"
+                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                                    aria-controls="offcanvasCart">
+                                <i class="ri-shopping-cart-2-line ri-lg align-middle position-relative z-index-10"></i>
+                                <span v-show="showBadge"
+                                      class="fs-xs f-w-5 f-h-5 bg-orange rounded-lg lh-1 pt-1 badge-cart z-index-20 mt-2 text-primary fw-bold">
+                                {_ cartData.numberItems _}
+                            </span>
+                            </button>
+                        {#{% endif %}#}
+                        {#{% if index %}
+                            <a v-cloak
+                               class="btn btn-link px-2 text-decoration-none d-flex align-items-center disable-child-pointer"
+                               href="{{ uripath }}/cart">
+                                <i class="ri-shopping-cart-2-line ri-lg align-middle position-relative z-index-10"></i>
+                                <span v-show="showBadge"
+                                      class="fs-xs f-w-5 f-h-5 bg-orange rounded-lg lh-1 pt-1 badge-cart z-index-20 mt-2 text-primary fw-bold">
+                                {_ cartData.numberItems _}
+                            </span>
+                            </a>
+                        {% endif %}#}
+
+                        {% include template ~ "/layout/components/cart-offcanvas.twig" %}
+                        {#<a href="{{ uripath }}/cart" class="btn btn-link px-2 text-decoration-none d-flex align-items-center disable-child-pointer" id="popover">
+                            <i class="ri-shopping-cart-2-line ri-lg align-middle position-relative z-index-10"></i>
+                            <span id="badgeCart" class="fs-xs f-w-5 f-h-5 bg-orange rounded-lg d-none lh-1 pt-1 position-absolute top-0 end-0 z-index-20 mt-2 text-primary fw-bold"></span>
+                        </a>#}
+                    </li>
+                    <!-- /Navbar Cart-->
+                </ul></div>
+                <!-- Navbar Icons-->
+                <!-- Navbar Toggle Icon-->
+                <div class="d-inline-block d-lg-none">
+                    <button class="btn btn-link px-2 text-decoration-none navbar-toggler border-0 d-flex align-items-center"
+                            data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ri-menu-line ri-lg align-middle"></i>
+                    </button>
+                </div>
+                <!-- /Navbar Toggle Icon-->
+
+            </div>
+        </div>
+    </nav>
+    <!-- / Navbar-->
+</div>
+<!-- / Navbar-->
+{% include template ~ "/layout/components/modal-login.twig" %}
+{% include template ~ "/layout/components/modal-register.twig" %}
+{% include template ~ "/layout/components/modal-forgotpwd.twig" %}
+{% include template ~ "/layout/components/modal-newsletter.twig" %}
+{% include template ~ "/layout/components/modal-resend.twig" %}
+{% include template ~ "/layout/components/modal-cookie.twig" %}

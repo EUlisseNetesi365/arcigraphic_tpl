@@ -1,0 +1,210 @@
+<form id="formUpdateAddress" class="needs-validation">
+    <template v-for="edit in editData">
+    <input type="hidden" id="data_id" name="data_id" :value="edit.id">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-check form-group form-check-custom form-radio-custom mb-3">
+                <input class="form-check-input" type="radio" name="is_private" @change="handleShowUpdatePrivateCompany"
+                       id="isUpdatePrivate" value="1" :checked="edit.is_private == 1">
+                <label class="form-check-label" for="isUpdatePrivate">
+                    <span class="align-items-start w-100">
+                        <span class="mb-0 fw-bolder d-block">{{ lang.private }}</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-check form-group form-check-custom form-radio-custom mb-3">
+                <input class="form-check-input" type="radio" name="is_private" @change="handleShowUpdatePrivateCompany"
+                       id="isUpdateCompany" value="0" :checked="edit.is_private == 0">
+                <label class="form-check-label" for="isUpdateCompany">
+                    <span class="align-items-start w-100">
+                        <span class="mb-0 fw-bolder d-block">{{ lang.company }}</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- First Name-->
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="nameUpdate" class="form-label">{{ lang.name }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control" name="name" :value="edit.name"
+                       id="nameUpdate" :required="isUpdatePrivateRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Last Name-->
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="surnameUpdate" class="form-label">{{ lang.last_name }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control" name="surname" :value="edit.surname"
+                       id="surnameUpdate" :required="isUpdatePrivateRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+        <!-- Email Pec-->
+        <div v-show="showUpdateCompany" class="col-sm-6">
+            <div class="form-group">
+                <label for="pecUpdate" class="form-label">{{ lang.email_pec }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="email" class="form-control" name="pec" id="pecUpdate" :value="edit.pec" placeholder="you@example.com">
+            </div>
+        </div>
+
+        <!-- Company Name-->
+        <div v-show="showUpdateCompany" class="col-sm-6">
+            <div class="form-group">
+                <label for="companyNameUpdate" class="form-label">{{ lang.company_name }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control" :value="edit.company_name"
+                       name="company_name" id="companyNameUpdate" :required="isUpdateCompanyRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+        <!-- Code Sdi-->
+        <div v-show="showUpdateCompany" class="col-sm-6">
+            <div class="form-group">
+                <label for="codeSdiUpdate" class="form-label">{{ lang.code_sdi }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="sdi" id="codeSdiUpdate" :value="edit.sdi">
+            </div>
+        </div>
+
+        <!-- Birthdate -->
+        <div v-show="showUpdatePrivate" class="col-sm-6">
+            <div class="form-group">
+                <label for="birthdateUpdate" class="form-label">{{ lang.birthdate }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="date" class="form-control" name="birthdate" id="birthdateUpdate" :value="edit.birthdate">
+            </div>
+        </div>
+
+        <!-- Address-->
+        <div class="col-12">
+            <div class="form-group">
+                <label for="addressUpdate" class="form-label">{{ lang.address }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control"
+                       name="address" id="addressUpdate" :value="edit.address"
+                       placeholder="{{ lang.example_address }}" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Country-->
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="countryUpdate" class="form-label">{{ lang.country }}</label>
+                <select class="form-select" name="country"
+                        id="countryUpdate" required>
+                    <option value="">{{ lang.select }}</option>
+                    <template v-for="country in countries">
+                        <option :value="country.id" :selected="country.id == edit.country_id">{_ country.name _}</option>
+                    </template>
+                </select>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Province-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="provinceUpdate" class="form-label ">{{ lang.province }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control" :value="edit.province"
+                       name="province" id="provinceUpdate" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- State-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="cityUpdate" class="form-label ">{{ lang.city }}</label>
+                <input type="text" pattern=".*\S+.*" class="form-control" :value="edit.city"
+                       name="city" id="cityUpdate" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Post Code-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="zipCodeUpdate" class="form-label">{{ lang.zip_code }}</label>
+                <input type="text" class="form-control" :value="edit.zip_code"
+                       name="zip_code" id="zipCodeUpdate" required>
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Location Gps-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="gpsLocationUpdate" class="form-label">{{ lang.gps }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="gps_location" :value="edit.location_gps" id="gpsLocationUpdate" placeholder="{{ lang.gps_example }}">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Phone 1-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="phone1Update" class="form-label">{{ lang.phone1 }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="phone1" id="phone1Update" :value="edit.phone1">
+            </div>
+        </div>
+
+        <!-- Phone 2-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="phone2Update" class="form-label">{{ lang.phone2 }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" class="form-control" name="phone2" id="phone2Update" :value="edit.phone2">
+            </div>
+        </div>
+
+        <!-- Fiscal Code-->
+        <div v-show="showUpdatePrivate" class="col-md-6">
+            <div class="form-group">
+                <label for="fiscalCodeUpdate" class="form-label">{{ lang.fiscal_code }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <input type="text" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$" :value="edit.fiscal_code"
+                       class="form-control" name="fiscal_code" id="fiscalCodeUpdate">
+            </div>
+        </div>
+
+        <!-- Vat Number-->
+        <div v-show="showUpdateCompany" class="col-md-6">
+            <div class="form-group">
+                <label for="vatNumberUpdate" class="form-label">{{ lang.vat_number }}</label>
+                <input type="text" class="form-control" min="4" name="vat_number" :value="edit.vat_number"
+                       id="vatNumberUpdate" :required="isUpdateCompanyRequired">
+                <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+            </div>
+        </div>
+
+        <!-- Note-->
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="noteUpdate" class="form-label">{{ lang.note }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <textarea type="text" class="form-control" name="note" id="noteUpdate" rows="3" :value="edit.note"></textarea>
+            </div>
+        </div>
+
+        <!-- Default Info-->
+        <div class="col-sm-6">
+            <div class="form-check form-group mb-3">
+                <input class="form-check-input" type="checkbox" name="shipping_is_default" id="isDefaultShippingUpdate"
+                       value="1" :checked="edit.is_default_ship == 1">
+                <label class="form-check-label" for="isDefaultShippingUpdate">{{ lang.is_default_ship }}</label>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-check form-group mb-3">
+                <input class="form-check-input" type="checkbox" name="billing_is_default" id="isDefaultBillingUpdate"
+                       value="1" :checked="edit.is_default_invoice == 1">
+                <label class="form-check-label" for="isDefaultBillingUpdate">{{ lang.is_default_invoice }}</label>
+            </div>
+        </div>
+    </div>
+    </template>
+    <div class="error-display alert d-none"></div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-dark px-5 text-white">{{ lang.save }}</button>
+    </div>
+</form>

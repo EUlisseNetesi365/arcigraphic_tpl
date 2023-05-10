@@ -1,0 +1,421 @@
+<script>
+    const filter = Vue.createApp({
+        data() {
+            return {
+                paginationStyle: 'center-bottom-fixed',
+                bottom: 0,
+                cartData: cartData,
+                pri_attr_vue: [],
+                sec_attr_vue: [],
+                img_attr_vue: [],
+                color:null,
+                colletto: 0,
+                filter: {
+                    brand_id: null,
+                    cat_id: {% if cat_id != 0 %} {{ cat_id }} {% else %} null {% endif %},
+                    pricemin: {{ min_price }},
+                    pricemax: {{ max_price }},
+                    sector_id: JSON.parse('{{ sec_attr_values|escape('js') }}').length === 1 ? JSON.parse('{{ sec_attr_values|escape('js') }}')[0].s_id : "",
+                    prim_list_ids: [],
+                    sec_list_ids: [],
+                    unimis_id: null,
+                    query: null,
+                    limit: null,
+                },
+                filtered: false,
+                goTo: [],
+                cat_id: {{ cat_id }},
+                loader: true,
+                lengthValue: 0,
+                manica: 0,
+                min_price: {{ min_price }},
+                max_price: {{ max_price }},
+                pagination: {
+                    page: 1,
+                    pages: null,
+                    page_items: {{ page_items }},
+                    tot_items: 0,
+                },
+                primaries: null,
+                secondaries: null,
+                unimis: null,
+                products: [],
+                rifiniture: 0,
+                sectors: JSON.parse('{{ sec_attr_values|escape('js') }}'),
+                showAttributes: null,
+                showCards: true,
+                showColors:2,
+                slider: {
+                    value: [{{ min_price }}, {{ max_price }}]
+                },
+                size: null,
+                sticker: {
+                    price: null,
+                    sector: null,
+                    attributes: null,
+                    unimis: null,
+                },
+                values: []
+            }
+        },
+        methods: {
+            clearFilters(sticker) {
+                switch (sticker) {
+                    case 'price':
+                        this.filter.min_price = this.min_price;
+                        this.filter.max_price = this.max_price;
+                        this.slider.value[0] = this.min_price;
+                        this.slider.value[1] = this.max_price;
+                        this.sticker.price.classList.add('d-none');
+                        break;
+                    case 'sector':
+                        this.filter.sector_id = "";
+                        this.sticker.sector.classList.add('d-none');
+                        break;
+                    case 'attributes':
+                        this.filter.prim_list_ids = null;
+                        this.filter.sec_list_ids = null;
+                        this.sticker.attributes.classList.add('d-none');
+                        document.querySelectorAll(".attributes").forEach(el => el.classList.remove("selected"));
+                        break;
+                }
+                this.getVariantsByFilter("0," + this.pagination.page_items);
+            },
+            debounceFilter(callback) {
+                clearTimeout(this.debounce);
+                this.debounce = setTimeout(() => {
+                    callback();
+                }, 600);
+            },
+            getVariantsByFilter(limit, filter) {
+                this.setFilter(limit, filter);
+                this.loader = true;
+                this.products = [];
+                let string = {};
+                Object.entries(this.filter).forEach(([key, value]) => {
+                    if (value !== null) {
+                        if (Array.isArray(value) && value.length !== 0) {
+                            return string[key] = '[' + value.toString().trim() + ']';
+                        }
+                        if (value !== "" && !Array.isArray(value)) {
+                            return string[key] = value.toString().trim();
+                        }
+                    }
+                });
+                fetch("{{ basepath }}/filter-items", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({filter: JSON.stringify(string)}),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if(result.length === 0) {
+                            this.showCards = false;
+                            this.loader = false;
+                        } else {
+                            this.products = result;
+                            if (limit === "0,12") this.setPagination('filter', result[0].v_total);
+                            this.setAttributesArray(this.products);
+                            this.loader = false;
+                            this.showCards = true;
+                        }
+                        window.scrollTo(0, 0);
+                    });
+            },
+            getVariants(limit) {
+                this.loader = true;
+                this.products = [];
+                fetch("{{ basepath }}/page", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({
+                        getVariants: JSON.stringify({
+                            cat_id: this.cat_id.toString().trim(),
+                            limit: limit.trim()
+                        })
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if(result.length === 0) {
+                            this.showCards = false;
+                            this.loader = false;
+                        } else {
+                            this.products = result;
+                            this.setPagination('init', result[0].v_total);
+                            this.setAttributesArray(this.products);
+                            this.loader = false;
+                            this.showCards = true;
+                        }
+                    });
+            },
+            setDataToView(data) {
+                this.cartData.items = data;
+                this.cartData.numberItems = data.length;
+                if (data.length === 0) {
+                    this.cartData.subtotal = 0;
+                    this.cartData.shipping = 0;
+                    this.cartData.total = 0;
+                    this.progress = 0;
+                    this.diffPrice = this.cartData.minPrice;
+                } else {
+                    this.cartData.subtotal = data[0].subtotal;
+                    this.cartData.shipping = data[0].shipping;
+                    this.cartData.total = data[0].total;
+                    this.progress = (100 * this.cartData.subtotal) / this.cartData.minPrice;
+                    this.diffPrice = this.cartData.subtotal >= this.cartData.minPrice ? 0 : this.cartData.minPrice - this.cartData.subtotal;
+                }
+            },
+            getVariantId(id, data) {
+                fetch("{{ basepath }}/get-vid", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({
+                        p_id: id,
+                        data: data
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.code === 6) {
+                        }
+                        if (result.success === 1) {
+                            location.href = "{{ uripath }}/product/"+ parseInt(result.variantid);
+                        }
+                    });
+            },
+            gotoPage(page) {
+                if (page === 1) history.replaceState("", "", location.href.split('#').shift());
+                const limit = (page-1) * this.pagination.page_items + "," + this.pagination.page_items;
+                this.pagination.page = page;
+                this.filtered ? this.getVariantsByFilter(limit) : this.getVariants(limit);
+            },
+            numberFormat(data) {
+                const euro = Intl.NumberFormat("it-IT", {
+                    style: "currency",
+                    currency: "EUR",
+                });
+                return euro.format(data);
+            },
+            setAttributesArray(products) {
+                this.pri_attr_vue = products.map(v => JSON.parse(v.primary_attributes));
+                this.sec_attr_vue = products.map(v => JSON.parse(v.secondary_attributes));
+                this.img_attr_vue = products.map(v => JSON.parse(v.variant_images));
+            },
+            setColor(e) {
+                this.color = e.target.value
+            },
+            setColumn(type){
+                let column = 'col-md-12';
+                if(type == 'radio_type'){
+                    column = 'col-me-3';
+                }
+                return column;
+            },
+            setFilter(limit, filter) {
+                const nameFilter = filter || null;
+                if (nameFilter) {
+                    switch (nameFilter) {
+                        case 'price':
+                            this.filter.pricemin = this.slider.value[0];
+                            this.filter.pricemax = this.slider.value[1];
+                            this.sticker.price.classList.remove('d-none');
+                            break;
+                    }
+                }
+                this.filter.limit = limit;
+                if (this.filter.sector_id) {
+                    this.sticker.sector.classList.remove('d-none');
+                }
+            },
+            onScroll(id) {
+
+                let e = document.getElementById(id);
+                e.addEventListener("scroll", function(){
+                    // do stuff
+                });
+                // const { scrollTop, offsetHeight, scrollHeight } = e.target
+                // // if ((scrollTop + offsetHeight) >= scrollHeight) {
+                // //     console.log('bottom!')
+                // // }
+                // if( e.scrollTop === (e.scrollHeight - e.offsetHeight))
+                // {
+                //     console.log('bottom')
+                // }
+            },
+            selectAttribute(e, index) {
+                const {target} = e;
+                console.log(target.localName);
+                if (target.localName === 'select' && target.value !== "") {
+                    this.filter.prim_list_ids.push(target.value);
+                }
+                if (target.localName === 'img') {
+                    document.querySelectorAll(".attributes"+index).forEach(el => el.classList.remove("selected"));
+                    target.classList.add('selected');
+                    this.filter.prim_list_ids.push(target.dataset.id);
+                    this.getVariantsByFilter('0,' + this.pagination.page_items);
+                    this.sticker.attributes.classList.remove("d-none");
+                }
+            },
+            setAttribute(session) {
+                if (this.filter.sector_id !== "") {
+                    const sector = this.sectors.filter(sector => sector.s_id === parseInt(this.filter.sector_id));
+                    this.primaries = JSON.parse(sector[0].primary_attributes);
+                    this.unimis = JSON.parse(sector[0].u_mis);
+                    this.unimis.length === 1 ? this.filter.unimis_id = this.unimis[0].u_id : this.filter.unimis_id = "";
+                    console.log(this.primaries);
+                }
+                else {
+                    this.filter.sector_id = "";
+                    this.filter.unimis_id = null;
+                }
+                session === 'pass' && this.getVariantsByFilter('0,' + this.pagination.page_items);
+            },
+            setPagination(session, totalItems) {
+                this.pagination.tot_items = totalItems;
+                let tmp_pages;
+                switch (session) {
+                    case 'init':
+                        tmp_pages =  this.pagination.tot_items / (this.pagination.page_items ? this.pagination.page_items : 1);
+                        this.pagination.pages = (Number.isInteger(tmp_pages)) ? tmp_pages : parseInt(tmp_pages + 1);
+                        break;
+                    case 'filter':
+                        tmp_pages =  this.pagination.tot_items / (this.pagination.page_items ? this.pagination.page_items : 1);
+                        this.pagination.pages = (Number.isInteger(tmp_pages)) ? tmp_pages : parseInt(tmp_pages + 1);
+                        break;
+                }
+            },
+            setShowColors(data) {
+                this.showColors = data;
+            },
+            selectSize(size) {
+                this.size = size;
+            },
+            switchImg(position, name){
+                let options = document.getElementsByName(name);
+                for(let i  = 0; i < options.length; i++) {
+
+                    let option = options[i].firstChild.value;
+
+                    if(option != position){
+                        options[i].classList.remove("active");
+                    }else{
+                        options[i].classList.add("active");
+                    }
+                }
+            },
+            resetSize() {
+                this.size = null;
+            },
+            replaceSpaces(string, separator){
+                let final = string.replace(/\s/g, separator);
+                return final.toLowerCase();
+            },
+            printConsole(data) {
+                console.log(data);
+            },
+            addToCart(sizeEls, quantity, colorEl, el) {
+                let sizeElements = document.getElementsByName(sizeEls);
+                let quantityValue = document.getElementsByName(quantity)[0].value;
+                let colorElement = document.getElementById(colorEl);
+                let element = document.getElementById(el);
+                const size = Array.from(sizeElements).filter((size) => size.classList.contains("selected"));
+                if (size.length === 0) {
+                    this.showPopOverError(element, "{{ lang_layout.error_size }}")
+                } else {
+                    let color = '';
+                    (!colorElement.value || colorElement.value === ' ') ? color = document.getElementById("base").value : color = colorElement.value;
+                    fetch("{{ basepath }}/add_to_cart", {
+                        method: "POST",
+                        mode: "cors",
+                        body: JSON.stringify({
+                            v4warehouses_id: parseInt(size[0].value),
+                            quantity: parseFloat(quantityValue),
+                            color: '{"color":"' + color + '"}'
+                        }), // Adding headers to the request
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                        },
+                    })
+                        .then((res) => res.json())
+                        .then(result => {
+                            if (result.code === 6) {
+                                this.showPopOverError(element, "{{ lang_layout.not_available }}");
+                            }
+                            if (result.success === 1) {
+                                if (parseInt(result.items.length) !== 0) {
+                                    this.setDataToView(result.items);
+                                    this.showBadge = true;
+                                } else {
+                                    this.showBadge = false;
+                                    this.cartData.numberItems = 0;
+                                }
+                                this.showPopOver("{{ lang_layout.added_item }}");
+                            }
+                        });
+                }
+            },
+            showPopOverError(el, message) {
+                const template = '<div class="popover bg-primary p-0" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-header"></h3><div class="popover-body text-white"></div></div>'
+
+                const popover = bootstrap.Popover.getOrCreateInstance(el, {
+                    placement: 'left',
+                    content: message,
+                    template: template,
+                });
+                popover.show();
+
+                setTimeout(function () {
+                    popover.dispose()
+                }, 1500);
+            },
+            showPopOver(message) {
+                const template = '<div class="popover bg-primary p-0" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-header"></h3><div class="popover-body text-secondary"></div></div>'
+
+                const popover = bootstrap.Popover.getOrCreateInstance(document.getElementById('popover'), {
+                    placement: 'left',
+                    content: message,
+                    template: template,
+                    trigger: 'manual'
+                });
+                popover.show();
+
+                setTimeout(function () {
+                    popover.dispose()
+                }, 2000);
+            },
+            handleScroll(){
+                let limit = document.body.offsetHeight/5;
+                // console.log(limit);
+                if((window.innerHeight + window.scrollY) >= document.body.offsetHeight-limit) {
+                    this.bottom = 1;
+                }else{
+                    this.bottom = 0;
+                }
+            }
+        },
+        mounted: function() {
+            const self = this;
+            this.gotoPage(this.pagination.page);
+            this.sticker.price = document.getElementById('stickerByPrice');
+            this.sticker.sector = document.getElementById('stickerBySector');
+            this.sticker.attributes = document.getElementById('stickerByAttributes');
+            this.sticker.unimis = document.getElementById('stickerByUnimis');
+            // this.filter.sector_id !== "" && this.setAttribute("init");
+            // let e = document.getElementById('dataDisplay');
+            window.addEventListener('scroll', function () {
+                self.handleScroll();
+            });
+        },
+        delimiters: ["{_", "_}"],
+    }).component('Slider', VueformSlider).mount('#dataDisplay');
+</script>

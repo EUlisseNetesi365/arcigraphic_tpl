@@ -1,0 +1,50 @@
+/* From theme bundle */
+.collapse-icon-chevron {
+    position: relative;
+}
+.collapse-icon-chevron:before {
+    font-family: var(--theme-font-icon);
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+}
+.collapse-icon-chevron[aria-expanded="true"]:before {
+    content: "";
+}
+.collapse-icon-plus {
+    position: relative;
+}
+.collapse-icon-plus:before {
+    font-family: var(--theme-font-icon);
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+}
+.collapse-icon-plus[aria-expanded="true"]:before {
+    content: "";
+}
+.collapse-icon-left {
+    padding-left: 1.5rem !important;
+}
+.collapse-icon-left:before {
+    right: auto;
+    left: 0;
+}
+.collapse-icon-bg-dark:before {
+    background: #1c212c;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    text-align: center;
+    color: #fff;
+    line-height: 24px;
+}
+.collapse-icon-bg-dark.collapse-icon-left {
+    padding-left: 2.25rem !important;
+}

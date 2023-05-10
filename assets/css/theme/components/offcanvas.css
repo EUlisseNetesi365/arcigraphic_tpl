@@ -1,0 +1,16 @@
+@media (min-width: 992px) {
+    .navbar-expand-lg .offcanvas {
+        position: fixed;
+        width: 400px !important;
+        visibility: hidden !important;
+        background-color: #fff !important;
+    }
+
+    .navbar-expand-lg .offcanvas.hiding,
+    .navbar-expand-lg .offcanvas.show,
+    .navbar-expand-lg .offcanvas.showing { visibility: visible !important; }
+
+    .navbar-expand-lg .offcanvas .offcanvas-body {
+        flex-grow: 1;
+    }
+}

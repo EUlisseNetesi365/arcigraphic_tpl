@@ -1,0 +1,26 @@
+<!-- Product -->
+<div class="d-block">
+    <img class="image-fluid w-100" src="{{ basepath ~ images[0].image }}" alt="{{ images[0].alt }}" title="{{ images[0].title }}">
+    <div class="swiper-description">
+        <span class="d-block">
+            <a class="text-decoration-none"
+               href="{% if product.v_alias %}{{ basepath ~ product.v_alias }}{% else %}{{ uripath }}/product/{{ product.id }}{% endif %}">
+            {{ product.name }}</a>
+        </span>
+        {% if product.min_price != product.max_price %}
+        {{ lang.from }}&nbsp;
+        <span class="fw-bolder price">{{ product.min_price|number_format(2, '.', ',') }}&nbsp;{{ product.currency }}</span>
+        {{ lang.to }}&nbsp;
+        <span class="fw-bolder price">{{ product.max_price|number_format(2, '.', ',') }}&nbsp;{{ product.currency }}</span>
+    {% else %}
+        <span class="fw-bolder price">{{ product.min_price|number_format(2, '.', ',') }}&nbsp;{{ product.currency }}</span>
+        {% endif %}&nbsp;
+        {# {% if product.promo_price != null %}
+            <span class="fw-bolder"><s>{{ sec_attr[0].price|number_format(2, '.', ',') }} {{ sec_attr[0].currency_value }}</s></span>
+            <span class="fw-bolder price">{{ sec_attr[0].promo_price|number_format(2, '.', ',') }} {{ sec_attr[0].currency_value }}</span>
+        {% else %}
+            <span class="fw-bolder price">{{ sec_attr[0].price|number_format(2, '.', ',') }} {{ sec_attr[0].currency_value }}</span>
+        {% endif %} #}
+    </div>
+</div>
+<!-- / Product -->

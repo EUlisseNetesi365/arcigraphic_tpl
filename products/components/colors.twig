@@ -1,0 +1,9 @@
+<div class="pb-2 pt-2" v-if="showColors == 2">
+  <label class="d-flex flex-row" style="width:fit-content">
+    <input id="base" type="color" @input="setColor($event)" :value="color || '#ffffff'">
+    <input id="customColor" type="text" :value="color || '#ffffff'" @keypress="(e)=> color = e.target.value" disabled />
+  </label>
+</div>
+
+  
+ 

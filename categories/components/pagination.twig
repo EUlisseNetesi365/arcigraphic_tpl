@@ -1,0 +1,24 @@
+<!-- Pagination-->
+<template v-if="!loader || !showCards">
+            <nav v-if="pagination.pages > 1" class="mt-5 pb-3 pt-3 d-flex justify-content-center align-items-center" :class="{'center-bottom-fixed' : bottom === 0}" aria-label="Category Pagination">
+                <ul class="pagination">
+                    <li v-if="pagination.page != 1" class="page-item">
+                        <a class="page-link" @click="gotoPage(pagination.page - 1)" :href="'#page' + (pagination.page - 1)">
+                            <div class="d-inline-flex"><i class="ri-arrow-left-line align-bottom"></i><span class="d-none d-md-flex">{{ lang.prev }}</span></div>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="pagination">
+                    <li v-for="page_item of pagination.pages" @click="gotoPage(page_item)" class="page-item mx-1" :class="[page_item == pagination.page ? 'active' : '']">
+                        <a class="page-link" :href="'#page' + page_item">{_ page_item _}</a>
+                    </li>
+                </ul>
+                <ul class="pagination">
+                    <li v-if="pagination.page != pagination.pages" class="page-item">
+                        <a class="page-link" @click="gotoPage(pagination.page + 1)" :href="'#page' + (pagination.page + 1)"><div class="d-inline-flex"><span class="d-none d-md-flex">{{ lang.next }}</span>
+                            <i class="ri-arrow-right-line align-bottom"></i></div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+</template>

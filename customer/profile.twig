@@ -1,0 +1,82 @@
+{% extends template ~ "/layout/layout.twig" %}
+
+{% block content %}
+{#    {% set customer = json_decode(customerdata) %}
+    {% set notice = json_decode(customer[0].notice) %}
+    {% set address = json_decode(customer[0].data) %}#}
+    {% set countries = json_decode(countries) %}
+     <section class="pt-5">
+        <h3 class="display-6 text-decoration-underline fw-bold mt-5 mb-5 mx-5">{{ lang.welcome }} {{ username }}</h3>
+{#         <pre>{{ dump(notice) }}</pre>
+         <pre>{{ dump(address) }}</pre>#}
+        <section>
+            <!-- User Tabs-->
+            <div id="profile" class="mt-7 pt-5 border-top">
+                <div class="container">
+                    <!-- Tab Nav-->
+                    <ul class="nav nav-tabs justify-content-center nav-tabs-border mb-4" id="accountTab" role="tablist">
+                        <li class="nav-item mb-2 mb-sm-0 w-sm-auto mx-sm-3" role="presentation">
+                            <a class="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0 active" id="account-tab"
+                               data-bs-toggle="tab" href="#account"
+                               role="tab" aria-controls="account" aria-selected="true">{{ lang.title_tab_account }}</a>
+                        </li>
+                        <li class="nav-item mb-2 mb-sm-0 w-sm-auto mx-sm-3" role="presentation">
+                            <a class="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0" id="details-tab"
+                               data-bs-toggle="tab" href="#details"
+                               role="tab" aria-controls="details" aria-selected="false">{{ lang.title_tab_details }}</a>
+                        </li>
+{#                        <li class="nav-item w-100 mb-2 mb-sm-0 w-sm-auto mx-sm-3" role="presentation">
+                            <a class="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0" id="reviews-tab"
+                               data-bs-toggle="tab" href="#orders"
+                               role="tab" aria-controls="orders" aria-selected="false">{{ lang.title_tab_orders }}</a>
+                        </li>
+                        <li class="nav-item w-100 mb-2 mb-sm-0 w-sm-auto mx-sm-3" role="presentation">
+                            <a class="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0" id="returns-tab"
+                               data-bs-toggle="tab" href="#methods-payment"
+                               role="tab" aria-controls="methods-payment" aria-selected="false">{{ lang.title_tab_methods_payment }}</a>
+                        </li> #}
+                        <li class="nav-item mb-2 mb-sm-0 w-sm-auto mx-sm-3" role="presentation">
+                            <a class="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0" id="returns-tab"
+                               data-bs-toggle="tab" href="#address"
+                               role="tab" aria-controls="address" aria-selected="false">{{ lang.title_tab_addresses }}</a>
+                        </li>
+                    </ul>
+                    <!-- / Tab Nav-->
+
+                    <!-- Tab Content-->
+                    <div class="tab-content" id="accountTabContent">
+                        <!-- Tab My Account Content-->
+                        <div class="tab-pane fade show active py-5" id="account" role="tabpanel"
+                             aria-labelledby="account-tab">
+                            {% include template ~ "/customer/components/account.twig" %}
+                        </div>
+                        <!-- Tab Details Content-->
+                        <!-- Details Tab Content-->
+                        <div class="tab-pane fade py-5" id="details" role="tabpanel" aria-labelledby="details-tab">
+                            {% include template ~ "/customer/components/details.twig" %}
+                        </div>
+                        <!-- / Details Tab Content-->
+{#                        <!-- Delivery Tab Content-->
+                        <div class="tab-pane fade py-5" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                            {% include template ~ "/customer/components/orders.twig" %}
+                        </div>
+                        <!-- / Delivery Tab Content-->
+                        <!-- Methods payment Tab Content-->
+                        <div class="tab-pane fade py-5" id="methods-payment" role="tabpanel"
+                             aria-labelledby="methods-payment-tab">
+                            {% include template ~ "/customer/components/methods_payment.twig" %}
+                        </div> #}
+                        <!-- / Methods payment Tab Content-->
+                        <!-- Methods payment Tab Content-->
+                        <div class="tab-pane fade py-5" id="address" role="tabpanel" aria-labelledby="address-tab">
+                            {% include template ~ "/customer/components/address.twig" %}
+                        </div>
+                        <!-- / Methods payment Tab Content-->
+                    </div>
+                    <!-- / Tab Content-->
+                </div>
+            </div>
+            <!-- / Product Tabs-->
+        </section>
+    </section>
+{% endblock %}

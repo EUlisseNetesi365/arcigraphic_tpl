@@ -1,0 +1,190 @@
+/* From theme bundle */
+.variant-active {
+    border: 1px solid #1c212c;
+    opacity: 0.25;
+}
+.card-title {
+    font-weight: 700;
+}
+.card-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 20;
+    padding: 0.5rem 0.5rem 0.6rem;
+    font-weight: 500;
+}
+.card-title-overlay-skewed {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transform: skewY(-5deg);
+}
+.card-skewed-overlap {
+    margin-top: -5px;
+    font-weight: 700;
+    font-size: 74%;
+    text-transform: uppercase;
+    background: #08c5d5;
+    color: #1c212c;
+    padding: 0.25rem 0.45rem;
+}
+.card-skewed-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    background: #1c212c;
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+}
+.card-expand {
+    padding-left: var(--bs-gutter-width);
+    padding-right: var(--bs-gutter-width);
+}
+@media (min-width: 768px) {
+    .card-expand {
+        width: auto;
+    }
+}
+@media (min-width: 1200px) {
+    .card-expand {
+        width: calc(
+                50vw + var(--theme-maxwidth-breakpoint-xl) / 2 - var(--bs-spacer) * 2
+        );
+        margin-left: auto;
+        margin-right: 0;
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+@media (min-width: 1400px) {
+    .card-expand {
+        width: calc(
+                50vw + var(--theme-maxwidth-breakpoint-xxl) / 2 - var(--bs-spacer) * 2
+        );
+    }
+}
+.card-listing .card-actions {
+    position: absolute;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem;
+    background: hsla(0, 0%, 100%, 0.8);
+    transform: translateY(100%);
+}
+.page-loaded .card-actions {
+    transition: transform 0.15s ease-in;
+}
+.card-listing .card-header {
+    border: 2px dashed transparent;
+    transition: border 0.2s ease-in;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+.card-listing:hover .card-header {
+    border: 2px dashed #1c212c;
+}
+.card-listing:hover .card-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (min-width: 1200px) {
+    .img-clip-shape-one {
+        -webkit-clip-path: url(#svg-slanted-one);
+        clip-path: url(#svg-slanted-one);
+    }
+}
+.card-title-rotate {
+    transition: all 0.3s ease-in;
+    transform: rotate(-90deg);
+    transform-origin: left top;
+}
+.card-rotate {
+    overflow: hidden;
+}
+.card-img-zoom {
+    transition: all 0.5s ease-in;
+}
+.card-rotate .link-cover:after {
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+.card:hover .card-img-zoom {
+    transform: scale(1.02);
+}
+.card:hover .card-link-show-hover,
+.card:hover .card-title-show-hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+.card:hover .card-title-wrapper {
+    bottom: -100%;
+}
+.card-rotate .card-title-wrapper {
+    transition: all 0.3s ease-in 0.2s;
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    z-index: 20;
+}
+.card-link-show-hover {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    transition: all 0.2s ease-in 0.2s;
+    transform: translateY(20%);
+    opacity: 0;
+    z-index: 20;
+}
+.card-title-show-hover {
+    transition: all 0.3s ease-in;
+    transform: translateY(-20%);
+    opacity: 0;
+    z-index: 20;
+    position: relative;
+}
+.card-brands {
+    border-top: 1px solid #e9eaea;
+    padding: 2rem 0;
+}
+.card-title-brand {
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    color: #e9eaea;
+}
+.card-hover-hide-one {
+    transition: all 0.3s ease-in;
+}
+.card-hover-hide-two {
+    transition: all 0.3s ease-in 0.1s;
+}
+.card-hover-hide-three {
+    transition: all 0.3s ease-in 0.2s;
+}
+.card-hover-show-one {
+    transition: all 0.2s ease-in !important;
+    transform: translate(-50%, -35%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+}
+.card:hover .card-hover-hide-one,
+.card:hover .card-hover-hide-three,
+.card:hover .card-hover-hide-two {
+    transform: translateX(-200%);
+}
+.card:hover .card-hover-show-one {
+    transition: all 0.2s ease-in 0.5s !important;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}

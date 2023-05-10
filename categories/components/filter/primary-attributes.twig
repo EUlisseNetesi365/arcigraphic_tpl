@@ -1,0 +1,35 @@
+<div v-if="filter.sector_id != ''" class="py-4 widget-filter border-top">
+    <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+       data-bs-toggle="collapse" href="#filter-options" role="button" aria-expanded="true"
+       aria-controls="filter-options">
+        {{ lang.option }}
+    </a>
+    <div id="filter-options" class="collapse show mt-2 ps-2">
+        <template v-for="(primary, index) in primaries">
+            <template v-if="JSON.parse(primary.settings).type == 'select'">
+                <div v-if="index == 0 || primary.a_id != primaries[index-1].a_id" class="form-group">
+                    <label v-if="index == 0 || primary.a_id != primaries[index-1].a_id" :for="primary.name">{_ primary.name _}</label>
+                    <select v-if="index == 0 || primary.a_id != primaries[index-1].a_id" :id="primary.name" class="form-select" @change="(e) => selectAttribute(e, index)">
+                        <option value="" selected>{{ lang.all_sector }}</option>
+                        <template v-for="loop_attr in primaries">
+                            <option v-if="primary.a_id == loop_attr.a_id" :value="loop_attr.a_id">{_ loop_attr.att_name _}</option>
+                        </template>
+                    </select>
+                </div>
+            </template>
+            <div v-if="JSON.parse(primary.settings).type == 'radio_type'" class="form-group">
+                <span v-if="index == 0 || primary.a_id != primaries[index-1].a_id" class="form-label">{_ primary.name _}</span>
+                <div v-if="index == 0 || primary.a_id != primaries[index-1].a_id" class="row">
+                    <template v-for="loop_attr in primaries">
+                        <div v-if="primary.a_id == loop_attr.a_id" class="col-md-4">
+                            <div class="cuts_content text-center me-2">
+                                <img @click="(e) => selectAttribute(e,index)" :data-id="loop_attr.att_id" :class="'cursor-pointer d-block mx-auto attributes attributes' + index" width="55" height="55" :src="'{{ basepath }}/templates/{{template}}/' + loop_attr.path" />
+                                <i align="start">{_ loop_attr.att_name _}</i>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>

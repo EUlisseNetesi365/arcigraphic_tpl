@@ -1,0 +1,537 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const languageDropdown = document.getElementById('language-dropdown');
+        languageDropdown.addEventListener('show.bs.dropdown', function (e) {
+            const links = document.querySelectorAll(".dropdown-item");
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const value = getValueFromUrl(link.href);
+                    setCookie('lang', value);
+                    window.location.href = "{{ basepath }}/" + value;
+                });
+            });
+        });
+
+        handleCookiePolicy();
+    });
+
+    const setCookie = (cname, cvalue) => {
+        const d = new Date();
+        d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    const getCookie = (name) => {
+        const cookieArr = document.cookie.split(";");
+        for (let i = 0; i < cookieArr.length; i++) {
+            let cookiePair = cookieArr[i].split("=");
+            if (name === cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        return null;
+    }
+
+    // cookie policy
+    const handleCookiePolicy = () => {
+        //const cookiePopup = document.getElementById("cookiePopup");
+
+        if (getCookie("accepted_cookies") !== 'yes') {
+            console.log("cookies path: {{ cookie_path }}");
+            console.log("checkCookies: ", getCookie("accepted_cookies"));
+            openCookie();
+        }
+
+        document.getElementById("acceptCookies").addEventListener("click", function (e) {
+            setCookie("accepted_cookies", "yes");
+            closeCookie();
+        });
+
+        document.getElementById("closeCookies").addEventListener("click", function (e) {
+            closeCookie();
+        });
+    }
+
+    function numberFormat(data) {
+        const euro = Intl.NumberFormat("it-IT", {
+            style: "currency",
+            currency: "EUR",
+        });
+        return euro.format(data);
+    }
+
+    function handleNewsletter(event, validator) {
+        const button_submit = validator.form.querySelector("button[type='submit']");
+        button_submit.disabled = true;
+        fetch("{{ basepath }}/newsletter", {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify(validator.getEntries()),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+            .then((res) => res.json())
+            .then(result => {
+                const display = validator.form.querySelector(".newsletter");
+                console.log(display);
+                if (result.msg) {
+                    display.classList.remove("d-none", "alert-primary", "alert-success");
+                    switch (parseInt(result.code)) {
+                        case 1:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_fields_required }}";
+                            setTimeout(()=> {
+                            display.classList.remove("alert-primary");
+                            display.innerHTML = "";
+                            },4000)
+                            break;
+                        case 2:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_no_data }}";
+                            setTimeout(()=> {
+                            display.classList.remove("alert-primary");
+                            display.innerHTML = "";
+                            },4000)
+                            break;
+                        case 3:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_not_valid }}";
+                            setTimeout(()=> {
+                            display.classList.remove("alert-primary");
+                            display.innerHTML = "";
+                            },4000)
+                            break;
+                        case 4:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_not_confirmed }}";
+                            setTimeout(()=> {
+                            display.classList.remove("alert-primary");
+                            display.innerHTML = "";
+                            },4000)
+                            break;
+                        case 5:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_already_registered }}";
+                            setTimeout(()=> {
+                            display.classList.remove("alert-primary");
+                            display.innerHTML = "";
+                            },4000)
+                            break;
+                        case 90:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_send }}";
+                            setTimeout(()=> {
+                            display.classList.remove("alert-primary");
+                            display.innerHTML = "";
+                            },4000)
+                            break;
+                        case 91:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.email_not_defined }}";
+                            setTimeout(()=> {
+                            display.classList.remove("alert-primary");
+                            display.innerHTML = "";
+                            },4000)
+                            break;
+                        case 0:
+                            if (result.msg === 'OK') {
+                                display.classList.add("alert-success");
+                                display.innerHTML = "{{ lang_layout.success_user_create }}";
+                                validator.clean();
+                            setTimeout(()=> {
+                            display.classList.remove("alert-succes");
+                            display.innerHTML = "";
+                            },4000)
+                            }
+                            break;
+                    }
+                }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+            .finally(() => {
+                button_submit.disabled = false;
+            });
+    }
+    /* handler Sign Up */
+    const handleSignUp = (e, validator) => {
+        const button_submit = validator.form.querySelector("button[type='submit']");
+        button_submit.disabled = true;
+        fetch("{{ basepath }}/create_c", {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify(validator.getEntries()),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+            .then((res) => res.json())
+            .then(result => {
+                const display = document.querySelector("#registerModal .error-display");
+                if (result.msg) {
+                    display.classList.remove("d-none", "alert-primary", "alert-success");
+                    switch (parseInt(result.code)) {
+                        case 1:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_fields_required }}";
+                            break;
+                        case 2:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_user_not_valid }}";
+                            break;
+                        case 3:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_not_valid }}";
+                            break;
+                        case 4:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_not_confirmed }}";
+                            break;
+                        case 5:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_already_registered }}";
+                            break;
+                        case 90:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_send }}";
+                            break;
+                        case 91:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.email_not_defined }}";
+                            break;
+                        case 0:
+                            if (result.msg === 'OK') {
+                                display.classList.add("alert-success");
+                                display.innerHTML = "{{ lang_layout.success_user_create }}";
+                            }
+                            break;
+                    }
+                }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+            .finally(() => {
+                button_submit.disabled = false;
+            });
+    };
+
+    const handleResend = (email) => {
+        fetch("{{ basepath }}/resend_em", {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify({email: email}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+            .then((res) => res.json())
+            .then(result => {
+                console.log(result);
+                /*const display = document.querySelector("#loginModal .error-display");
+                if (result.msg) {
+                    display.classList.remove("d-none", "alert-primary", "alert-success");
+                    switch (parseInt(result.code)) {
+                        case 1:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error.fields_required }}";
+                            break;
+                        case 5:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error.email_confirmation }}";
+                            break;
+                        case 2:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error.user_validation }}";
+                            break;
+                        case 4:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error.user_pass_validation }}";
+                            break;
+                        case 0:
+                            if (result.success === 1) {
+                                display.classList.add("alert-success");
+                                display.innerHTML = "{{ lang_layout.success.signin }}";
+                                /!*var loginModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'))
+                                loginModal.hide();*!/
+                                window.location.reload();
+                                button_submit.disabled = false;
+                            }
+                            break;
+                    }
+                }*/
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+            .finally(() => {
+                button_submit.disabled = false;
+            });
+    }
+    
+    /* handler login */
+    const handleSignIn = (e, validator) => {
+        const button_submit = validator.form.querySelector("button[type='submit']");
+        button_submit.disabled = true;
+        fetch("{{ basepath }}/login", {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify(validator.getEntries()),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+            .then((res) => res.json())
+            .then(result => {
+                const display = document.querySelector("#loginModal .error-display");
+                if (result.msg) {
+                    display.classList.remove("d-none", "alert-primary", "alert-success");
+                    switch (parseInt(result.code)) {
+                        case 1:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_empty_fields }}";
+                            break;
+                        case 5:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_not_confirmed }}";
+                            break;
+                        case 2:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_user_not_valid }}";
+                            break;
+                        case 4:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_user_pass_not_valid }}";
+                            break;
+                        case 0:
+                            if (result.success === 1) {
+                                display.classList.add("alert-success");
+                                display.innerHTML = "{{ lang_layout.success_signin }}";
+                                /*var loginModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'))
+                                loginModal.hide();*/
+                                window.location.reload();
+                                button_submit.disabled = false;
+                            }
+                            break;
+                    }
+                }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+            .finally(() => {
+                button_submit.disabled = false;
+            });
+    };
+
+    /* handler forgot password */
+    const handleForgot = (e, validator) => {
+        const button_submit = validator.form.querySelector("button[type='submit']");
+        button_submit.disabled = true;
+        fetch("{{ basepath }}/recover", {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify(validator.getEntries()),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+            .then((res) => res.json())
+            .then(result => {
+                const display = document.querySelector("#forgotModal .error-display");
+                if (result.msg) {
+                    display.classList.remove("d-none", "alert-primary", "alert-success");
+                    switch (parseInt(result.code)) {
+                        case 3:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_not_valid }}";
+                            break;
+                        case 2:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_no_data }}";
+                            break;
+                        case 4:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_email_not_confirmed }}";
+                            break;
+                        case 5:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.email_not_login }}";
+                            break;
+                        case 0:
+                            display.classList.add("alert-success");
+                            display.innerHTML = "{{ lang_layout.success_forgot }}";
+                            var loginModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'))
+                            loginModal.hide();
+                            break;
+                        default:
+                            display.classList.add("alert-primary");
+                            display.innerHTML = "{{ lang_layout.error_user_pass_not_valid }}";
+                            break;
+                    }
+                }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+            .finally(() => {
+                button_submit.disabled = false;
+            });
+    };
+
+    (new FormValidator(document.getElementById("login-form"), handleSignIn)).initialize();
+    (new FormValidator(document.getElementById("register-form"), handleSignUp)).initialize();
+    (new FormValidator(document.getElementById("forgot-form"), handleForgot)).initialize();
+    (new FormValidator(document.getElementById("formNewsletterModal"), handleNewsletter)).initialize();
+    (new FormValidator(document.getElementById("formNewsletter"), handleNewsletter)).initialize();
+    (new FormValidator(document.getElementById("resend-form"), handleResend)).initialize();
+
+    const openRegisterFromLogin = () => {
+        const loginModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'));
+        const registerModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('registerModal'));
+        loginModal.hide();
+        registerModal.show();
+    }
+
+    const openForgotFromLogin = () => {
+        const loginModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'));
+        const forgotModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('forgotModal'));
+        loginModal.hide();
+        forgotModal.show();
+    }
+
+    const openLoginFromForgot = () => {
+        const loginModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'));
+        const forgotModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('forgotModal'));
+        forgotModal.hide();
+        loginModal.show();
+    }
+
+    const openLoginFromRegister = () => {
+        const loginModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'));
+        const registerModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('registerModal'));
+        registerModal.hide();
+        loginModal.show();
+    }
+
+    const openCookie = () => {
+        const cookieModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('cookieModal'));
+        cookieModal.show();
+    }
+
+    const closeCookie = () => {
+        const cookieModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('cookieModal'));
+        cookieModal.hide();
+    }
+
+    function showPopOver(message) {
+        const template = '<div class="popover bg-primary p-0" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-header"></h3><div class="popover-body text-secondary"></div></div>'
+
+        const popover = bootstrap.Popover.getOrCreateInstance(document.getElementById('popover'), {
+            placement: 'left',
+            content: message,
+            template: template,
+        });
+        popover.show();
+
+        setTimeout(function () {
+            popover.hide()
+        }, 2000);
+    }
+
+    function showPopOverError(el, message) {
+        const template = '<div class="popover bg-primary p-0" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-header"></h3><div class="popover-body text-danger"></div></div>'
+
+        const popover = bootstrap.Popover.getOrCreateInstance(el, {
+            placement: 'left',
+            content: message,
+            template: template,
+        });
+        popover.show();
+
+        setTimeout(function () {
+            popover.hide()
+        }, 1500);
+    }
+
+    function showPassword (target) {
+        if (target.classList.contains('ri-eye-fill')) {
+            target.classList.replace('ri-eye-fill', 'ri-eye-off-fill');
+            target.previousElementSibling.type = "text";
+        } else {
+            target.classList.replace('ri-eye-off-fill', 'ri-eye-fill');
+            target.previousElementSibling.type = "password";
+        }
+
+    }
+
+  
+    // var swiper = new Swiper(".mySwiper", {
+    //     spaceBetween: 30,
+    //     centeredSlides: true,
+    //     effect: "fade",
+    //     autoplay: {
+    //         delay: 2500,
+    //         disableOnInteraction: false,
+    //     },
+    //     pagination: {
+    //         el: ".swiper-pagination",
+    //         clickable: true,
+    //     },
+    //     navigation: {
+    //         nextEl: ".swiper-button-next",
+    //         prevEl: ".swiper-button-prev",
+    //     },
+    // });
+//   var swiper = new Swiper(".mySwiperHero", {
+//        spaceBetween: 30,
+//        centeredSlides: true,
+//        effect: "fade",
+//        autoplay: {
+//            delay: 2500,
+//            disableOnInteraction: false,
+//        },
+//        pagination: {
+//            el: ".swiper-pagination",
+//            clickable: true,
+//        },
+//        navigation: {
+//            nextEl: ".swiper-button-next",
+//            prevEl: ".swiper-button-prev",
+//        },
+//    });
+//
+//    var swiper2 = new Swiper(".mySwiper2", {
+//        loop: true,
+//        spaceBetween: 10,
+//        navigation: {
+//            nextEl: ".swiper-button-next",
+//            prevEl: ".swiper-button-prev",
+//        }
+//    });
+//
+//    var swiperThumbs = new Swiper(".mySwiperThumbs", {
+//        loop: true,
+//        spaceBetween: 10,
+//        slidesPerView: 4,
+//        freeMode: true,
+//        watchSlidesProgress: true,
+//    });
+//    var swiper = new Swiper(".mySwiper3", {
+//        slidesPerView:1 ,
+//        spaceBetween: 30,
+//        pagination: {
+//            el: ".swiper-pagination",
+//            clickable: true,
+//        },
+//        breakpoints: {
+//            640: {
+//                slidesPerView: 2,
+//                spaceBetween: 20,
+//            },
+//            768: {
+//                slidesPerView: 3,
+//                spaceBetween: 40,
+//            },
+//            1024: {
+//                slidesPerView: 4,
+//                spaceBetween: 50,
+//            },
+//        },
+//    });
+</script>

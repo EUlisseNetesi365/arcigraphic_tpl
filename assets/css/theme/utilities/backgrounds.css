@@ -1,0 +1,91 @@
+/* From theme bundle */
+.bg-img-cover {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.bg-img-contain {
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.bg-pos-center-center {
+    background-position: 50%;
+}
+.bg-pos-center-top {
+    background-position: top;
+}
+.bg-pos-left-top {
+    background-position: 0 0;
+}
+.bg-pos-left-center {
+    background-position: 0;
+}
+.bg-pos-right-center {
+    background-position: 100%;
+}
+.bg-pos-right-top {
+    background-position: 100% 0;
+}
+.bg-pos-center-bottom {
+    background-position: bottom;
+}
+.bg-pos-left-bottom {
+    background-position: 0 100%;
+}
+.bg-pos-right-bottom {
+    background-position: 100% 100%;
+}
+.bg-white-hover:hover {
+    background: #fff !important;
+}
+.bg-primary-faded {
+    background-color: rgba(111, 70, 255, 0.2) !important;
+}
+.bg-secondary-faded {
+    background-color: rgba(160, 160, 162, 0.2) !important;
+}
+.bg-success-faded {
+    background-color: rgba(25, 184, 162, 0.2) !important;
+}
+.bg-info-faded {
+    background-color: rgba(13, 202, 240, 0.2) !important;
+}
+.bg-warning-faded {
+    background-color: rgba(255, 237, 3, 0.2) !important;
+}
+.bg-danger-faded {
+    background-color: rgba(219, 26, 42, 0.2) !important;
+}
+.bg-light-faded {
+    background-color: hsla(0, 0%, 96.5%, 0.2) !important;
+}
+.bg-dark-faded {
+    background-color: rgba(28, 33, 44, 0.2) !important;
+}
+.bg-facebook-faded {
+    background-color: rgba(59, 89, 152, 0.2) !important;
+}
+.bg-twitter-faded {
+    background-color: rgba(0, 172, 238, 0.2) !important;
+}
+.bg-white-faded {
+    background-color: hsla(0, 0%, 100%, 0.2) !important;
+}
+.bg-pink-faded {
+    background-color: rgba(255, 166, 158, 0.2) !important;
+}
+.bg-teal-faded {
+    background-color: rgba(8, 197, 213, 0.2) !important;
+}
+.bg-orange-faded {
+    background-color: rgba(252, 98, 41, 0.2) !important;
+}
+.bg-teal-300 {
+    background: #e2f7f9;
+}
+.bg-black-opacity {
+    background: rgba(0, 0, 0, 0.2);
+}
+.bg-gray-800 {
+    background: #343a40 !important;
+}
+

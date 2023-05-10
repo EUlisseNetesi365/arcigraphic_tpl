@@ -1,0 +1,29 @@
+/* Override lib vendor */
+.choices__list.form-control {
+    cursor: pointer;
+    position: relative;
+}
+.choices__list.form-control:after {
+    font-family: var(--theme-font-icon);
+    font-style: var(--theme-font-icon-style);
+    content: "";
+    font-size: 1.5rem;
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+}
+.choices__list.dropdown-menu {
+    width: 100%;
+    padding: 0.5rem 0;
+}
+.choices__item.dropdown-item {
+    background: transparent !important;
+    color: #1c212c;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+.choices__item.dropdown-item:hover {
+    background: #f6f6f6 !important;
+}

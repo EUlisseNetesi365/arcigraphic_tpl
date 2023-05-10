@@ -1,0 +1,10 @@
+<div class="py-4 widget-filter widget-filter-price border-top" data-filter-group="price">
+    <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+       data-bs-toggle="collapse" href="#filter-price" role="button" aria-expanded="true"
+       aria-controls="filter-price">
+        {{ lang.price }}
+    </a>
+    <div id="filter-price" class="collapse {% if min_price != max_price %} show {% endif %} pt-5">
+        <Slider id="sliderPrice" v-model="slider.value" v-bind="slider" :max="{{ max_price }}" @change="debounceFilter(()=>getVariantsByFilter('0,' + pagination.page_items ,'price'))" class="slider-blue"></Slider>
+    </div>
+</div>

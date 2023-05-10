@@ -1,0 +1,36 @@
+<div id="searchBox" v-cloak="">
+    <div class="search-content">
+        <section class="search-bar">
+            <img class="img-fluid search-logo" width="160" src="{{ basepath }}/templates/img/arcigraphic-fooder.png">
+            <div class="d-flex align-items-center position-relative">
+                <input type="text" id="words" name="words" class="search-input text-white transition-all px-2" v-model="value" autocomplete="off"
+                       @input="handleSuggestion(value)" @enter="handleSearch(value)" placeholder="{{ lang_layout.nav_search }}">
+                <button class="btn btn-link px-2 text-decoration-none search-btn">
+                    <i class="zmdi search-icon zmdi-search pe-1 align-middle text-white"></i>
+                </button>
+                <div v-if="filteredSuggestions" class="suggestions list-group w-100">
+                    <a href="#" class="list-group-item list-group-item-action text-decoration-none" v-for="filteredSuggestion in filteredSuggestions" @click="setValue(filteredSuggestion.variant_name)">{_ filteredSuggestion.variant_name _}</a>
+                </div>
+            </div>
+            <button class="search-close btn-link no-border bg-transparent text-white">{{ lang_layout.btn_cancel }}</button>
+        </section>
+        <section class="search-results container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-2 mb-2 mb-md-0">
+                    <ul class="list-group list-group-flush mb-3">
+                        <li v-if="textSearch" class="list-group-item bg-search"><a href="#" @mouseover="handleSearch(textSearch)" class="text-decoration-none">{_ textSearch _}</a></li>
+                        <li v-for="attr in attributes" class="list-group-item bg-search">
+                            <a href="#" @mouseover="handleSearch(attr.value)" class="text-decoration-none">{_ attr.value _}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div v-if="results.length != 0" class="col-12 col-lg-10">
+                    <div class="d-flex flex-wrap">
+                        {% include template ~ "/components/base-card-search.twig" %}
+                    </div>
+                </div>
+                <div v-else class="col-12 col-lg-10"><p>{{ lang_layout.empty_result }}</p></div>
+            </div>
+        </section>
+    </div>
+</div>

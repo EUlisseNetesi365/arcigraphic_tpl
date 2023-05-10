@@ -1,0 +1,220 @@
+/* From theme bundle */
+.translate {
+    transform: translate(var(--theme-translate-X), var(--theme-translate-Y));
+}
+.translate-x-n0 {
+    --theme-translate-X: -0;
+}
+.translate-x-0 {
+    --theme-translate-X: 0;
+}
+.translate-y-n0 {
+    --theme-translate-Y: -0;
+}
+.translate-y-0 {
+    --theme-translate-Y: 0;
+}
+.translate-x-n1 {
+    --theme-translate-X: -1%;
+}
+.translate-x-1 {
+    --theme-translate-X: 1%;
+}
+.translate-y-n1 {
+    --theme-translate-Y: -1%;
+}
+.translate-y-1 {
+    --theme-translate-Y: 1%;
+}
+.translate-x-n2 {
+    --theme-translate-X: -2%;
+}
+.translate-x-2 {
+    --theme-translate-X: 2%;
+}
+.translate-y-n2 {
+    --theme-translate-Y: -2%;
+}
+.translate-y-2 {
+    --theme-translate-Y: 2%;
+}
+.translate-x-n3 {
+    --theme-translate-X: -3%;
+}
+.translate-x-3 {
+    --theme-translate-X: 3%;
+}
+.translate-y-n3 {
+    --theme-translate-Y: -3%;
+}
+.translate-y-3 {
+    --theme-translate-Y: 3%;
+}
+.translate-x-n4 {
+    --theme-translate-X: -4%;
+}
+.translate-x-4 {
+    --theme-translate-X: 4%;
+}
+.translate-y-n4 {
+    --theme-translate-Y: -4%;
+}
+.translate-y-4 {
+    --theme-translate-Y: 4%;
+}
+.translate-x-n5 {
+    --theme-translate-X: -5%;
+}
+.translate-x-5 {
+    --theme-translate-X: 5%;
+}
+.translate-y-n5 {
+    --theme-translate-Y: -5%;
+}
+.translate-y-5 {
+    --theme-translate-Y: 5%;
+}
+.translate-x-n7 {
+    --theme-translate-X: -7%;
+}
+.translate-x-7 {
+    --theme-translate-X: 7%;
+}
+.translate-y-n7 {
+    --theme-translate-Y: -7%;
+}
+.translate-y-7 {
+    --theme-translate-Y: 7%;
+}
+.translate-x-n10 {
+    --theme-translate-X: -10%;
+}
+.translate-x-10 {
+    --theme-translate-X: 10%;
+}
+.translate-y-n10 {
+    --theme-translate-Y: -10%;
+}
+.translate-y-10 {
+    --theme-translate-Y: 10%;
+}
+.translate-x-n20 {
+    --theme-translate-X: -20%;
+}
+.translate-x-20 {
+    --theme-translate-X: 20%;
+}
+.translate-y-n20 {
+    --theme-translate-Y: -20%;
+}
+.translate-y-20 {
+    --theme-translate-Y: 20%;
+}
+.translate-x-n25 {
+    --theme-translate-X: -25%;
+}
+.translate-x-25 {
+    --theme-translate-X: 25%;
+}
+.translate-y-n25 {
+    --theme-translate-Y: -25%;
+}
+.translate-y-25 {
+    --theme-translate-Y: 25%;
+}
+.translate-x-n30 {
+    --theme-translate-X: -30%;
+}
+.translate-x-30 {
+    --theme-translate-X: 30%;
+}
+.translate-y-n30 {
+    --theme-translate-Y: -30%;
+}
+.translate-y-30 {
+    --theme-translate-Y: 30%;
+}
+.translate-x-n35 {
+    --theme-translate-X: -35%;
+}
+.translate-x-35 {
+    --theme-translate-X: 35%;
+}
+.translate-y-n35 {
+    --theme-translate-Y: -35%;
+}
+.translate-y-35 {
+    --theme-translate-Y: 35%;
+}
+.translate-x-n40 {
+    --theme-translate-X: -40%;
+}
+.translate-x-40 {
+    --theme-translate-X: 40%;
+}
+.translate-y-n40 {
+    --theme-translate-Y: -40%;
+}
+.translate-y-40 {
+    --theme-translate-Y: 40%;
+}
+.translate-x-n45 {
+    --theme-translate-X: -45%;
+}
+.translate-x-45 {
+    --theme-translate-X: 45%;
+}
+.translate-y-n45 {
+    --theme-translate-Y: -45%;
+}
+.translate-y-45 {
+    --theme-translate-Y: 45%;
+}
+.translate-x-n50 {
+    --theme-translate-X: -50%;
+}
+.translate-x-50 {
+    --theme-translate-X: 50%;
+}
+.translate-y-n50 {
+    --theme-translate-Y: -50%;
+}
+.translate-y-50 {
+    --theme-translate-Y: 50%;
+}
+.translate-x-n75 {
+    --theme-translate-X: -75%;
+}
+.translate-x-75 {
+    --theme-translate-X: 75%;
+}
+.translate-y-n75 {
+    --theme-translate-Y: -75%;
+}
+.translate-y-75 {
+    --theme-translate-Y: 75%;
+}
+.translate-x-n100 {
+    --theme-translate-X: -100%;
+}
+.translate-x-100 {
+    --theme-translate-X: 100%;
+}
+.translate-y-n100 {
+    --theme-translate-Y: -100%;
+}
+.translate-y-100 {
+    --theme-translate-Y: 100%;
+}
+.skew-5 {
+    transform: skewY(5deg);
+}
+.skew-n5 {
+    transform: skewY(-5deg);
+}
+.skew-10 {
+    transform: skewY(10deg);
+}
+.skew-n10 {
+    transform: skewY(-10deg);
+}

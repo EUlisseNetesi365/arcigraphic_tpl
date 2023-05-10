@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="{{language}}">
+	<head>
+		{% include template ~ "/layout/head.twig" %}
+	</head>
+	<body id="main" class="">
+
+		{% include template ~ "/layout/components/navbar.twig" %}
+
+		{% block content %}{% endblock %}
+		
+		{% include template ~ "/layout/footer.twig" %}
+{#<a href="https://api.whatsapp.com/send?phone=12345&text=&source=&data=" class="whatsApp" target="_blank"><i class="ri-whatsapp-line my-whatsApp"></i></a>#}
+	</body>
+</html>

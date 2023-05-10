@@ -1,0 +1,28 @@
+/* Form theme bundle */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+label {
+    margin-bottom: 0.35rem;
+}
+.form-check-label {
+    font-weight: 400;
+}
+.form-select-sm {
+    font-size: 0.85em;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #1c212c;
+    border-color: #1c212c;
+}
+
+.newsletter-input {
+    border-radius: 0 !important;
+}

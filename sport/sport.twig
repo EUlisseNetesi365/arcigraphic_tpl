@@ -1,0 +1,32 @@
+{% extends template ~ "/layout/layout.twig" %}
+{% block content %}
+    {% set alternatemenu = json_decode(altmenu) %}
+    <section class="mt-0" style="padding-top: 1.5rem">
+        <div class="py-6 bg-img-cover bg-dark bg-overlay-gradient-dark position-relative overflow-hidden mb-4 bg-pos-center-center"
+             style="background-image: url({{ basepath }}/templates/arcigraphic/img/azienda/azienda.jpg);">
+            <div class="container position-relative z-index-8 customTop" data-aos="fade-right" data-aos-delay="300">
+                <!-- Breadcrumbs-->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+
+                        <li class="breadcrumb-item"><a href="{{ basepath }}/">Home</a></li>
+                        <li class="breadcrumb-item"><a style="color: #009fe2" href="{{ uripath }}/sport">Sport</a></li>
+                      
+
+                    </ol>
+                </nav>            <!-- /Breadcrumbs-->
+            </div>
+        </div>
+    </section>
+    <section class="p-2 m-auto">
+
+        <h3 align="center">{{lang.choose}}</h3>
+        <div class="row flex-wrap m-auto">
+        {% for menu in alternatemenu %}
+            <div class="col-12 col-md-6 d-flex justify-content-center align-center">
+                <a href="{{ basepath ~ menu.alias }}"> <img src="{{basepath}}/templates/arcigraphic/assets/images/sport/{{ menu.name }}.png" /></a>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+{% endblock %}

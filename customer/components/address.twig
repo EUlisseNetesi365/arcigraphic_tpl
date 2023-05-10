@@ -1,0 +1,19 @@
+<div class="col-12 col-lg-10 mx-auto">
+    <div v-show="showFormAdd">
+        <div class="row g-5">
+            <div class="col-12">
+                <h4>{{ lang.subtitle_address }}</h4>
+                <p>{{ lang.subtitle_text }}</p>
+            </div>
+        </div>
+        {% include template ~ "/customer/components/form-add-address.twig" %}
+    </div>
+    <div v-show="showFormUpdate">
+        <div class="row g-5">
+            <div class="col-12">
+                <h4>{{ lang.edit_address }}</h4>
+            </div>
+        </div>
+        {% include template ~ "/customer/components/form-update-address.twig" %}
+    </div>
+</div>

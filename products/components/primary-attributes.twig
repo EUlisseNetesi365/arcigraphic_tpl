@@ -1,0 +1,89 @@
+{% for primary in pri_attr %}
+    {% set type = json_decode(primary.attribute.settings) %}
+    {% set type_value =  json_decode(primary.attribute_value.settings) %}
+    <h6 class="border-top mt-2"><b>{{ primary.attribute.value }}</b></h6>
+    <div class="container p-0">
+    <div class="row">
+        {% if type.type == 'select' %}
+            <div class="col-md-12">
+                <select name="{{ primary.attribute.value }}" id="{{ primary.attribute.id }}" @change="addSelected({{ primary.attribute.id }},$event.target.value, {{ item[0].p_id }})" class="form-control">
+                    {% for listattr in listall %}
+                        {% set itemattr = json_decode(listattr.priattr) %}
+                        {% for dettattr in itemattr %}
+                            {% if listattr.attribute_id == primary.attribute.id %}
+                                {% set listatt = json_decode(dettattr.list) %}
+                                {% set pimg = json_decode(listatt[0].settings) %}
+                                <option value="{{ listatt[0].list_id }}" {{primary.attribute_value.id == listatt[0].list_id?'selected':null}} > {{ listatt[0].name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+                {% if type_value.type == 'colorpicker'%}
+                    {% include template ~ "/products/components/colors.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if type.type == 'radio' %}
+        <div class="col-md-12">
+            <label>{{ primary.attribute.value }}</label>
+            {% for listattr in listall %}
+                {% set itemattr = json_decode(listattr.priattr) %}
+                {% for dettattr in itemattr %}
+                    {% if listattr.attribute_id == primary.attribute.id %}
+                        {% set listatt = json_decode(dettattr.list) %}
+                        <input class="form-control" @click="addSelected({{ primary.attribute.id }}, {{ listatt[0].list_id }}, {{ item[0].p_id }})" type="radio" value="{{ listatt[0].list_id }}" {{primary.attribute_value.id == listatt[0].list_id?'checked':null}}>
+                        <label>{{ listatt[0].name }}</label>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {% endif %}
+            {% if type.type == 'radio_type' %}
+                <div class="col-md-12 d-flex">
+                    {% for listattr in listall %}
+                        {% set itemattr = json_decode(listattr.priattr) %}
+                        {% if listattr.attribute_id == primary.attribute.id %}
+                            {% for dettattr in itemattr %}
+                                {% set listatt = json_decode(dettattr.list) %}
+                                {% set pimg = json_decode(listatt[0].settings) %}
+                                <div class="cuts_content text-center me-2 {{ primary.attribute_value.id == listatt[0].list_id?'selected':null}}">
+                                    <img @click="addSelected({{ primary.attribute.id }}, {{ listatt[0].list_id }}, {{ item[0].p_id }})" value="{{ listatt[0].list_id }}" class="cursor-pointer d-block mx-auto" width="55" height="55" src="{{ basepath }}/templates/{{template}}/{{ pimg.path }}"/>
+                                    <i align="start">{{ listatt[0].name }}</i>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if type.type == 'checkbox' %}
+                <div class="col-md-12 d-flex">
+                    {% for listattr in listall %}
+                        {% set itemattr = json_decode(listattr.priattr) %}
+                        {% if listattr.attribute_id == primary.attribute.id %}
+                            {% for dettattr in itemattr %}
+                                {% set listatt = json_decode(dettattr.list) %}
+                                <input class="form-control" type="checkbox" value="{{ listatt[0].list_id }}" {{primary.attribute_value.id == listatt[0].list_id?'checked':null}}>
+                                <label>{{ listatt[0].name }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if type.type == 'checkbox_type' %}
+                <div class="col-md-12 d-flex">
+                    {% for listattr in listall %}
+                        {% set itemattr = json_decode(listattr.priattr) %}
+                        {% if listattr.attribute_id == primary.attribute.id %}
+                            {% for dettattr in itemattr %}
+                                {% set listatt = json_decode(dettattr.list) %}
+                                {% set pimg = json_decode(listatt[0].settings) %}
+                                <input class="form-control" type="checkbox" value="{{ listatt[0].list_id }}" {{primary.attribute_value.id == listatt[0].list_id?'checked':null}} >
+                                <label>{{ listatt[0].name }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endfor %}

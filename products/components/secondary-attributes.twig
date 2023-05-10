@@ -1,0 +1,7 @@
+<div class="product-option border-top mt-4">
+    <label class="fw-bolder">{{lang.size}}</label>
+    <br>
+    {% for secondary in sec_attr | sort((a, b) => a.attribute_value.id <=> b.attribute_value.id)%}
+        <button name="sizeButton" class="btn btn-light btn-sm btn-size size-btn mt-2 me-2" :class="{ 'selected' : size === {{secondary.attribute_value.id}} }" @click="selectSize({{secondary.attribute_value.id}})" value="{{secondary.variant4_whouse_id}}">{{secondary.attribute_value.value}}</button>
+    {% endfor %}
+</div>

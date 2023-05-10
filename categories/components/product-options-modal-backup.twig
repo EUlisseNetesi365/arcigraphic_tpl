@@ -1,0 +1,111 @@
+<div class="product-option mb-4 mt-4">
+        <h6><b>{{ lang.options }}</b></h6>
+            <div class="d-flex flex-wrap justify-content-between">
+                {% set prevType = null %}
+                {% set nextType = null %}
+                {% set is_rtype = false %}
+                {% for primary in pri_attr %}
+                    {% set type = json_decode(primary.attribute.settings) %}
+                    {% if loop.index <  pri_attr|length %}
+                        {% set nextType = json_decode(pri_attr[loop.index+1].attribute.settings) %}
+                    {% endif %}
+                    {% set type_value =  json_decode(primary.attribute_value.settings) %}
+                    {% if type.type == 'radio_type' %}
+                        {% set is_rtype = true %}
+                        {% if prevType != 'radio_type' %}
+                            <div class="row mt-4">
+                        {% endif %}
+                        {% set settings = json_decode(primary.attribute_value.settings) %}
+                            <div class="col-md-3 d-flex">
+                                <div class="cuts_content text-center me-2">
+                                    <img value="{{ primary.attribute_value.id }}" class="d-block mx-auto" width="55"
+                                         height="55" src="{{ basepath }}/templates/{{ template }}/{{ settings.path }}"/>
+                                    <i align="start">{{ primary.attribute_value.value }}</i>
+                                </div>
+                            </div>
+                    {% else %}
+                        <h6 class="border-top mt-2"><b>{{ primary.attribute.value }}</b></h6>
+                        <div class="container p-0">
+                            <div class="row">
+                                {% if type.type == 'select' %}
+                                    {% if type_value.type == 'colorpicker' %}
+                                        <div class="pb-2 pt-2" v-if="showColors == 2">
+                                            <label class="d-flex flex-row" style="width:fit-content">
+                                                <input id="base-{{ idIndex }}" type="color" @input="setColor($event)"
+                                                       :value="color || '#ffffff'">
+                                                <input id="customColor-{{ idIndex }}" type="text" value="#ffffff"/>
+                                            </label>
+                                        </div>
+                                    {% endif %}
+                                    <div class="col-md-12">
+                                        <select name="{{ primary.attribute.value }}-{{ idIndex }}"
+                                                id="{{ primary.attribute.id }}-{{ idIndex }}" class="form-control form-control-sm">
+                                            <option value="{{ primary.attribute_value.id }}">{{ primary.attribute_value.value }}</option>
+                                        </select>
+                                    </div>
+                                {% endif %}
+                                {% if type.type == 'radio' %}
+                                    <div class="col-md-12">
+                                        <label>{{ primary.attribute.value }}</label>
+                                        <input class="form-control" type="radio" value="{{ primary.attribute_value.id }}">
+                                        <label>{{ primary.attribute_value.value }}</label>
+                                    </div>
+                                {% endif %}
+                                {% if type.type == 'checkbox' %}
+                                    <div class="col-md-12 d-flex">
+                                        <input class="form-control" type="checkbox"
+                                               value="{{ primary.attribute_value.id }}">
+                                        <label>{{ primary.attribute_value.value }}</label>
+                                    </div>
+                                {% endif %}
+                                {% if type.type == 'checkbox_type' %}
+                                    <div class="col-md-12 d-flex">
+                                        <input class="form-control" type="checkbox"
+                                               value="{{ primary.attribute_value.id }}">
+                                        <label>{{ primary.attribute_value.value }}</label>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% set prevType = type.type %}
+                {% endfor %}
+
+                {# EUL - 20230413 - Add control if for product without radio_type #}
+                {% if is_rtype == false %}
+                            <div>
+                {% endif %}
+                {# EUL - 20230413 - END #}
+
+                <input type="hidden" id="hidden-primary-{{ idIndex }}" value="{{ pri_attr|json_encode() }}">
+                    <div class="product-option border-top mt-4">
+                        <label>{{ lang.size }}</label>
+                        <br>
+                        {% for secondary in sec_attr | sort((a, b) => a.attribute_value.id <=> b.attribute_value.id) %}
+                            <button name="sizeButton-{{ idIndex }}"
+                                    class="btn btn-light btn-sm btn-size size-btn mt-2 me-2"
+                                    :class="{ 'selected' : size === {{ secondary.attribute_value.id }} }"
+                                    @click="selectSize({{ secondary.attribute_value.id }}, {{ idIndex }})"
+                                    value="{{ secondary.variant4_whouse_id }}">{{ secondary.attribute_value.value }}</button>
+                        {% endfor %}
+                    </div>
+            </div>
+        </div>
+        <div class="product-option border-top mt-4 col-lg-5">
+            <small class="text-uppercase d-block fw-bolder my-2">
+                {{ lang.quantity }}
+            </small>
+            <div class="d-flex justify-content-start">
+                <input id="quantity-{{ idIndex }}" type="number" min="1" value="1"
+                       pattern="^[1-9][0-9]*(\.[0-9]+)?$|^0\.[0-9]+$" class="form-control  w-50"
+                       placeholder="Quantity"
+                       aria-label="Quantity" {% if sec_attr[0].available == null %} disabled {% endif %}>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+            <button type="button" class="btn btn-dark btn-dark-chunky flex-grow-1 me-2 text-white" onclick="cart.addToCart(document.getElementsByName('sizeButton-{{ idIndex }}'), document.getElementById('quantity-{{ idIndex }}').value, document.getElementById('customColor-{{ idIndex }}'), this)">
+                {{ lang.add_to_cart }}
+            </button>
+            <a href="{% if product.v_alias %}{{ basepath ~ product.v_alias }}{% else %}{{ uripath }}/product/{{ product.v_id }}{% endif %}" class="btn btn-secondary btn-secondary-chunky align-middle flex-grow-1 me-2 text-white centered-text-link">   <span>{{ lang.customize }}</span> </a>
+        </div>
+    </div>

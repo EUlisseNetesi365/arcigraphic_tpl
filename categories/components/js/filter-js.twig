@@ -1,0 +1,111 @@
+{% set items = json_decode(products) %}
+<script type="module">
+    //import { Filter } from "./classes/filter-class.js";
+    import { newFilter } from "{{ basepath }}/templates/{{ template }}/assets/js/classes/class-newfilter.js";
+
+    (function () {
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const inputMin = document.getElementById("price-min");
+            const inputMax = document.getElementById("price-max");
+            const colorsCheckBox = document.querySelectorAll(".colors");
+            const products = document.querySelectorAll(".product");
+            const brandsCheckBox = document.querySelectorAll(".brand");
+            const container = document.getElementById("product-list");
+
+            const priceSlider = document.querySelector('.filter-price') || null;
+            const parentElem = priceSlider && priceSlider.closest('.widget-filter-price');
+
+            const prices = [];
+
+            {% for item in items %}
+            {% set sec_attr = json_decode(item.secondary_attributes) %}
+            prices.push({{ sec_attr[0].price }});
+            {% endfor %}
+            const minPrice = Math.min(...prices);
+            const maxPrice = Math.max(...prices);
+            if (prices.length) {
+                if (minPrice !== maxPrice) {
+                    noUiSlider.create(priceSlider, {
+                        start: [minPrice, maxPrice],
+                        connect: true,
+                        tooltips: true,
+                        range: {
+                            'min': minPrice,
+                            'max': maxPrice
+                        },
+                        pips: {
+                            mode: 'values',
+                            values: [0, 50, 100, 250, 500],
+                            density: 100
+                        }
+                    });
+
+                    const filterMinInput = parentElem ? parentElem.querySelector('.filter-min') : false;
+                    const filterMaxInput = parentElem ? parentElem.querySelector('.filter-max') : false;
+                    const inputs = [filterMinInput, filterMaxInput];
+
+                    priceSlider.noUiSlider.on('update', function (values, handle) {
+                        inputs[handle].value = values[handle];
+                    });
+
+                    filterMinInput.addEventListener('change', function () {
+                        priceSlider.noUiSlider.set([this.value, null]);
+                    });
+
+                    filterMaxInput.addEventListener('change', function () {
+                        priceSlider.noUiSlider.set([null, this.value]);
+                    });
+                }
+            
+                const filterMin = document.querySelector(".noUi-handle-lower");
+                const filterMax = document.querySelector(".noUi-handle-upper");
+
+                const filter = new newFilter(container, products);
+
+                if (minPrice !== maxPrice) {
+                    /* Filter by Price */
+                    filterMin.onmouseup = function () {
+                        filter.filterByPrices(".price", this.ariaValueText, this.ariaValueMax);
+                    };
+
+                    filterMax.onmouseup = function () {
+                        filter.filterByPrices(".price", this.ariaValueMin, this.ariaValueText);
+                    };
+
+                    inputMin.oninput = function () {
+                        filter.filterByPrices(".price", this.value, inputMax.value);
+                    };
+
+                    inputMax.oninput = function () {
+                        filter.filterByPrices(".price", inputMin.value, this.value);
+                    };
+                }
+            }
+            /* Filter  by Color */
+            /*
+            colorsCheckBox.forEach((element) => {
+              element.addEventListener("click", (event) => {
+                filter.filterByColors(".color", event.target);
+              });
+            });
+
+            /!* Filter by Brands *!/
+            brandsCheckBox.forEach((element) => {
+              element.addEventListener("click", (event) => {
+                filter.filterByBrands(".brands", event.target);
+              });
+            });*/
+        });
+
+        const handleSticker = (sticker, action) => {
+            if (action === "attack") {
+                document.getElementById(sticker).classList.remove("d-none");
+            }
+
+            if (action === "remove") {
+                document.getElementById(sticker).classList.add("d-none");
+            }
+        };
+    })();
+</script>

@@ -1,0 +1,57 @@
+/* From theme bundle */
+.alert-primary-faded {
+    background-color: rgba(111, 70, 255, 0.1);
+    color: #6f46ff;
+}
+.alert-secondary-faded {
+    background-color: rgba(160, 160, 162, 0.1);
+    color: #a0a0a2;
+}
+.alert-success-faded {
+    background-color: rgba(25, 184, 162, 0.1);
+    color: #19b8a2;
+}
+.alert-info-faded {
+    background-color: rgba(13, 202, 240, 0.1);
+    color: #0dcaf0;
+}
+.alert-warning-faded {
+    background-color: rgba(255, 237, 3, 0.1);
+    color: #ffed03;
+}
+.alert-danger-faded {
+    background-color: rgba(219, 26, 42, 0.1);
+    color: #db1a2a;
+}
+.alert-light-faded {
+    background-color: hsla(0, 0%, 96.5%, 0.1);
+    color: #f6f6f6;
+}
+.alert-dark-faded {
+    background-color: rgba(28, 33, 44, 0.1);
+    color: #1c212c;
+}
+.alert-facebook-faded {
+    background-color: rgba(59, 89, 152, 0.1);
+    color: #3b5998;
+}
+.alert-twitter-faded {
+    background-color: rgba(0, 172, 238, 0.1);
+    color: #00acee;
+}
+.alert-white-faded {
+    background-color: hsla(0, 0%, 100%, 0.1);
+    color: #fff;
+}
+.alert-pink-faded {
+    background-color: rgba(255, 166, 158, 0.1);
+    color: #ffa69e;
+}
+.alert-teal-faded {
+    background-color: rgba(8, 197, 213, 0.1);
+    color: #08c5d5;
+}
+.alert-orange-faded {
+    background-color: rgba(252, 98, 41, 0.1);
+    color: #fc6229;
+}

@@ -1,0 +1,112 @@
+.swiper-slide button {
+	display: none;
+}
+.mySwiperHero img {
+	object-fit: cover;
+	height: 65vh;
+	width: 100%;
+}
+.mySwiperPrimo .swiper {
+	width: 100%;
+	height: 100%;
+}
+.mySwiperBottom .swiper {
+	width: 100%;
+	height: 100%;
+}
+
+.mySwiper3 {
+	overflow-x: hidden;
+}
+
+.mySwiper3 img {
+	height: auto;
+	width: 100%;
+}
+.bold {
+	font-weight: bold;
+	font-size: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+.mySwiperPrimo .swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.mySwiperBottom .swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.mySwiperPrimo .swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.mySwiperBottom .swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+@media screen and (min-width: 992px) {
+	.swiper-slide button {
+		display: unset;
+		position: absolute;
+		left: 10%;
+		bottom: 5rem;
+		border: none;
+		border-radius: 100vmax;
+		padding: 1rem 2.5rem;
+	}
+
+	.mySwiperHero {
+		margin-top: -13rem;
+	}
+
+	.pt-lg-10 {
+		padding-top: 13rem !important;
+	}
+	.mySwiperHero img {
+		object-fit: cover !important;
+		height: inherit;
+		width: 100%;
+		height: 100vh;
+	}
+}
+
+.mySwiper2 {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.mySwiper2.swiper-slide {
+	background-size: cover;
+	background-position: center;
+}
+
+.mySwiperThumbs {
+	height: 20%;
+	box-sizing: border-box;
+	padding: 10px 0;
+}
+
+.mySwiperThumbs .swiper-slide {
+	width: 25%;
+	height: 100%;
+	opacity: 0.4;
+}
+
+.mySwiperThumbs .swiper-slide-thumb-active {
+	opacity: 1;
+}
+

@@ -1,0 +1,18 @@
+<div class="mb-4 widget-filter border-top">
+    <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+       data-bs-toggle="collapse" href="#category-tags" role="button" aria-expanded="true"
+       aria-controls="category-tags">
+        {{ lang.tags }}
+    </a>
+    <div id="category-tags" class="collapse show">
+        {% set cat_attribs = json_decode(cat_attr_values) %}
+        {% set attributes = json_decode(cat_attribs[0].cat_attributes) %}
+        <ul class="list-unstyled d-inline-block mb-0 ms-2">
+            {% for attribute in attributes %}
+                <li class="bg-light py-1 px-2 cursor-pointer d-inline-block me-1 small">
+                    {{ attribute.name }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

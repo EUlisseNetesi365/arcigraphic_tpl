@@ -1,0 +1,58 @@
+<!-- Card Product-->
+<div class="product-grid">
+    <div class="product-image">
+        <a href="{{ uripath }}/product/{{ items[loop.index0].p_id }}" class="image">
+            {% if img_attr[0].image != null  %}
+                <img class="pic-1" src="{{ basepath ~ img_attr[0].image }}">
+                <img class="pic-2" src="{{ basepath ~ img_attr[1].image }}">
+            {% else %}
+                <img class="pic-1" src="{{ basepath }}/templates/arcigraphic/assets/images/logos/arcigraphic-fooder-small.png">
+            {% endif %}
+        </a>
+        {#        <div class="badge fixed text-center text-uppercase">-25%</div>
+                <ul class="product-links">
+                    <li>
+                        <a data-tip="quick add" href="#">
+                            <button class=" btn btn-sm color color-red rounded-circle mx-2" value="red"></button>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-tip="quick add" href="#">
+                            <button class="btn btn-sm color color-blue rounded-circle mx-2" value="blue"></button>
+                        </a>
+                    </li>
+                </ul>#}
+    </div>
+    <div class="product-content">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="title-index brands" href="#">{{ items[loop.index0].brand_name }}</h3>
+            <h3 class="title-index"><a href="{{ uripath }}/product/{{ items[loop.index0].p_id }}">{{ items[loop.index0].product_name }}</a></h3>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            {% if sec_attr[0].promo_price != null %}
+                <div class="fw-bolder"><s>{{sec_attr[0].price|number_format(2, '.', ',')}} {{ sec_attr[0].currency_value }}</s></div>
+                <div class="fw-bolder price">{{sec_attr[0].promo_price|number_format(2, '.', ',')}} {{ sec_attr[0].currency_value }}</div>
+            {% else %}
+                <div class="fw-bolder price">{{sec_attr[0].price|number_format(2, '.', ',')}} {{ sec_attr[0].currency_value }}</div>
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            {% if sec_attr[0].available != null %}
+                <div class="price">{{ lang_layout.item_available }}</div>
+            {% else %}
+                <div class="text-danger fw-bold">{{ lang_layout.item_not_available }}</div>
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <ul class="rating p-0 mb-0">
+                <li class="fas fa-star"></li>
+                <li class="fas fa-star"></li>
+                <li class="fas fa-star"></li>
+                <li class="fas fa-star"></li>
+                <li class="far fa-star"></li>
+            </ul>
+            {% if sec_attr[0].available != null %}<a onclick="cart.addToCart({{ items[loop.index0].p_id }}, 1, this)"><i class="fa-solid fa-cart-plus fa-lg"></i></a>{% endif %}
+        </div>
+    </div>
+</div>
+<!--/ Card Product-->

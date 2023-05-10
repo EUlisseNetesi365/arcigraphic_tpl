@@ -1,0 +1,73 @@
+/* From theme bundle */
+[class*="hover-"] {
+    will-change: transform, opacity, box-shadow;
+}
+.hover-lift {
+    transition: all 0.15s ease-in;
+}
+.hover-lift:hover {
+    transform: translate3d(0, -5px, 0);
+}
+.hover-lift-sm {
+    transition: all 0.15s ease-in;
+}
+.hover-lift-sm:hover {
+    transform: translate3d(0, -2px, 0);
+}
+.hover-opacity-75 {
+    transition: all 0.15s ease-in;
+}
+.hover-opacity-75:hover {
+    opacity: 0.75;
+}
+.hover-boxshadow {
+    transition: all 0.15s ease-in;
+}
+.hover-boxshadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(29, 48, 61, 0.06);
+}
+.hover-target-show {
+    opacity: 0;
+    transition: all 0.1s ease-in;
+}
+.hover-target-hide {
+    opacity: 1;
+    transition: all 0.1s ease-in;
+}
+.hover-show {
+    opacity: 0;
+}
+.hover-trigger:hover {
+    z-index: 20;
+}
+.hover-trigger:hover .hover-target-show {
+    opacity: 1;
+    transition: all 0.3s ease-in;
+}
+.hover-trigger:hover .hover-target-hide {
+    opacity: 0;
+}
+.hover-trigger:hover .hover-show {
+    opacity: 1;
+}
+.hover-pseudo-bg {
+    position: relative;
+}
+.hover-pseudo-bg:before {
+    content: "";
+    display: block;
+    background: #fff;
+    box-shadow: 0 1rem 2.5rem rgba(29, 48, 61, 0.125);
+    border-radius: 0.25rem;
+    width: 100%;
+    min-height: 100%;
+    height: var(--theme-listing-page-card-pseudo-hover-height);
+    transform: scale3d(1.1, 1.1, 1.1);
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease-in;
+    opacity: 0;
+}
+.hover-pseudo-bg:hover:before {
+    opacity: 1;
+}

@@ -1,0 +1,352 @@
+<script>
+    const checkout = Vue.createApp({
+        data() {
+            return {
+                addresses: [],
+                messageEmpty: `{{ cart_empty }}`,
+                //messageError: '',
+                sameData: false,
+                showCart: '',
+                //showError: false,
+                showPage: 'close',
+                showShipping: true,
+                showShipPrivate: false,
+                showShipCompany: false,
+                showBillingPrivate: false,
+                showBillingCompany: false,
+                showBillingOptions: false,
+                showBilling: false,
+                showAnonimous: {% if username %} false {% else %} true {% endif %},
+                isLogged: {% if username %} true {% else %} false {% endif %},
+                isShipLogged: false,
+                isBillingLogged: false,
+                isShipRequired: false,
+                isShipSelectRequired: false,
+                isShipPrivateAnonimousRequired: false,
+                isShipPrivateRequired: false,
+                isShipCompanyRequired: false,
+                isBillingRequired: false,
+                isBillingSelectRequired: false,
+                isBillingPrivateRequired: false,
+                isBillingPrivateAnonimousRequired: false,
+                isBillingCompanyRequired: false,
+                cartData: cartData,
+                /*quantity: null,*/
+                /*subtotal: null,
+                shipping: null,
+                total: null,*/
+            }
+        },
+        methods: {
+            closeAlert (display) {
+                display.innerHTML = "";
+                display.classList.remove("alert-primary", "alert-success");
+                display.classList.add("d-none");
+            },
+            changeQuantity(id, quantity, el) {
+                fetch("{{ basepath }}/edit_item_cart", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({
+                        v4warehouses_id: parseInt(id),
+                        quantity: parseFloat(quantity),
+                    }), // Adding headers to the request
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.code === 6) {
+                            this.showPopOverError(el, "{{ lang_layout.not_available }}");
+                        }
+                        if (result.success === 1) {
+                            this.setDataToView(result.items);
+                        }
+                    });
+            },
+            deleteItem(id) {
+                fetch("{{ basepath }}/del_from_cart", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({
+                        v4warehouses_id: id,
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.success === 1) {
+                            if (parseInt(result.items.length) !== 0) {
+                                this.setDataToView(result.items);
+                            } else {
+                                this.showCart = 'empty';
+                                //this.messageEmpty = "{{ lang.cart_empty }}";
+                                //badgeCart.classList.replace("d-block", "d-none");
+                            }
+                        }
+                    });
+            },
+            getCustomerData() {
+                fetch("{{ basepath }}/read_cdata", {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.code === 6) {
+
+                        }
+                        if (result.success === 1) {
+                            this.addresses = JSON.parse(result.userdata[0].data);
+                            if (this.addresses && this.addresses.length) {
+                                this.addresses.forEach(address => {
+                                    if (address.is_default_ship === 1 && address.is_default_invoice === 1) {
+                                        this.sameData = true;
+                                    }
+                                });
+                            }
+                        }
+                    });
+            },
+            goToCheckout() {
+                this.showPage = 'checkout';
+            },
+            goToCart() {
+                this.showPage = 'cart'
+            },
+            handleChangeAddress(event) {
+                if (event.target.value !== "") {
+                    fetch("{{ basepath }}/update_address_cart", {
+                        method: "POST",
+                        mode: "cors",
+                        body: JSON.stringify({id: event.target.value, name: event.target.name}),
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                        },
+                    })
+                        .then((res) => res.json())
+                        .then(result => {
+                            console.log(result);
+                            if (result.code === 6) {
+
+                            }
+                            if (result.success === 1) {
+
+                            }
+                        });
+                }
+            },
+            handleCheckout(event, validator) {
+                const button_submit = validator.form.querySelector("button[type='submit']");
+                button_submit.disabled = true;
+
+                fetch("{{ basepath }}/add_customer_info", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify(validator.getEntries()),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        const display = document.querySelector("#formCheckout .error-display");
+                        if (result.msg) {
+                            display.classList.remove("d-none", "alert-primary", "alert-success");
+                            //TODO: Finish to set code error
+                            switch (parseInt(result.code)) {
+                                case 1:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.invalid_request }}";
+                                    break;
+                                case 'EMAIL_NOT_CONFIRMED':
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang_layout.error_email_not_confirmed }}";
+                                    break;
+                                case 0:
+                                    if (parseInt(result.success) === 1) {
+                                        console.log("acquisto eseguito");
+                                        validator.clean();
+                                        this.closeAlert(display);
+                                        location.href = "{{ uripath }}/wire";
+                                    }
+                                    break;
+                            }
+                        }
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    })
+                    .finally(() => {
+                        button_submit.disabled = false;
+                    });
+
+            },
+            handleSameData() {
+                if (document.getElementById('same-address').checked) {
+                    this.showBilling = false;
+                    this.showBillingOptions = false;
+                    this.isBillingRequired = false;
+                    this.isBillingPrivateRequired = false;
+                    this.isBillingCompanyRequired = false;
+                    if (this.isLogged) {
+                        this.isShipCompanyRequired = false;
+                        this.isShipPrivateRequired = false;
+                        this.isShipRequired = false;
+                        this.isShipSelectRequired = true;
+                        this.isBillingSelectRequired = false;
+                    }
+                } else {
+                    if (this.isLogged) {
+                        this.showBilling = true;
+                        this.isBillingSelectRequired = true;
+                        this.isShipSelectRequired = true;
+                        this.showBillingOptions = false;
+                        //this.handleShowBillingPrivate();
+                    } else {
+                        this.showBilling = true;
+                        this.showBillingOptions = true;
+                        this.handleShowBillingPrivate();
+                    }
+                }
+            },
+            handleShowShipping() {
+                !this.showShipping ? this.showShipping = true : this.showShipping = false;
+                if (this.showShipping) {
+                    document.getElementById('addShipAddress').value = 1;
+                    document.getElementById('defaultShipping').disabled = true;
+                    this.isShipSelectRequired = false;
+                    this.setShipPrivateRequired(true);
+                } else {
+                    document.getElementById('addShipAddress').value = 0;
+                    document.getElementById('defaultShipping').disabled = false;
+                    this.isShipSelectRequired = true;
+                    this.setShipPrivateRequired(false);
+                }
+            },
+            handleShowBilling() {
+                !this.showBillingOptions ? this.showBillingOptions = true : this.showBillingOptions = false;
+                if (this.showBillingOptions) {
+                    document.getElementById('addBillingAddress').value = 1;
+                    document.getElementById('defaultBilling').disabled = true;
+                    this.isBillingSelectRequired = false;
+                    this.setBillingPrivateRequired(true);
+                } else {
+                    document.getElementById('addBillingAddress').value = 0;
+                    document.getElementById('defaultBilling').disabled = false;
+                    this.isBillingSelectRequired = true;
+                    this.setBillingPrivateRequired(true);
+                }
+            },
+            handleShowBillingPrivate() {
+                if (document.getElementById("isBillingPrivate").checked) {
+                    this.showBillingPrivate = true;
+                    this.showBillingCompany = false;
+                    this.setBillingPrivateRequired(true);
+                    this.setBillingCompanyRequired(false);
+                }
+                if (document.getElementById("isBillingCompany").checked) {
+                    this.showBillingPrivate = false;
+                    this.showBillingCompany = true;
+                    this.setBillingPrivateRequired(false);
+                    this.setBillingCompanyRequired(true);
+                }
+            },
+            handleShowShippingPrivate() {
+                if (document.getElementById("isShipPrivate").checked) {
+                    this.showShipPrivate = true;
+                    this.showShipCompany = false;
+                    this.setShipPrivateRequired(true);
+                    this.setShipCompanyRequired(false);
+                }
+                if (document.getElementById("isShipCompany").checked) {
+                    this.showShipPrivate = false;
+                    this.showShipCompany = true;
+                    this.setShipPrivateRequired(false);
+                    this.setShipCompanyRequired(true);
+                }
+            },
+            numberFormat(data) {
+                const euro = Intl.NumberFormat("it-IT", {
+                    style: "currency",
+                    currency: "EUR",
+                });
+                return euro.format(data);
+            },
+            setDataToView(data) {
+                this.cartData.items = data;
+                this.cartData.numberItems = data.length;
+                this.cartData.subtotal = data[0].subtotal;
+                this.cartData.shipping = data[0].shipping;
+                this.cartData.total = data[0].total;
+            },
+            setShipPrivateRequired (value) {
+                this.isShipRequired = value;
+                this.isShipPrivateRequired = value;
+                if(!this.isLogged) this.isShipPrivateAnonimousRequired = value;
+            },
+            setShipCompanyRequired (value) {
+                this.isShipRequired = value;
+                this.isShipCompanyRequired = value;
+            },
+            setBillingPrivateRequired (value) {
+                this.isBillingRequired = value;
+                this.isBillingPrivateRequired = value;
+                if(!this.isLogged) this.isBillingPrivateAnonimousRequired = value;
+            },
+            setBillingCompanyRequired (value) {
+                this.isBillingRequired = value;
+                this.isBillingCompanyRequired = value;
+            },
+            showPopOverError(el, message) {
+                const template = '<div class="popover bg-primary p-0" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-header"></h3><div class="popover-body text-white"></div></div>'
+
+                const popover = bootstrap.Popover.getOrCreateInstance(el, {
+                    placement: 'right',
+                    content: message,
+                    template: template,
+                });
+                popover.show();
+
+                setTimeout(function () {
+                    popover.hide()
+                }, 1500);
+            }
+        },
+        created() {
+            const self = this;
+            setTimeout(function () {
+                if (self.cartData.numberItems !== 0) {
+                    self.showCart = "";
+                    self.showPage = 'cart';
+                } else {
+                    self.showCart = 'empty';
+                    document.getElementById("btnCheckout").disabled = true;
+                }
+            }, 500);
+        },
+        mounted: function () {
+            !this.isLogged && this.handleShowShippingPrivate();
+            this.handleSameData();
+            this.isLogged && this.getCustomerData();
+            this.isLogged ? this.showShipping = false : this.showShipping = true;
+
+            this.isLogged && document.getElementById('defaultShipping').addEventListener('change', this.handleChangeAddress);
+            this.isLogged && document.getElementById('showShipAddress').addEventListener('click', this.handleShowShipping);
+            (!this.sameData && this.isLogged) && document.getElementById('defaultBilling').addEventListener('change', this.handleChangeAddress);
+            (!this.sameData && this.isLogged) && document.getElementById('showBillingAddress').addEventListener('click', this.handleShowBilling);
+
+            (new FormValidator(document.getElementById("formCheckout"), this.handleCheckout)).initialize();
+            setTimeout(function () {
+                console.log(cartData);
+            }, 500);
+        },
+        delimiters: ["{_", "_}"],
+    }).mount('#cartCheckout');
+</script>

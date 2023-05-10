@@ -1,0 +1,198 @@
+/* From theme Bundle */
+.nav-link-sm {
+    font-size: 0.75rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-transform: uppercase;
+}
+/*.nav-link-stripped {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    color: #a0a0a2;
+    font-weight: 500;
+    margin-bottom: -1px;
+}
+.nav-link-stripped.active {
+    border-bottom: 1px solid #1c212c;
+    color: #1c212c;
+}*/
+.navbar-nav a:active,
+.navbar-nav a:focus {
+    background: transparent;
+}
+/*.navbar-dark .btn-link {
+    color: #fff;
+}
+.navbar-dark.bg-white-hover:hover .btn-link,
+.navbar-dark.bg-white-hover:hover .navbar-brand,
+.navbar-dark.bg-white-hover:hover .navbar-collapse:not(.show) .btn-link,
+.navbar-dark.bg-white-hover:hover .navbar-collapse:not(.show) .nav-link {
+    color: #1c212c;
+}
+.navbar-light.bg-dark-hover:hover .btn-link,
+.navbar-light.bg-dark-hover:hover .navbar-brand,
+.navbar-light.bg-dark-hover:hover .navbar-collapse:not(.show) .btn-link,
+.navbar-light.bg-dark-hover:hover .navbar-collapse:not(.show) .nav-link {
+    color: #fff;
+}*/
+.nav-link {
+    align-items: center;
+    display: flex;
+    font-weight: 500;
+}
+.navbar-nav .dropdown .dropdown-menu:before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    height: calc(1rem + 1px);
+    width: 100%;
+}
+/*@media (min-width: 992px) {
+    .navbar-collapse:not(.show) {
+        display: flex !important;
+    }
+}*/
+@media (max-width: 991.98px) {
+    .navbar-active {
+        overflow: hidden;
+    }
+    .navbar-collapse:not(.navbar-collapse-expand) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100vh !important;
+        width: 100vw !important;
+        z-index: 9999;
+        background: #1c212c;
+        margin: 0 !important;
+        opacity: 0;
+        padding: 5rem 1.25rem 4rem;
+        overflow-y: scroll;
+        transition: all 0.3s ease-in;
+    }
+    .navbar-collapse-light {
+        background: #fff !important;
+    }
+    .navbar-collapse-light .nav-link {
+        color: #1c212c !important;
+    }
+    .navbar-collapse.show {
+        opacity: 1;
+    }
+    .navbar-collapse.show:not(.navbar-collapse-expand) {
+        -webkit-animation: fadeInUp 0.3s;
+        animation: fadeInUp 0.3s;
+    }
+    .navbar-collapse .container-fluid,
+    .navbar-collapse .container-lg,
+    .navbar-collapse .container-md,
+    .navbar-collapse .container-sm,
+    .navbar-collapse .container-xl,
+    .navbar-collapse .container-xxl {
+        padding: 0;
+    }
+    .navbar-nav .nav-link {
+        font-size: 1.75rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .navbar-nav .nav-link:after {
+        font-size: inherit;
+    }
+    .navbar-nav .dropdown-menu .dropdown-menu {
+        display: block;
+        box-shadow: none !important;
+        margin: 0 !important;
+        min-width: auto !important;
+        padding: 0 0.5rem 0.5rem;
+    }
+    .navbar-nav .dropdown-menu .dropdown-item.dropdown-toggle {
+        font-weight: 500;
+    }
+    .navbar-nav .dropdown-menu .dropdown-item.dropdown-toggle:after {
+        display: none;
+    }
+}
+.nav-link,
+.navbar-brand {
+    transition: none;
+}
+
+/* From Arcigraphic */
+.navbar {
+    position: fixed!important;
+    -webkit-transform: none!important;
+    transform: none!important;
+    top: 0;
+    z-index: 9 !important;
+    background-color: rgba(0, 0, 0, 1) !important;
+    font-size: 0.85rem;
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+nav,
+.nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link,
+button::after {
+    -webkit-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+    color: #000;
+}
+.nav-link.show.dropdown-toggle::after {
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    color: #000;
+}
+
+nav i {
+    font-size: 1rem !important;
+}
+
+.navbar:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -5;
+}
+
+.nav-item.dropdown.dropdown-mega {
+    position: static;
+}
+.nav-item.dropdown.dropdown-mega .dropdown-menu {
+    top: auto;
+    left: auto;
+}
+
+@media screen and (min-width: 992px) {
+    .navbar,
+    .navbar > div {
+        color: unset;
+        background: transparent !important;
+    }
+
+    .navbar:after {
+        display: none;
+    }
+
+    .nav-link,
+    .nav-link:focus,
+    .nav-link:hover {
+        -webkit-transition: color 200ms ease-in-out;
+        transition: color 200ms ease-in-out;
+    }
+    .nav-link:focus,
+    .nav-link:hover { color: #e7047e !important; }
+}

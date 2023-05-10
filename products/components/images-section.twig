@@ -1,0 +1,70 @@
+{#<div class="row g-1">
+ <div class="gallery-thumbs-vertical" id='x'>
+ </div>
+    <div class="swiper-container gallery-thumbs-vertical col-2 pb-4">
+        <div class="swiper-wrapper">
+            {% for imgpro in img_attr %}
+                <div class="swiper-slide bg-light bg-light h-auto">
+                    <picture>
+                        <img class="img-fluid mx-auto d-table" src="{{ basepath ~ imgpro.image }}" alt="">
+                    </picture>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="swiper-container gallery-top-vertical col-10">
+        <div class="swiper-wrapper">
+            {% for imgprobig in img_attr %}
+                <div class="swiper-slide bg-white h-auto">
+                    <picture>
+                        <img class="img-fluid d-table mx-auto demo-trigger "
+                         src="{{ basepath ~ imgprobig.image }}"
+                         data-zoom="{{ basepath ~ imgprobig.image }}" alt="">
+                    </picture>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>#}
+<div class="row g-1">
+    <div class="swiper-container gallery-thumbs-vertical col-2 pb-4">
+        <div class="swiper-wrapper">
+            {% for image_thumb in images %}
+                {% if image_thumb.is_blend == 1 %}
+                    <div class="bg-light bg-light h-auto svg-slide mb-1">
+                        <object data="{{ basepath ~ image_thumb.image_blend }}" class="apply-color img-fluid mx-auto d-table" alt="">
+                            <img src="{{ basepath ~ image_thumb.image }}" class="img-fluid mx-auto d-table" alt="">
+                        </object>
+                    </div>
+                {% else %}
+                    <div class="swiper-slide bg-light bg-light h-auto">
+                        <picture>
+                            <img class="img-fluid mx-auto d-table" src="{{ basepath ~ image_thumb.image }}" alt="">
+                        </picture>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="swiper-container gallery-top-vertical col-10">
+        <div class="swiper-wrapper">
+            {% for image in images %}
+                {% if image.is_blend == 1 %}
+                    <div class="bg-white h-auto d-none svg-slide">
+                        <object data="{{ basepath ~ image.image_blend }}" class="apply-color img-fluid d-table mx-auto demo-trigger" data-zoom="{{ basepath ~ image.image }}" alt="">
+                            {#<img src="{{ basepath ~ image.image }}" class="img-fluid d-table mx-auto demo-trigger " alt="">#}
+                        </object>
+                    </div>
+                {% else %}
+                    <div class="swiper-slide bg-white h-auto">
+                        <picture>
+                            <img class="img-fluid d-table mx-auto"
+                             src="{{ basepath ~ image.image }}"
+                             data-zoom="{{ basepath ~ image.image }}" alt="">
+                        </picture>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

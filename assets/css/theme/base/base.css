@@ -1,0 +1,19 @@
+/* From Theme Bundle */
+body {
+    overflow-x: hidden;
+}
+.fs-p,
+p {
+    font-size: 1.08rem;
+}
+:active,
+:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+img {
+    image-rendering: smooth;
+}
+.disable-child-pointer * {
+    pointer-events: none;
+}

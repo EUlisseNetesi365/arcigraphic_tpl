@@ -1,0 +1,15 @@
+/* From theme bundle */
+.rating .stars {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+}
+.rating .stars.position-absolute {
+    position: absolute;
+    z-index: 2;
+    flex-wrap: nowrap;
+}
+.rating .stars i {
+    display: inline-block;
+}

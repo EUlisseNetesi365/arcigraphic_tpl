@@ -1,0 +1,37 @@
+<form id="formInfoRequest" class="needs-validation">
+        <div align="center" class="mb-3">
+            <h2 class="title-2 text-black mb-3 border-title">{{ lang.contact_us }}</h2>
+            <h5>{{ lang.question }} {{ lang.contact_service }}.</h5>
+        </div>
+        <!-- First Name-->
+        <div class="form-group">
+            <label for="name" class="form-label">{{ lang.name }}</label>
+            <input type="text" pattern=".*\S+.*" class="form-control" name="name"
+                   id="name" required>
+            <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+        </div>
+        <!-- Last Name-->
+        <div class="form-group">
+            <label for="surname" class="form-label">{{ lang.last_name }}</label>
+            <input type="text" pattern=".*\S+.*" class="form-control" name="surname"
+                   id="surname" required>
+            <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+        </div>
+        <!-- Email -->
+        <div class="form-group">
+            <label class="form-label">{{ lang.email }}&nbsp;<small>{{ lang.optional }}</small></label>
+            <input type="email" class="form-control" name="email" placeholder="you@example.com"
+                   id="email" required>
+            <div class="invalid-feedback">{{ lang.error_required_field }}</div>
+        </div>
+        <div class="">
+            <div class="form-group">
+                <label class="form-label">{{ lang.note }}&nbsp;<small>{{ lang.optional }}</small></label>
+                <textarea type="text" class="form-control" name="note" id="note" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="error-display alert d-none"></div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-dark px-5 text-white-100">{{ lang.send }}</button>
+        </div>
+</form>

@@ -1,0 +1,24 @@
+/* Override lib vendor */
+[data-aos="reveal-left"].aos-animate .card-reveal-body:after,
+[data-aos="reveal-left"].aos-animate .card-reveal-img:after,
+[data-aos="reveal-right"].aos-animate .card-reveal-body:after,
+[data-aos="reveal-right"].aos-animate .card-reveal-img:after {
+    opacity: 0;
+}
+[data-aos="reveal-left"].aos-animate .card-reveal-text,
+[data-aos="reveal-right"].aos-animate .card-reveal-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+[data-aos="reveal-left"].aos-animate .card-reveal-img img,
+[data-aos="reveal-right"].aos-animate .card-reveal-img img {
+    transform: translateX(0);
+}
+[data-aos="reveal-right"].aos-animate .card-reveal-body:after,
+[data-aos="reveal-right"].aos-animate .card-reveal-img:after {
+    transform: translateX(100%);
+}
+[data-aos="reveal-left"].aos-animate .card-reveal-body:after,
+[data-aos="reveal-left"].aos-animate .card-reveal-img:after {
+    transform: translateX(-100%);
+}

@@ -1,0 +1,39 @@
+/* From Them bundle */
+:root {
+    --bs-font-sans-serif: "Barlow", sans-serif;
+    --bs-spacer: 1rem;
+    --bs-gutter-width: 1.5rem;
+    --theme-font-headings: "Barlow", sans-serif;
+    --theme-font-icon: "remixicon";
+    --theme-font-icon-style: "normal";
+    --theme-form-checkbox-before-size: 20px;
+    --theme-form-checkbox-bg-before-size: 28px;
+    --theme-form-checkbox-after-width: 6px;
+    --theme-form-checkbox-after-height: 12px;
+    --theme-form-checkbox-border-radius: 2px;
+    --theme-form-checkbox-after-position-left: 7px;
+    --theme-form-checkbox-after-position-top: 4px;
+    --theme-form-checkbox-bg-after-position-left: 11px;
+    --theme-form-checkbox-bg-after-position-top: 7px;
+    --theme-form-checkbox-after-border-width: 2px;
+    --theme-form-checkbox-active-color: #1c212c;
+    --theme-form-radio-button-after-size: 10px;
+    --theme-form-radio-button-after-position-left: 5px;
+    --theme-form-radio-button-after-position-top: 6px;
+    --theme-form-radio-button-border-radius: 100%;
+    --theme-breakpoint-xs: 0;
+    --theme-breakpoint-sm: 576px;
+    --theme-breakpoint-md: 768px;
+    --theme-breakpoint-lg: 992px;
+    --theme-breakpoint-xl: 1200px;
+    --theme-breakpoint-xxl: 1400px;
+    --theme-maxwidth-breakpoint-sm: 100%;
+    --theme-maxwidth-breakpoint-md: 100%;
+    --theme-maxwidth-breakpoint-lg: 100%;
+    --theme-maxwidth-breakpoint-xl: 1140px;
+    --theme-maxwidth-breakpoint-xxl: 1320px;
+    --theme-listing-page-sidebar-hide-filter-margin: -16.66667%;
+    --theme-listing-page-card-pseudo-hover-height: 100%;
+    --theme-translate-X: 0;
+    --theme-translate-Y: 0;
+}

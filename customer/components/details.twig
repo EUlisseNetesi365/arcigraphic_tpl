@@ -1,0 +1,76 @@
+<div class="col-12 col-lg-10 mx-auto">
+    <div class="row">
+        <div class="col-12 col-md-6 justify-content-center align-items-center">
+            <h4>{{ lang.title_info }}</h4>
+            <p>
+                <button type="button" id="goToAddress" class="btn btn-dark btn-sm">{{ lang.add_new_address }}</button>
+            </p>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="address error-display alert d-none"></div>
+        </div>
+    </div>
+    <div v-if="addresses == null" class="row">
+        <h4>{{ lang.empty_address }}</h4>
+    </div>
+    <!-- Card Address -->
+    <div v-else class="row row-cols-1 row-cols-md-2 g-4">
+        <div v-for="address in addresses" class="col">
+            <div class="card border-1 h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <template
+                                v-if="address.is_default_ship == 1 && address.is_default_invoice == null">{{ lang.is_default_ship }}</template>
+                        <template
+                                v-if="address.is_default_ship == null && address.is_default_invoice == 1">{{ lang.is_default_invoice }}</template>
+                        <template
+                                v-if="address.is_default_ship == 1 && address.is_default_invoice == 1">{{ lang.is_both_default }}</template>
+                        <template
+                                v-if="address.is_default_ship == null && address.is_default_invoice == null">{{ lang.no_default }}</template>
+                    </h6>
+                    <button v-if="address.is_default_ship == null && address.is_default_invoice == null" type="button"
+                            class="no-bg no-border p-0 text-end" @click="handleDeleteAddress(address.id)">
+                        <i class="ri-delete-bin-2-fill fs-5"></i>
+                    </button>
+                </div>
+                <div class="card-body pt-1">
+                    {#<a class="card-link" href="#" @click.prevent="goToEdit(address.id)">{{ lang.modify }}</a>#}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <template v-if="address.is_private == 0">{_ address.company_name _}</template>
+                            <template v-if="address.is_private == 1">{_ address.name _}&nbsp;{_ address.surname _}</template>
+                        </li>
+                        <li v-if="address.is_private == 1" class="list-group-item">
+                            {{ lang.birthdate }}: {_ formatDate(address.birthdate) _}
+                        </li>
+                        <li class="list-group-item">
+                            {_ address.address _}&nbsp;({_ address.province _}) - {_ address.city _} - {_ address.zip_code _} -
+                            <template v-for="country in countries">
+                                <template v-if="country.id == address.country_id">{_ country.name _}</template>
+                            </template>
+                        </li>
+                        <li v-if="address.is_private == 0" class="list-group-item">
+                            <template v-if="address.pec">Pec: {_ address.pec _}</template>&nbsp;-&nbsp;<template v-if="address.sdi">Sdi: {_ address.sdi _}</template>
+                        </li>
+                        <li v-if="(address.vat_number && address.is_private == 0) || (address.fiscal_code && address.is_private == 1)"
+                            class="list-group-item">
+                            <p v-if="address.vat_number" class="mb-0">{{ lang.vat_number }}: {_ address.vat_number _}</p>
+                            <p v-if="address.fiscal_code" class="mb-0">{{ lang.fiscal_code }}: {_ address.fiscal_code _}</p>
+                        </li>
+                        <li v-if="address.phone1 || address.phone2" class="list-group-item">
+                            <p v-if="address.phone1" class="mb-0">T: {_ address.phone1 _}</p>
+                            <p v-if="address.phone2" class="mb-0">T: {_ address.phone2 _}</p>
+                        </li>
+                        <li v-if="address.note" class="list-group-item">
+                            <p class="mb-0">Note: {_ address.note _}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a class="card-link" href="#" @click.prevent="goToEdit(address.id)">{{ lang.modify }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ Card Address -->
+</div>

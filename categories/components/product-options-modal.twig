@@ -1,0 +1,100 @@
+    <div class="product-option mb-4 mt-4">
+        <h6><b>{{ lang.options }}</b></h6>
+            <div class="row mt-4"></div>
+            <div class="d-flex flex-wrap">
+                        <div v-for="(primary, indexOption) in pri_attr_vue[index]" :class="setColumn(JSON.parse(primary.attribute.settings).type)">
+{#                        <div v-for="(primary, indexOption) in pri_attr_vue[index]" class="col-md-12">#}
+
+{#                            <div class="col-md-12">#}
+                                <div v-if="JSON.parse(primary.attribute.settings).type == 'radio_type'">
+                                    <div class="cuts_content text-center mt-4 me-2">
+                                        <img :value="primary.attribute_value.id" class="d-block mx-auto" width="55"
+                                             height="55" :src="'{{ basepath }}/templates/{{ template }}/'+JSON.parse(primary.attribute_value.settings).path"/>
+                                        <i align="start">{_ primary.attribute_value.value _}</i>
+                                    </div>
+                                </div>
+{#                            </div>#}
+
+                        <div v-else>
+                        <h6 class="border-top mt-2"><b>{_ primary.attribute.value _}</b></h6>
+                        <div class="container p-0">
+{#                            <div class="row">#}
+                                        <div v-if="JSON.parse(primary.attribute.settings).type == 'select'" class="col-md-12">
+                                        <div class="pb-2 pt-2" v-if="JSON.parse(primary.attribute_value.settings).type == 'colorpicker'">
+                                            <label class="d-flex flex-row" style="width:fit-content" v-if="showColors == 2">
+                                                <input :id="'base-'+index" type="color" @input="setColor($event)"
+                                                       :value="color || '#ffffff'">
+                                                <input :id="'customColor-'+index" type="text" value="#ffffff"/>
+                                            </label>
+                                        </div>
+
+                                    <div class="col-md-12">
+                                        <select :name="primary.attribute.value+'-'+ index"
+                                                :id="primary.attribute.id+'-'+index" class="form-control form-control-sm">
+                                            <option :value="primary.attribute_value.id">{_ primary.attribute_value.value _}</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div v-if="JSON.parse(primary.attribute.settings).type == 'radio'" class="col-md-12">
+                                        <label>{_ primary.attribute.value _}</label>
+                                        <input class="form-control" type="radio" :value="primary.attribute_value.id">
+                                        <label>{_ primary.attribute_value.value _}</label>
+                                    </div>
+                                    <div v-if="JSON.parse(primary.attribute.settings).type == 'checkbox'" class="col-md-12 d-flex">
+                                        <input class="form-control" type="checkbox"
+                                               :value="primary.attribute_value.id">
+                                        <label>{_ primary.attribute_value.value _}</label>
+                                    </div>
+                                    <div v-if="JSON.parse(primary.attribute.settings).type == 'checkbox_type'" class="col-md-12 d-flex">
+                                        <input class="form-control" type="checkbox"
+                                               :value="primary.attribute_value.id">
+                                        <label>{_ primary.attribute_value.value _}</label>
+                                    </div>
+{#                            </div>#}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+{#            </div>#}
+                <div class="d-flex flex-wrap justify-content-between">
+                    <div class="product-option border-top mt-4">
+                        <label>{{ lang.size }}</label>
+                        <br>
+{#                        {% for secondary in sec_attr | sort((a, b) => a.attribute_value.id <=> b.attribute_value.id) %}#}
+                            <button v-for="(secondary, indexSize) in sec_attr_vue[index]" :name="'sizeButton-'+index"
+                                    class="btn btn-light btn-sm btn-size size-btn mt-2 me-2"
+                                    :class="{ 'selected' : size ===  secondary.attribute_value.id }"
+                                    @click="selectSize( secondary.attribute_value.id, index)"
+                                    :value="secondary.variant4_whouse_id">{_ secondary.attribute_value.value _}
+                            </button>
+{#                        {% endfor %}#}
+                    </div>
+                </div>
+        </div>
+        <div class="product-option border-top mt-4 col-lg-5">
+            <small class="text-uppercase d-block fw-bolder my-2">
+                {{ lang.quantity }}
+            </small>
+            <div class="d-flex justify-content-start">
+                <input v-if="sec_attr_vue[index][0].available == 0" :name="'quantity-'+index " type="number" min="1" value="1"
+                       pattern="^[1-9][0-9]*(\.[0-9]+)?$|^0\.[0-9]+$" class="form-control  w-50"
+                       placeholder="Quantity"
+                       aria-label="Quantity" disabled>
+                <input v-else :name="'quantity-'+index " type="number" min="1" value="1"
+                       pattern="^[1-9][0-9]*(\.[0-9]+)?$|^0\.[0-9]+$" class="form-control  w-50"
+                       placeholder="Quantity"
+                       aria-label="Quantity">
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+            <button type="button" :id="'add-to-cart-'+index" class="btn btn-dark btn-dark-chunky flex-grow-1 me-2 text-white" @click="addToCart('sizeButton-'+index, 'quantity-'+index, 'customColor-'+index, 'add-to-cart-'+index)">
+                {{ lang.add_to_cart }}
+            </button>
+{#            <button type="button" class="btn btn-dark btn-dark-chunky flex-grow-1 me-2 text-white" @click="cart.addToCart(document.getElementsByName('sizeButton-'+index), document.getElementById('quantity-{{ idIndex }}').value, document.getElementById('customColor-{{ idIndex }}'), this)">#}
+{#                {{ lang.add_to_cart }}#}
+{#            </button>#}
+            <a v-if="item.v_alias" :href="'{{ basepath }}'+item.v_alias" class="btn btn-secondary btn-secondary-chunky align-middle flex-grow-1 me-2 text-white centered-text-link">   <span>{{ lang.customize }}</span> </a>
+            <a v-else :href="'{{ uripath }}/product/'+item.v_id" class="btn btn-secondary btn-secondary-chunky align-middle flex-grow-1 me-2 text-white centered-text-link">   <span>{{ lang.customize }}</span> </a>
+        </div>
+    </div>
+

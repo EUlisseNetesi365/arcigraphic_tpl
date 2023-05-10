@@ -1,0 +1,43 @@
+/* From theme bundle */
+.shadow-primary {
+    box-shadow: -1px 1px 13px -6px rgba(111, 70, 255, 0.85);
+}
+.shadow-secondary {
+    box-shadow: -1px 1px 13px -6px rgba(160, 160, 162, 0.85);
+}
+.shadow-success {
+    box-shadow: -1px 1px 13px -6px rgba(25, 184, 162, 0.85);
+}
+.shadow-info {
+    box-shadow: -1px 1px 13px -6px rgba(13, 202, 240, 0.85);
+}
+.shadow-warning {
+    box-shadow: -1px 1px 13px -6px rgba(255, 237, 3, 0.85);
+}
+.shadow-danger {
+    box-shadow: -1px 1px 13px -6px rgba(219, 26, 42, 0.85);
+}
+.shadow-light {
+    box-shadow: -1px 1px 13px -6px hsla(0, 0%, 96.5%, 0.85);
+}
+.shadow-dark {
+    box-shadow: -1px 1px 13px -6px rgba(28, 33, 44, 0.85);
+}
+.shadow-facebook {
+    box-shadow: -1px 1px 13px -6px rgba(59, 89, 152, 0.85);
+}
+.shadow-twitter {
+    box-shadow: -1px 1px 13px -6px rgba(0, 172, 238, 0.85);
+}
+.shadow-white {
+    box-shadow: -1px 1px 13px -6px hsla(0, 0%, 100%, 0.85);
+}
+.shadow-pink {
+    box-shadow: -1px 1px 13px -6px rgba(255, 166, 158, 0.85);
+}
+.shadow-teal {
+    box-shadow: -1px 1px 13px -6px rgba(8, 197, 213, 0.85);
+}
+.shadow-orange {
+    box-shadow: -1px 1px 13px -6px rgba(252, 98, 41, 0.85);
+}

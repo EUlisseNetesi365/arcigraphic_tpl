@@ -1,0 +1,175 @@
+{% set filter_settings = json_decode(settings_filter) %}
+<div class="col-lg-3">
+    <div class="pe-4">
+        <!-- Products Aside -->
+        <aside>
+            <div class="mb-4 form-group">
+                <input id="searchByFilter" type="search" class="form-control" v-model="filter.query" @input="debounceFilter(() => getVariantsByFilter('0,' + pagination.page_items))" placeholder="{{ lang.search }}" >
+            </div>
+            <!-- Category Tags -->
+            {% if filter_settings.filter.show_category_tags == "true" %}
+                {% include template ~ "/categories/components/filter/categories-tags.twig" %}
+            {% endif %}
+            <!-- /Category Tags -->
+            <!-- Price Filter -->
+            {% if filter_settings.filter.price == "true" %}
+                {% include template ~ "/categories/components/filter/price.twig" %}
+            {% endif %}
+            <!-- / Price Filter -->
+            <!-- Brands Filter -->
+            {% if filter_settings.filter.brands == "true" %}
+                {% include template ~ "/categories/components/filter/brands.twig" %}
+            {% endif %}
+            <!-- / Brands Filter -->
+            <!-- Sector Filter -->
+            {% if filter_settings.filter.sectors == "true" %}
+                {% include template ~ "/categories/components/filter/sector.twig" %}
+            {% endif %}
+            <!-- / Sector Filter -->
+            <!-- Options Filter -->
+            {% if filter_settings.filter.primary_attributes == "true" %}
+                {% include template ~ "/categories/components/filter/primary-attributes.twig" %}
+            {% endif %}
+            {% if filter_settings.filter.secondary_attributes == "true" %}
+                {% include template ~ "/categories/components/filter/secondary-attributes.twig" %}
+            {% endif %}
+            <!-- /Options Filter -->
+            <!-- Unimis Filter -->
+            {% if filter_settings.filter.unit_measure == "true" %}
+                {% include template ~ "/categories/components/filter/unimis.twig" %}
+            {% endif %}
+            <!-- /Unimis Filter -->
+            <!-- Type Filter -->
+            {# <div class="py-4 widget-filter border-top">
+                <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+                    data-bs-toggle="collapse" href="#filter-type" role="button" aria-expanded="true"
+                    aria-controls="filter-type">
+                    Type
+                </a>
+                <div id="filter-type" class="collapse show">
+                    <div class="input-group my-3 py-1">
+                        <input type="text" class="form-control py-2 filter-search rounded" placeholder="Search" aria-label="Search">
+                        <span class="input-group-text bg-transparent px-2 position-absolute top-7 end-0 border-0 z-index-20"><i class="ri-search-2-line text-muted"></i></span>
+                    </div>
+                    <div class="filter-options">
+                            <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input types" id="filter-type-0">
+                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex justify-content-between"
+                                    for="filter-type-0">Slip On </label>
+                            </div>                        <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input types" id="filter-type-1">
+                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex justify-content-between"
+                                    for="filter-type-1">Strap Up </label>
+                            </div>                        <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input types" id="filter-type-2">
+                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex justify-content-between"
+                                    for="filter-type-2">Zip Up </label>
+                            </div>                        <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input types" id="filter-type-3">
+                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex justify-content-between"
+                                    for="filter-type-3">Toggle </label>
+                            </div>                        <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input types" id="filter-type-4">
+                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex justify-content-between"
+                                    for="filter-type-4">Auto </label>
+                            </div>                        <div class="form-group form-check mb-0">
+                                <input type="checkbox" class="form-check-input types" id="filter-type-5">
+                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex justify-content-between"
+                                    for="filter-type-5">Click </label>
+                            </div>                </div>
+                </div>
+            </div> #}
+            <!-- / Type Filter -->
+
+            <!-- Sizes Filter -->
+            {# <div class="py-4 widget-filter border-top">
+                <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+                    data-bs-toggle="collapse" href="#filter-sizes" role="button" aria-expanded="true"
+                    aria-controls="filter-sizes">
+                    Sizes
+                </a>
+                <div id="filter-sizes" class="collapse show">
+                    <div class="filter-options mt-3">
+                            <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-0">
+                                <label class="form-check-label fw-normal" for="filter-sizes-0">6.5</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-1">
+                                <label class="form-check-label fw-normal" for="filter-sizes-1">7</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-2">
+                                <label class="form-check-label fw-normal" for="filter-sizes-2">7.5</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-3">
+                                <label class="form-check-label fw-normal" for="filter-sizes-3">8</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-4">
+                                <label class="form-check-label fw-normal" for="filter-sizes-4">8.5</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-5">
+                                <label class="form-check-label fw-normal" for="filter-sizes-5">9</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-6">
+                                <label class="form-check-label fw-normal" for="filter-sizes-6">9.5</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-7">
+                                <label class="form-check-label fw-normal" for="filter-sizes-7">10</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-8">
+                                <label class="form-check-label fw-normal" for="filter-sizes-8">10.5</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-9">
+                                <label class="form-check-label fw-normal" for="filter-sizes-9">11</label>
+                            </div>                        <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
+                                <input type="checkbox" class="form-check-bg-input sizes" id="filter-sizes-10">
+                                <label class="form-check-label fw-normal" for="filter-sizes-10">11.5</label>
+                            </div>                </div>
+                </div>
+            </div> #}
+            <!-- / Sizes Filter -->
+
+            {#<!-- Colour Filter -->
+            <div class="py-4 widget-filter border-top">
+                <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+                    data-bs-toggle="collapse" href="#filter-colour" role="button" aria-expanded="true"
+                    aria-controls="filter-colour">
+                    Colour
+                </a>
+                <div  class="collapse show">
+                    <div id="filter-color" class="filter-options mt-3" data-filter-group="color">
+                            #}{# <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-primary">
+                                <input type="checkbox" class="form-check-color-input colors" id="filter-colours-0" value="violet">
+                                <label class="form-check-label" for="filter-colours-0"></label>
+                            </div>  #}{#
+                            <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-success ">
+                                <input type="checkbox" class="form-check-color-input colors" id="filter-colours-1" value="green">
+                                <label class="form-check-label" for="filter-colours-1"></label>
+                            </div>
+                            <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-danger">
+                                <input type="checkbox" class="form-check-color-input colors" id="filter-colours-2" value="red">
+                                <label class="form-check-label" for="filter-colours-2"></label>
+                            </div>
+                            <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-info">
+                                <input type="checkbox" class="form-check-color-input colors" id="filter-colours-3" value="blue">
+                                <label class="form-check-label" for="filter-colours-3"></label>
+                            </div>
+                            <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-warning">
+                                <input type="checkbox" class="form-check-color-input colors" id="filter-colours-4" value="yellow">
+                                <label class="form-check-label" for="filter-colours-4"></label>
+                            </div>
+                            #}{# <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-dark">
+                                <input type="checkbox" class="form-check-color-input colors" id="filter-colours-5" value="black">
+                                <label class="form-check-label" for="filter-colours-5"></label>
+                            </div>                        <div class="form-group d-inline-block mr-1 mb-1 form-check-solid-bg-checkmark form-check-custom form-check-secondary">
+                                <input type="checkbox" class="form-check-color-input colors" id="filter-colours-6" value="grey">
+                                <label class="form-check-label" for="filter-colours-6"></label>
+                            </div> #}{#
+                    </div>
+                </div>
+            </div>#}
+            <!-- / Colour Filter -->
+        </aside>
+        <!-- / Products Aside-->
+    </div>
+</div>
+                

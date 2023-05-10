@@ -1,0 +1,525 @@
+<section class="container-fluid d-flex justify-content-between align-items-center bg-black">
+    <p class="my-auto mx-auto m-lg-0 text-uppercase text-white fs-8">{{ lang_layout.shipping_fees_top_head }}</p>
+    <div class="flex-row d-none d-lg-flex py-1">
+        <p class="my-auto pe-2 text-white fs-8">{{ lang_layout.subscribe_newsletter_top_head }}</p>
+        <button class="bg-black border-white-opacity text-white border-1 fs-8" data-bs-toggle="modal"
+                data-bs-target="#newsletterModal">{{ lang_layout.subscribe }}
+        </button>
+    </div>
+
+</section>
+<!-- Navbar -->
+<div id="navbar-container" class="sticky-top z-index-30">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mx-0 p-0 flex-column  border-0 position-absolute w-100 z-index-30 bg-white-hover transition-all shadow">
+        <div class="w-100 pb-lg-0 pt-lg-0 pt-4 pb-3">
+            <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Logo-->
+                <a class="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0" href="{{ basepath }}/">
+                    <!-- Start of Logo-->
+                    <div class="d-flex align-items-center">
+                        {# <div class="f-w-6 d-flex align-items-center me-2 lh-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 194 194"><path fill="currentColor" class="svg-logo-white" d="M47.45,60l1.36,27.58,53.41-51.66,50.87,50,3.84-26L194,100.65V31.94A31.94,31.94,0,0,0,162.06,0H31.94A31.94,31.94,0,0,0,0,31.94v82.57Z"/><path fill="currentColor" class="svg-logo-dark" d="M178.8,113.19l1,34.41L116.3,85.92l-14.12,15.9L88.07,85.92,24.58,147.53l.93-34.41L0,134.86v27.2A31.94,31.94,0,0,0,31.94,194H162.06A31.94,31.94,0,0,0,194,162.06V125.83Z"/></svg>
+                        </div>
+                        <span class="fs-5">Petshop</span> #}
+                        <img class="" width="160" src="{{ basepath }}/templates/arcigraphic/img/logo/arcigraphic-fooder.png)">
+                    </div>
+                    <!-- / Logo-->
+                </a>
+                <!-- / Logo-->
+                <!-- Main Navigation-->
+                <div class="ms-5 flex-shrink-0 collapse navbar-collapse navbar-collapse-light w-auto flex-grow-1"
+                     id="navbarNavDropdown">
+                    <!-- Mobile Nav Toggler-->
+                    <button id="btnCloseNavbar"
+                            class="btn btn-link px-2 text-decoration-none navbar-toggler border-0 position-absolute top-0 end-0 mt-3 me-2"
+                            data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ri-close-circle-line ri-2x"></i>
+                    </button>
+                    <!-- / Mobile Nav Toggler-->
+                    <ul class="navbar-nav py-lg-2 mx-auto">
+                        <li class="nav-item me-lg-4 dropdown position-static">
+{#                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="{{ uripath }}/category/1">#}
+                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="{{ uripath }}/category/2">
+                                Cane
+                            </a>
+                            {#                            <button class="bg-transparent" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>#}
+                            <!-- Dog dropdown menu-->
+                            <div class="dropdown-menu dropdown-megamenu">
+                                <div class="container">
+                                    <div class="row g-0">
+                                        <!-- Dropdown Menu Links Section-->
+                                        <div class="col-12">
+                                            <div class="row py-lg-5">
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Alimentazione</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/3">Biscotti</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/4">Umido</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/5">Secco</a>
+                                                        </li>
+
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/6">Snack</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md mb-5 mb-sm-0">
+                                                    <h6 class="dropdown-heading">Abbigliamento</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{uripath}}/category/8">Cappottini e impermeabili</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/9">Felpe e
+                                                                T-shirt</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/10">Cerimonia</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Collari e Guinzagli</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/12">Collari</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/13">Guinzagli</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/14">Pettorine</a>
+                                                        </li>
+                                                        <!-- li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/">Porta
+                                                                sacchettini</a>
+                                                        </li -->
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Accessori</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/16">Bandane e
+                                                                Papillon</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/17">Gioielli</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Casa</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/19">Ciotole</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/20">Cucce e Coperte</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/21">Oggetti di design</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/22">Giochi</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Viaggio</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/24">Borse</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/25">Trasportini e Beatycase</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/26">GPS e Tech</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+
+                                            </div>
+                                        </div>
+                                        <!-- /Dropdown Menu Links Section-->
+                                        <!-- Dropdown Menu Images Section-->
+                                        {# <div class="d-none d-lg-block col-lg-5">
+                                            <div class="vw-50 h-100 bg-img-cover bg-pos-center-center position-absolute" style="background-image: url({{ basepath }}/templates/pet-bootstrap/assets/images/banners/banner-4.jpg);"></div>
+                                        </div> #}
+                                        <!-- Dropdown Menu Images Section-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Dog dropdown menu-->
+                        </li>
+                        <li class="nav-item me-lg-4 dropdown position-static">
+{#                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="{{ uripath }}/category/27">#}
+                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="{{ uripath }}/category/27">
+                                Gatto
+                            </a>
+{#                            <button class="bg-transparent" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>#}
+                            <!-- Cat dropdown menu-->
+                            <div class="dropdown-menu dropdown-megamenu">
+                                <div class="container">
+                                    <div class="row g-0">
+                                        <!-- Dropdown Menu Links Section-->
+                                        <div class="col-12">
+                                            <div class="row py-lg-5">
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Alimentazione</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/29">Biscotti</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/30">Umido</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/31">Secco</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/32">Snack</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md mb-5 mb-sm-0">
+                                                    <h6 class="dropdown-heading">Abbigliamento</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/34">Cappottini e
+                                                                Impermeabili</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/35">Felpe e T-shirt</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/36">Cerimonia</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Accessori</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/42">Collari e Pettorine</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/43">Gioielli</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Casa</h6>
+                                                    <ul class="list-unstyled">
+{#                                                        <li class="dropdown-list-item">#}
+{#                                                            <a class="dropdown-item"#}
+{#                                                               href="{{ uripath }}/category/">Lettiere</a>#}
+{#                                                        </li>#}
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/45">Ciotole</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/46">Cucce e
+                                                                Coperte</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/47">Oggetti di
+                                                                design</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/48">Giochi e
+                                                                Tiragraffi</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                                <!-- menu row-->
+                                                <div class="col col-md">
+                                                    <h6 class="dropdown-heading">Viaggio</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/50">Borse</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/51">Trasportini e
+                                                                Beautycase</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/52">GPS e Tech</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+
+                                            </div>
+                                        </div>
+                                        <!-- /Dropdown Menu Links Section-->
+                                        <!-- Dropdown Menu Images Section-->
+                                        {# <div class="d-none d-lg-block col-lg-5">
+                                            <div class="vw-50 h-100 bg-img-cover bg-pos-center-center position-absolute" style="background-image: url({{ basepath }}/templates/pet-bootstrap/assets/images/banners/banner-4.jpg);"></div>
+                                        </div> #}
+                                        <!-- Dropdown Menu Images Section-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Food dropdown menu-->
+                        </li>
+                        <li class="nav-item me-lg-4 dropdown position-static">
+{#                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="{{ uripath }}/category/53">#}
+                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="#">
+                                Beauty
+                            </a>
+{#                            <button class="btn bg-transparent border-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>#}
+                            <!-- Beauty dropdown menu-->
+                            <div class="dropdown-menu dropdown-megamenu">
+                                <div class="container">
+                                    <div class="row g-0">
+                                        <!-- Dropdown Menu Links Section-->
+                                        <div class="col-12 col-lg-7">
+                                            <div class="row py-lg-5">
+                                                <!-- menu row-->
+                                                <div class="col col-lg-6 mb-5 mb-sm-0">
+                                                    <h6 class="dropdown-heading">Cura e Bellezza</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/55">Shampoo e
+                                                                Balsamo</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/56">Creme e
+                                                                Dentrifici</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/57">Detergenti e
+                                                                Sieri</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/58">Prodotti per
+                                                                ambienti</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/59">Accappatoi e
+                                                                set doccia</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                            </div>
+                                        </div>
+                                        <!-- /Dropdown Menu Links Section-->
+                                        <!-- Dropdown Menu Images Section-->
+                                        {#<div class="d-none d-lg-block col-lg-5">
+                                            <div class="vw-50 h-100 bg-img-cover bg-pos-center-center position-absolute"
+                                                 style="background-image: url({{ basepath }}/templates/images/banners/banner-4.jpg);"></div>
+                                        </div>#}
+                                        <!-- Dropdown Menu Images Section-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Beauty dropdown menu-->
+                        </li>
+                        <li class="nav-item me-lg-4 dropdown position-static">
+{#                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="{{ uripath }}/category/60">#}
+                            <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="#">
+                                Idee Regalo
+                            </a>
+                            {#                            <button class="bg-transparent" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>#}
+                            <!-- Gift dropdown menu-->
+                            <div class="dropdown-menu dropdown-megamenu">
+                                <div class="container">
+                                    <div class="row g-0">
+                                        <!-- Dropdown Menu Links Section-->
+                                        <div class="col-12 col-lg-7">
+                                            <div class="row py-lg-5">
+                                                <!-- menu row-->
+                                                <div class="col col-lg-6 mb-5 mb-sm-0">
+                                                    <h6 class="dropdown-heading">Il pensiero perfetto</h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/62">Dolci e Snack</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/63">Giochi</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/64">Gioielli</a>
+                                                        </li>
+                                                        <li class="dropdown-list-item">
+                                                            <a class="dropdown-item"
+                                                               href="{{ uripath }}/category/61">Tutti</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /menu row-->
+                                            </div>
+                                        </div>
+                                        <!-- /Dropdown Menu Links Section-->
+                                        <!-- Dropdown Menu Images Section-->
+{#                                        <div class="d-none d-lg-block col-lg-5">#}
+{#                                            <div class="vw-50 h-100 bg-img-cover bg-pos-center-center position-absolute"#}
+{#                                                 style="background-image: url({{ basepath }}/templates/images/banners/banner-4.jpg);"></div>#}
+{#                                        </div>#}
+                                        <!-- Dropdown Menu Images Section-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Gift dropdown menu-->
+                        </li>
+                    </ul>
+                </div>
+                <!-- / Main Navigation-->
+
+                <!-- Navbar Icons-->
+                <ul
+                        class="list-unstyled mb-0 d-flex align-items-center">
+
+
+                    <!-- Navbar Search-->
+{#                    <li class="ms-1 d-inline-block">#}
+{#                        <button class="btn btn-link px-2 text-decoration-none d-flex align-items-center" data-pr-search>#}
+{#                            <i class="ri-search-2-line ri-lg align-middle"></i>#}
+{#                        </button>#}
+{#                    </li>#}
+                    <!-- /Navbar Search-->
+
+                    <!-- Navbar Wishlist-->
+{#                    <li class="ms-1 d-inline-block">#}
+{#                        <button class="btn btn-link px-2 text-decoration-none d-flex align-items-center disable-child-pointer"#}
+{#                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasWishlist"#}
+{#                                aria-controls="offcanvasWishlist">#}
+{#                            <i class="ri-heart-line ri-lg align-middle"></i>#}
+{#                        </button>#}
+{#                    </li>#}
+                    <!-- /Navbar Wishlist-->
+
+                    <!-- Navbar Login-->
+{#                    <li class="ms-1 d-inline-block">#}
+{#                        <a id="btnModal"#}
+{#                           class="btn btn-link px-2 text-decoration-none d-flex align-items-center trigger-btn"#}
+{#                           data-bs-toggle="modal" data-bs-target="#loginModal">#}
+{#                            <i class="ri-user-line ri-lg align-middle"></i>#}
+{#                        </a>#}
+{#                    </li>#}
+                    <!-- /Navbar Login-->
+
+
+                    <!-- Dropdown Menu -->
+                    <li class="ms-1 d-inline-block position-relative">
+                        <div class="dropdown" id="language-dropdown">
+                            <button class="dropdown-toggle border-0 bg-white" type="button" id="dropdownMenuLanguage" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span id="show-language" class="fi fi-{% if language =="en" %}gb{% else %}{{ language }}{% endif %} fis"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLanguage">
+                                <li><a class="dropdown-item dropdown-language" href="it"><span class="fi fi-it fis me-2"></span>{{ lang_layout.italian }}</a></li>
+                                <li><a class="dropdown-item dropdown-language" href="en"><span class="fi fi-gb fis me-2"></span>{{ lang_layout.english }}</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- /Dropdown Menu -->
+                    <!-- Navbar Cart-->
+                    <li class="ms-1 d-inline-block position-relative">
+                        <a href="{{ uripath }}/cart" class="btn btn-link px-2 text-decoration-none d-flex align-items-center disable-child-pointer" id="popover">
+                            <i class="ri-shopping-cart-2-line ri-lg align-middle position-relative z-index-10"></i>
+                            <span id="badgeCart" class="fs-xs f-w-5 f-h-5 bg-orange rounded-lg d-none lh-1 pt-1 position-absolute top-0 end-0 z-index-20 mt-2 text-primary fw-bold"></span>
+                        </a>
+                    </li>
+                    <!-- /Navbar Cart-->
+
+                </ul>
+                <!-- Navbar Icons-->
+                <!-- Navbar Toggle Icon-->
+                <div class="d-inline-block d-lg-none">
+                    <button class="btn btn-link px-2 text-decoration-none navbar-toggler border-0 d-flex align-items-center"
+                            data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ri-menu-line ri-lg align-middle"></i>
+                    </button>
+                </div>
+                <!-- /Navbar Toggle Icon-->
+
+            </div>
+            <div id="showMessage" class="d-none">
+                <span id="message"></span>
+            </div>
+        </div>
+    </nav>
+    <!-- / Navbar-->
+</div>
+<!-- / Navbar-->
+{% include template ~ "/layout/components/modal-login.twig" %}
+{% include template ~ "/layout/components/modal-register.twig" %}
+{% include template ~ "/layout/components/modal-forgotpwd.twig" %}
+{% include template ~ "/layout/components/modal-newsletter.twig" %}

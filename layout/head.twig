@@ -1,0 +1,265 @@
+<!-- Page Meta Tags-->
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="title" content="{{lang.meta_title}}">
+<meta name="description" content="{{lang.meta_description}}">
+<meta name="author" content="Arcigraphic">
+<meta name="keywords" content="{{lang.meta_keywords}}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arcigraphic.com{{lang.meta_url}}">
+<meta property="og:title" content="{{lang.meta_title}}">
+<meta property="og:description" content="{{lang.meta_description}}!">
+<meta property="og:image" content="https://arcigraphic.com{{lang.meta_image}}">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://arcigraphic.com{{lang.meta_url}}">
+<meta property="twitter:title" content="{{lang.meta_title}}">
+<meta property="twitter:description" content="{{lang.meta_description}}">
+<meta property="twitter:image" content="https://arcigraphic.com{{lang.meta_image}}">
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ basepath }}/templates/{{ template }}/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ basepath }}/templates/{{ template }}/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ basepath }}/templates/{{ template }}/assets/favicon/favicon-16x16.png">
+<link rel="mask-icon" href="{{ basepath }}/templates/{{ template }}/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Manifest -->
+{#<link rel="manifest" href="{{ basepath }}/templates/{{ template }}/assets/favicon/site.webmanifest" />#}
+<!-- Main CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+<!-- Theme CSS -->
+<link rel="stylesheet" href="{{ basepath }}/templates/{{template}}/assets/css/theme.css" />
+<!-- Vendor CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" />
+{% if filter %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vueform/slider@2.1.7/themes/default.min.css" />
+{% endif %}
+<!-- Theme CSS -->
+<link rel="stylesheet" href="{{ basepath }}/templates/{{ template }}/assets/css/arcigraphic.css" />
+<!-- Flags CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css" />
+<!-- Icon Remix -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" />
+<!-- Google Fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{% if index %}
+	<link rel="stylesheet" href="{{ basepath }}/templates/{{ template }}/assets/css/testimonials.css" />
+{% endif %}
+{% if index is empty %}
+	<link rel="stylesheet" href="{{ basepath }}/templates/{{ template }}/assets/css/navclassic.css" />
+{% endif %}
+
+
+
+<!-- Fix for custom scrollbar if JS is disabled-->
+<noscript>
+	<style>
+		/**
+          * Reinstate scrolling for non-JS clients
+          */
+		.simplebar-content-wrapper {
+			overflow: auto;
+		}
+	</style>
+</noscript>
+
+<!-- Page Title -->
+<title>Arcigraphic - {{ title }}</title>
+
+<style>
+	.rating .stars {
+		position: relative;
+		z-index: 1;
+		overflow: hidden;
+		display: flex;
+	}
+	.rating .stars.position-absolute {
+		position: absolute;
+		z-index: 2;
+		flex-wrap: nowrap;
+	}
+	.rating .stars i {
+		display: inline-block;
+	}
+	.search-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100vw;
+		min-height: 100vh;
+		overflow-y: auto;
+		background: #fff;
+		display: none;
+		opacity: 0;
+		z-index: -1;
+	}
+	.search-active {
+		overflow: hidden;
+	}
+	.search-active .search-overlay {
+		display: block;
+		animation: fadeIn 0.5s;
+		opacity: 1;
+		z-index: 999;
+	}
+	.nav-tabs-border .nav-link {
+		position: relative;
+		padding-left: 0;
+		padding-right: 0;
+		margin-right: 2rem;
+	}
+	.nav-tabs-border .nav-link:after {
+		content: "";
+		display: block;
+		height: 2px;
+		background: #1c212c;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		opacity: 0;
+	}
+	.nav-tabs-border .nav-link.active:after {
+		opacity: 1;
+	}
+	.nav-tabs {
+		border: 0;
+	}
+	.nav-tabs .nav-link {
+		border: 0;
+	}
+	.tab-pane {
+		padding-top: 1rem;
+	}
+	.table > :not(:last-child) > :last-child > * {
+		border-bottom-color: #e9eaea;
+	}
+	.table th {
+		text-transform: uppercase;
+		font-size: 0.85em;
+	}
+	.card-reveal-text {
+		opacity: 0;
+		transition: transform 0.5s cubic-bezier(0.5, 0, 0.1, 1) 0.65s, opacity 0.5s cubic-bezier(0.5, 0, 0.1, 1) 0.65s;
+		transform: translateY(10%);
+	}
+	.card-reveal-body {
+		position: relative;
+		z-index: 20;
+	}
+	.card-reveal-body:after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: white;
+		transition: transform 1s cubic-bezier(0.5, 0, 0.1, 1), opacity 1s cubic-bezier(0.5, 0, 0.1, 1) 0.75s;
+	}
+	.card-reveal-img {
+		position: relative;
+		overflow: hidden;
+		z-index: 30;
+	}
+	.card-reveal-img:after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: white;
+		transition: transform 1s cubic-bezier(0.5, 0, 0.1, 1), opacity 1s cubic-bezier(0.5, 0, 0.1, 1) 0.75s;
+	}
+	.card-reveal-img img {
+		transition: transform 0.75s cubic-bezier(0.5, 0, 0.1, 1);
+		transform: translateX(-20%);
+	}
+	/* reveal right variant */
+	.card-reveal-left .card-reveal-img img {
+		transform: translateX(20%);
+	}
+
+	[data-aos="reveal-right"].aos-animate .card-reveal-body:after, [data-aos="reveal-left"].aos-animate .card-reveal-body:after, [data-aos="reveal-right"].aos-animate .card-reveal-img:after, [data-aos="reveal-left"].aos-animate .card-reveal-img:after {
+		opacity: 0;
+	}
+	[data-aos="reveal-right"].aos-animate .card-reveal-text, [data-aos="reveal-left"].aos-animate .card-reveal-text {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	[data-aos="reveal-right"].aos-animate .card-reveal-img img, [data-aos="reveal-left"].aos-animate .card-reveal-img img {
+		transform: translateX(0);
+	}
+	/* Default reveal animation (reveal right)*/
+	[data-aos="reveal-right"].aos-animate .card-reveal-body:after, [data-aos="reveal-right"].aos-animate .card-reveal-img:after {
+		transform: translateX(100%);
+	}
+	/* variant reveal, reveal left */
+	[data-aos="reveal-left"].aos-animate .card-reveal-body:after, [data-aos="reveal-left"].aos-animate .card-reveal-img:after {
+		transform: translateX(-100%);
+	}
+	.checkout-panel {
+		margin-bottom: 3rem;
+	}
+
+	.title-checkout {
+		border-bottom: 1px solid #000;
+		padding-bottom: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	/* Qty number used in checkout summary */
+	.checkout-item-qty {
+		position: absolute;
+		border-radius: 100%;
+		width: 1.5rem;
+		height: 1.5rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		top: -8px;
+		right: -8px;
+		background: #000;
+		color: #fff;
+		font-size: 74%;
+	}
+</style>
+<script>window.URIPATH = "{{ uripath }}";window.BASEPATH = "{{ basepath }}"</script>
+<script defer src="{{basepath}}/templates/js/functions.js"></script>
+
+<script type="application/ld+json">{
+"@context": "http://schema.org",
+"@type": "Organization",
+"@id": "https://arcigraphic.com/contact_us",
+"url": "https://arcigraphic.com",
+"name": "Arcigraphic",
+"description": "Siamo qui per te! Per qualsiasi informazione, dubbio, richiesta particolare, reclamo o suggerimento per migliorare i nostri prodotti e servizi, non esitare a metterti in contatto con noi. Di seguito trovi tutti i nostri recapiti",
+"sameAs": ["facebook.com/Page", "plus.google.com/page", "twitter.com/page"],
+"logo": "https://arcigraphic.com/arcigraphic/templates/img/arcigraphic-fooder.png",
+"address": {
+"addressCountry": "it",
+"addressRegion": "Eboli",
+"postalCode": "84025",
+"streetAddress": "Contrada Santa Chiarella"
+}
+}</script>

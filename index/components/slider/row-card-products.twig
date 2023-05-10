@@ -1,0 +1,10 @@
+<div class="row mb-5 g-5">
+    {% for product in products %}
+        {% set images = json_decode(product.variant_images) %}
+        <!-- Product -->
+        <div data-aos="fade-left" class="col-12 col-sm-6 col-md-3 text-center fs-fix">
+            {% include template ~ "/index/components/slider/base-card-product.twig" %}
+        </div>
+        <!-- / Product -->
+    {% endfor  %}
+</div>

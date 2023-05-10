@@ -1,0 +1,18 @@
+<div class="py-4 widget-filter border-top">
+    <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+       data-bs-toggle="collapse" href="#filter-sector" role="button" aria-expanded="true"
+       aria-controls="filter-sector">
+        {{ lang.sector }}
+    </a>
+    <div id="filter-sector" class="collapse show mt-2 ps-2">
+        {% set sectors = json_decode(sec_attr_values) %}
+        <select class="form-select" v-model="filter.sector_id" @change="setAttribute('pass')">
+            {% if sectors|length != 1 %}
+                <option value="">{{ lang.all_sector }}</option>
+            {% endif %}
+            {% for sector in sectors %}
+                <option value="{{ sector.s_id }}">{{ sector.s_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

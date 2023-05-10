@@ -1,0 +1,108 @@
+/* From theme bundle */
+@media (max-width: 767.98px) {
+    .display-md-1 {
+        font-size: calc(1.5rem + 3vw);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+@media (max-width: 767.98px) and (min-width: 1200px) {
+    .display-md-1 {
+        font-size: 3.75rem;
+    }
+}
+@media (max-width: 767.98px) {
+    .display-md-2 {
+        font-size: calc(1.45rem + 2.4vw);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+@media (max-width: 767.98px) and (min-width: 1200px) {
+    .display-md-2 {
+        font-size: 3.25rem;
+    }
+}
+@media (max-width: 767.98px) {
+    .display-md-3 {
+        font-size: calc(1.4rem + 1.8vw);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+@media (max-width: 767.98px) and (min-width: 1200px) {
+    .display-md-3 {
+        font-size: 2.75rem;
+    }
+}
+@media (max-width: 767.98px) {
+    .display-md-4 {
+        font-size: calc(1.35rem + 1.2vw);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+@media (max-width: 767.98px) and (min-width: 1200px) {
+    .display-md-4 {
+        font-size: 2.25rem;
+    }
+}
+@media (max-width: 767.98px) {
+    .display-md-5 {
+        font-size: calc(1.3rem + 0.6vw);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+@media (max-width: 767.98px) and (min-width: 1200px) {
+    .display-md-5 {
+        font-size: 1.75rem;
+    }
+}
+@media (max-width: 767.98px) {
+    .display-md-6 {
+        font-size: calc(1.275rem + 0.3vw);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+@media (max-width: 767.98px) and (min-width: 1200px) {
+    .display-md-6 {
+        font-size: 1.5rem;
+    }
+}
+.fs-fix { font-size: 18px !important; }
+.fs-xs {
+    font-size: 11px !important;
+}
+.link-cover:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 30;
+    pointer-events: auto;
+    content: "";
+}
+.text-link-border {
+    text-decoration: none;
+    border-bottom: 1px solid #1c212c;
+    border-radius: 0;
+    transition: all 0.2s linear;
+}
+.text-link-border:active,
+.text-link-border:focus,
+.text-link-border:hover {
+    border-color: transparent;
+}
+.title-small {
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: block;
+}
+a { color: var(--st-color); }
+
+.text-secondary-hover:hover { color: #717070 !important; }

@@ -1,0 +1,96 @@
+{% extends template ~ "/layout/layout.twig" %}
+{% block content %}
+
+  <!-- Demo styles -->
+  <style>
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      overflow: hidden;
+    }
+  </style>
+    <section class="mt-0" style="padding-top: 1.5rem">
+        <div class="py-6 bg-img-cover bg-dark bg-overlay-gradient-dark position-relative overflow-hidden mb-4 bg-pos-center-center"
+             style="background-image: url({{ basepath }}/templates/arcigraphic/img/azienda/azienda.jpg);">
+            <div class="container position-relative z-index-8 customTop" data-aos="fade-right" data-aos-delay="300">
+                <!-- Breadcrumbs-->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+
+                        <li class="breadcrumb-item"><a href="{{ basepath }}/">Home</a></li>
+                        <li class="breadcrumb-item"><a style="color: #009fe2" href="{{ uripath }}/societa-sportive">Arcisport Club Sponsor</a></li>
+                      
+
+                    </ol>
+                </nav>            <!-- /Breadcrumbs-->
+            </div>
+        </div>
+    </section>
+    <section class="mt-0" style="padding-top: 4.5rem;padding-left:1rem;padding-right:1rem;">
+    <h3>Arcisport Club Sponsor</h3>
+    <br/>
+    
+  <!-- Swiper -->
+
+  <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="position-relative swiper mySwiper" data-swiper data-options='{"zoom":true,"loop":true,"autoplay":{"delay":2500,"disableOnInteraction":false},"navigation":{"nextEl":".swiper-button-next","prevEl":".swiper-button-prev"},"pagination":{"el":".swiper-pagination","clickable":true}}'>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="swiper-zoom-container">
+          <img alt="societa-sportiva-arcigraphic-sponsor" src="{{basepath}}/templates/arcigraphic/img/soc_sportive/battipagliese-pallavolo.jpg" />
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="swiper-zoom-container">
+          <img alt="societa-sportiva-arcigraphic-sponsor" src="{{basepath}}/templates/arcigraphic/img/soc_sportive/caivano-runner.jpg" />
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="swiper-zoom-container">
+          <img alt="societa-sportiva-arcigraphic-sponsor" src="{{basepath}}/templates/arcigraphic/img/soc_sportive/carmax-camadolese.jpg" />
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="swiper-zoom-container">
+          <img alt="societa-sportiva-arcigraphic-sponsor" src="{{basepath}}/templates/arcigraphic/img/soc_sportive/sacs-volley-napoli-3.jpg" />
+        </div>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+  <br/>
+  <h3>{{lang.collaborate}}</h3>
+  <ul>
+  <li>Battipagliese Pallavolo</li>
+  <li>Caivano Runner</li>
+  <li>Carmax Carmadolese</li>
+  <li>Sacs Volley Napoli</li>
+  <li>ed altre ancora...!</li>
+  </ul>
+  <br/>
+  <br/>
+   </section>
+  <script>
+//    var swiper = new Swiper(".mySwiper", {
+//      zoom: true,
+//      loop: true,
+//        autoplay: {
+//    delay: 2500,
+//    disableOnInteraction: false,
+//  },
+//      navigation: {
+//        nextEl: ".swiper-button-next",
+//        prevEl: ".swiper-button-prev",
+//      },
+//      pagination: {
+//        el: ".swiper-pagination",
+//        clickable: true,
+//      },
+//    });
+  </script>
+{% endblock %}

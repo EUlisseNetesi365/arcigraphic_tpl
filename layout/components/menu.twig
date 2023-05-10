@@ -1,0 +1,84 @@
+<div id="navbarNavDropdown" class="flex-shrink-0 collapse navbar-collapse navbar-collapse-light w-auto flex-grow-1" >
+    <!-- Mobile Nav Toggler-->
+    <button id="btnCloseNavbar"
+            class="btn btn-link px-2 text-decoration-none navbar-toggler border-0 position-absolute top-0 end-0 mt-3 me-2"
+            data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="ri-close-circle-line ri-2x"></i>
+    </button>
+    <!-- / Mobile Nav Toggler-->
+    <ul class="navbar-nav py-lg-2 mx-auto">
+        <li class="nav-item me-lg-4 dropdown position-static">
+            <a class="nav-link fw-bold  text-uppercase left position-relative" href="{{ basepath }}/">
+                {{ lang_layout.home }}
+            </a>
+        </li>
+        {% set previous_level = 0 %}
+        {% set childs_level_idx_0  = 0 %}
+        {% set childs_level_idx_1  = 0 %}
+        {% set childs_level_idx_2  = 0 %}
+        {% set childs_val_level_0 = 0 %}
+        {% set childs_val_level_1 = 0 %}
+        {% set childs_val_level_2 = 0 %}
+        {% for menu in categories_menu %}
+            {% set alias = explode(',', menu.alias) %}
+            {% if (menu.LEVEL == 0) and  (menu.childs == 0) %}
+                <li class="nav-item me-lg-4 position-relative">
+                {# <a class="nav-link fw-bolder dropdown-toggle py-lg-4" href="{{ uripath }}/category/1">#}
+                <a class="nav-link fw-bold text-uppercase left position-relative"
+                   href="{{ basepath ~ alias[menu.LEVEL] }}">
+                    {{ menu.name }}
+                </a>
+            {% elseif (menu.LEVEL == 0) and  (menu.childs > 0) %}
+                {% set childs_val_level_0 = menu.childs %}
+                {% set childs_level_idx_0 = 0 %}
+                <li class="nav-item me-lg-4 dropdown position-relative">
+                    <a class="nav-link fw-bold dropdown-toggle  text-uppercase left position-relative"
+                       href="{{ basepath ~ alias[menu.LEVEL] }}">
+                        {{ menu.name }}
+                    </a>
+                <div class="dropdown-menu dropdown-megamenu" style="width:fit-content;">
+                    <div class="container">
+                        <div class="row g-0">
+                            <!-- Dropdown Menu Links Section-->
+                            <div class="col-12">
+                                <div class="row py-lg-2 mb-2">
+            {% elseif (menu.LEVEL > 0) and (childs_level_idx_0 <= childs_val_level_0) %}
+                {% if menu.childs > 0 %}
+                    {% set childs_val_level_1 = menu.childs %}
+                    {% set childs_level_idx_1 = 0 %}
+                    {% set childs_val_level_0 = childs_val_level_0 + childs_val_level_1 %}
+                    <div class="col col-md">
+                        <a href="{{ basepath ~ alias[menu.LEVEL] }}"
+                           class="dropdown-heading text-decoration-none fs-7">{{ menu.name }}</a>
+                {% elseif childs_level_idx_1 <= childs_val_level_1 %}
+                    {% if childs_level_idx_1 == 1 %}
+                        <ul class="dropdown-list-item">
+                    {% endif %}
+                    <a class="dropdown-item"
+                       href="{{ basepath ~ alias[menu.LEVEL] }}">{{ menu.name }}</a>
+                    {% if childs_level_idx_1 == childs_val_level_1 %}
+                        {% set childs_val_level_1 = 0 %}
+                        </ul>
+                    {% endif %}
+                {% else %}
+                    <div class="col col-md">
+                        <a href="{{ basepath ~ alias[menu.LEVEL] }}"
+                           class="dropdown-heading text-decoration-none fs-7">{{ menu.name }}</a>
+                {% endif %}
+            {% endif %}
+            {% if loop.last and menu.LEVEL > 0 %}
+                    <div class="col col-md">
+                        <a href="{{ basepath ~ alias[menu.LEVEL] }}"
+                           class="dropdown-heading text-decoration-none fs-7">{{ menu.name }}</a>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+            {% endif %}
+            {% set childs_level_idx_1 = childs_level_idx_1 + 1 %}
+            {% set childs_level_idx_0 = childs_level_idx_0 + 1 %}
+        {% endfor %}
+    </ul>
+</div>

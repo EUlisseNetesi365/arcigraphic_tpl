@@ -1,0 +1,411 @@
+<script>
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+                showAddPrivate: true,
+                showAddCompany: false,
+                isAddPrivateRequired: true,
+                isAddCompanyRequired: false,
+                showFormAdd: true,
+                showFormEmail: false,
+                showFormPassword: false,
+                showFormUpdate: false,
+                showUpdatePrivate: false,
+                showUpdateCompany: false,
+                isUpdatePrivateRequired: false,
+                isUpdateCompanyRequired: false,
+                countries: JSON.parse('{{ countries }}'.replace(/(&quot\;)/g,"\"")),
+                user: [],
+                emails: [],
+                addresses: [],
+                editData: []
+            }
+        },
+        methods: {
+            closeAlert (display) {
+                display.innerHTML = "";
+                display.classList.remove("alert-primary", "alert-success");
+                display.classList.add("d-none");
+            },
+            formatDate(date) {
+                if (date === null) {
+                    return '';
+                } else {
+                    return new Date(date).toLocaleDateString('en-GB');
+                }
+            },
+            getCustomerData () {
+                fetch("{{ basepath }}/read_cdata", {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        if (result.code === 6) {
+
+                        }
+                        if (result.success === 1) {
+                            this.user = result.userdata[0];
+                            this.emails = JSON.parse(result.userdata[0].emails);
+                            this.addresses = JSON.parse(result.userdata[0].data);
+                        }
+                    });
+            },
+            gotToAddress () {
+                this.showFormUpdate = false;
+                this.showFormAdd = true;
+                this.openAddressTab();
+            },
+            goToEdit (id) {
+                this.showFormAdd = false;
+                this.showFormUpdate = true;
+                this.editData = this.addresses.filter(function (data) {
+                    return parseInt(data.id) === parseInt(id);
+                });
+                if (this.editData[0].is_private === 0) {
+                    this.showUpdateCompany = true;
+                    this.isUpdateCompanyRequired = true;
+                }
+                if (this.editData[0].is_private === 1) {
+                    this.showUpdatePrivate = true;
+                    this.isUpdatePrivateRequired = true;
+                }
+                this.openAddressTab();
+            },
+            handleAddAddress (event, validator) {
+                const button_submit = validator.form.querySelector("button[type='submit']");
+                button_submit.disabled = true;
+
+                fetch("{{ basepath }}/create_cdata", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify(validator.getEntries()),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                .then((res) => res.json())
+                .then(result => {
+                    const display = document.querySelector("#formAddAddress .error-display");
+                    if (result.msg) {
+                        display.classList.remove("d-none", "alert-primary", "alert-success");
+                        switch (parseInt(result.code)) {
+                            case 10:
+                                display.classList.add("alert-primary");
+                                display.innerHTML = "{{ lang.no_address }}";
+                                break;
+                            /*case 9:
+                                display.classList.add("alert-primary");
+                                display.innerHTML = "{{ lang.is_default_exist }}";
+                                this.addresses = result.list;
+                                setTimeout(this.openDetailsTab, 500);
+                                break;*/
+                            case 0:
+                                if (parseInt(result.success) === 1) {
+                                    validator.clean();
+                                    display.classList.add("alert-success");
+                                    display.innerHTML = "{{ lang.success_add_address }}";
+                                    this.addresses = result.list;
+                                    setTimeout(this.closeAlert(display), 500);
+                                    setTimeout(this.openDetailsTab, 500);
+                                }
+                                break;
+                        }
+                    }
+                })
+                    .catch((e) => {
+                        console.log(e)
+                    })
+                    .finally(() => {
+                        button_submit.disabled = false;
+                    });
+            },
+            handleAddEmail (event, validator) {
+                const button_submit = validator.form.querySelector("button[type='submit']");
+                button_submit.disabled = true;
+
+                fetch("{{ basepath }}/create_em", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify(validator.getEntries()),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        const display = document.querySelector("#formAddEmail .error-display");
+                        if (result.msg) {
+                            display.classList.remove("d-none", "alert-primary", "alert-success");
+                            switch (parseInt(result.code)) {
+                                case 6:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.email_not_inserted }}";
+                                    break;
+                                case 3:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.email_not_valid }}";
+                                    break;
+                                case 8:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.email_wait_confirm }}";
+                                    break;
+                                case 9:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.email_exist }}";
+                                    break;
+                                case 0:
+                                    if (parseInt(result.success) === 1) {
+                                        validator.clean();
+                                        setTimeout(this.closeAlert(display), 500);
+                                        display.classList.add("alert-success");
+                                        display.innerHTML = "{{ lang.success_add_email }}";
+                                        this.emails = result.emails;
+                                    }
+                                    break;
+                            }
+                        }
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    })
+                    .finally(() => {
+                        button_submit.disabled = false;
+                    });
+            },
+            handleChangePassword (event, validator) {
+                const button_submit = validator.form.querySelector("button[type='submit']");
+                button_submit.disabled = true;
+
+                fetch("{{ basepath }}/change_pwd", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify(validator.getEntries()),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        const display = document.querySelector("#formChangePassword .error-display");
+                        if (result.msg) {
+                            display.classList.remove("d-none", "alert-primary", "alert-success");
+                            switch (parseInt(result.code)) {
+                                case 2:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.no_data }}";
+                                    break;
+                                case 7:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.pwd_empty }}";
+                                    break;
+                                case 0:
+                                    if (parseInt(result.success) === 1) {
+                                        validator.clean();
+                                        setTimeout(this.closeAlert(display), 500);
+                                        display.classList.add("alert-success");
+                                        display.innerHTML = "{{ lang.success_pwd_change }}";
+                                    }
+                                    break;
+                            }
+                        }
+                    })
+                .catch((e) => {
+                    console.log(e)
+                })
+                .finally(() => {
+                    button_submit.disabled = false;
+                });
+            },
+            handleLoginEmail (event) {
+                fetch("{{ basepath }}/update_em", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({id: parseInt(event.target.dataset.vid)}),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        const display = document.querySelector("#formChangePassword .error-display");
+                        if (result.msg) {
+                            display.classList.remove("d-none", "alert-primary", "alert-success");
+                            switch (parseInt(result.code)) {
+                                case 2:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.no_data }}";
+                                    document.getElementById('email-' + result.id).checked = true;
+                                    break;
+                                case 3:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.email_not_valid }}";
+                                    document.getElementById('email-' + result.id).checked = true;
+                                    break;
+                                case 5:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.email_wait_confirm }}";
+                                    document.getElementById('email-' + result.id).checked = true;
+                                    break;
+                                case 0:
+                                    if (parseInt(result.success) === 1) {
+                                        setTimeout(this.closeAlert(display), 500);
+                                        display.classList.add("alert-success");
+                                        display.innerHTML = "{{ lang.success_pwd_change }}";
+                                    }
+                                    break;
+                            }
+                        }
+                    })
+                .catch((e) => {
+                    console.log(e)
+                });
+            },
+            handleDeleteAddress (id) {
+                fetch("{{ basepath }}/delete_cdata", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify({data_id: id}),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(result => {
+                        const display = document.querySelector(".address");
+                        if (result.msg) {
+                            display.classList.remove("d-none", "alert-primary", "alert-success");
+                            switch (parseInt(result.code)) {
+                                case 12:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.list_error }}";
+                                    break;
+                                case 11:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.address_default }}";
+                                    break;
+                                case 10:
+                                    display.classList.add("alert-primary");
+                                    display.innerHTML = "{{ lang.no_address }}";
+                                    break;
+                                case 0:
+                                    display.classList.add("alert-success");
+                                    display.innerHTML = "{{ lang.delete_address }}";
+                                    this.addresses = result.list;
+                                    break;
+                            }
+                        }
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    });
+
+            },
+            handleUpdateAddress (event, validator) {
+                event.preventDefault();
+                const button_submit = validator.form.querySelector("button[type='submit']");
+                button_submit.disabled = false;
+                fetch("{{ basepath }}/update_cdata", {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify(validator.getEntries()),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                })
+                .then((res) => res.json())
+                .then(result => {
+                    const display = document.querySelector("#formUpdateAddress .error-display");
+                    if (result.msg) {
+                        display.classList.remove("d-none", "alert-primary", "alert-success");
+                        switch (parseInt(result.code)) {
+                           case 9:
+                               display.classList.add("alert-primary");
+                               display.innerHTML = "{{ lang.no_data }}";
+                               break;
+                            case 0:
+                                if (parseInt(result.success) === 1) {
+                                    validator.clean();
+                                    display.classList.add("alert-success");
+                                    display.innerHTML = "{{ lang.success_upd_address }}";
+                                    this.addresses = result.list;
+                                    setTimeout(this.closeAlert(display), 500);
+                                    setTimeout(this.openDetailsTab, 500);
+                                }
+                                break;
+                        }
+                    }
+                })
+                    .catch((e) => {
+                        console.log(e)
+                    })
+                    .finally(() => {
+                        button_submit.disabled = false;
+                    });
+            },
+            handleShowFormEmail() {
+                this.showFormEmail = !this.showFormEmail;
+            },
+            handleShowFormPassword() {
+                this.showFormPassword = !this.showFormPassword;
+            },
+            handleShowPrivateCompany () {
+                if (document.getElementById("isPrivate").checked) {
+                    this.showAddPrivate = true;
+                    this.showAddCompany = false;
+                    this.isAddPrivateRequired = true;
+                    this.isAddCompanyRequired = false;
+                }
+                if (document.getElementById("isCompany").checked) {
+                    this.showAddPrivate = false;
+                    this.showAddCompany = true;
+                    this.isAddPrivateRequired = false;
+                    this.isAddCompanyRequired = true;
+                }
+            },
+            handleShowUpdatePrivateCompany () {
+                if (document.getElementById("isUpdatePrivate").checked) {
+                    this.showUpdatePrivate = true;
+                    this.showUpdateCompany = false;
+                    this.isUpdatePrivateRequired = true;
+                    this.isUpdateCompanyRequired = false;
+                }
+                if (document.getElementById("isUpdateCompany").checked) {
+                    this.showUpdatePrivate = false;
+                    this.showUpdateCompany = true;
+                    this.isUpdatePrivateRequired = false;
+                    this.isUpdateCompanyRequired = true;
+                }
+            },
+            openAddressTab () {
+                const triggerEl = document.querySelector('#accountTab a[href="#address"]');
+                const tabAddress = bootstrap.Tab.getOrCreateInstance(triggerEl);
+                tabAddress.show();
+            },
+            openDetailsTab () {
+                const elDetails = document.querySelector('#accountTab a[href="#details"]');
+                const tabDetails = bootstrap.Tab.getOrCreateInstance(elDetails);
+                tabDetails.show();
+            }
+        },
+        mounted() {
+            this.getCustomerData();
+            document.getElementById('showAddEmail').addEventListener('click', this.handleShowFormEmail);
+            document.getElementById('showFormPassword').addEventListener('click', this.handleShowFormPassword);
+            document.getElementById('isPrivate').addEventListener('change', this.handleShowPrivateCompany);
+            document.getElementById('isCompany').addEventListener('change', this.handleShowPrivateCompany);
+            document.getElementById('goToAddress').addEventListener('click', this.gotToAddress);
+
+            (new FormValidator(document.getElementById("formAddAddress"), this.handleAddAddress)).initialize();
+            (new FormValidator(document.getElementById("formUpdateAddress"), this.handleUpdateAddress)).initialize();
+            (new FormValidator(document.getElementById("formAddEmail"), this.handleAddEmail)).initialize();
+            (new FormValidator(document.getElementById("formChangePassword"), this.handleChangePassword)).initialize();
+        },
+        delimiters: ["{_", "_}"],
+    }).mount('#profile');
+</script>

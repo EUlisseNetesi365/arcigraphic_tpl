@@ -1,0 +1,10 @@
+/* From theme bundle */
+.even-child-mt-5:nth-of-type(2n),
+.odd-child-mt-5:nth-of-type(odd) {
+    margin-top: 5rem;
+}
+
+.py-6 {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+}

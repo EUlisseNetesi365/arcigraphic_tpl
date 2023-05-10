@@ -1,0 +1,40 @@
+<div class="col-12 col-lg-6 col-xl-5 z-index-0">
+    <div class="bg-dark p-4 sticky-md-top top-sticky text-white ">
+        <div class="border-bottom pb-3">
+            <!-- CartCheckout Item-->
+            {% include template ~ "/cart/components/summary-item.twig" %}
+            <!-- / CartCheckout Item-->
+        </div>
+        <div class="py-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <p class="m-0 fw-bolder fs-6">{{ lang.subtotal }}</p>
+                <p class="m-0 fs-6 fw-bolder">{_ numberFormat(cartData.subtotal) _}</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center ">
+                <p class="m-0 fw-bolder fs-6">{{ lang.shipping }}</p>
+                <p class="m-0 fs-6 fw-bolder">{_ numberFormat(cartData.shipping) _}</p>
+            </div>
+        </div>
+        <div class="py-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="m-0 fw-bold fs-5">{{ lang.total }}</p>
+                </div>
+                <p class="m-0 fs-5 fw-bold">{_ numberFormat(cartData.total) _}</p>
+            </div>
+        </div>
+        {#                <div class="py-3 border-bottom">#}
+        {#                    <div class="input-group mb-0">#}
+        {#                        <input type="text" class="form-control" placeholder="Enter your coupon code">#}
+        {#                        <button class="btn btn-dark btn-sm px-4">Apply</button>#}
+        {#                    </div>#}
+        {#                </div>#}
+        <!-- Accept Terms Checkbox-->
+        <div class="form-group form-check my-4">
+            <input type="checkbox" class="form-check-input" id="accept-terms" checked required>
+            <label class="form-check-label fw-bolder text-white" for="accept-terms">{{ lang.agree}} <a href="#" class="text-decoration-none text-white">{{ lang.terms }}</a></label>
+        </div>
+        <button type="submit" id="btnCheckout" class="btn btn-orange w-100">{{ lang.buy }}</button>
+        <button type="button" class="btn btn-white w-100 text-center mt-3" @click="goToCart">{{ lang.back }}</button>
+    </div>
+</div>

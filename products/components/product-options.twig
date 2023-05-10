@@ -1,0 +1,27 @@
+<div class="product-option mb-4 mt-4">
+    <div>
+        <h6><b>{{lang.options}}</b></h6>
+        <div class="d-flex flex-wrap justify-content-between">
+            <!-- Primary Attributes -->
+            {% include template ~ "/products/components/primary-attributes.twig" %}
+            <!-- /Primary Attributes -->
+            <input type="hidden" id="hidden-primary" value="{{ pri_attr|json_encode() }}">
+            <!-- Secondary Attributes -->
+            {% include template ~ "/products/components/secondary-attributes.twig" %}
+            <!-- /Secondary Attributes -->
+        </div>
+    </div>
+</div>
+<!-- Quantity -->
+<div class="product-option border-top mt-4 col-lg-5">
+    <small class="text-uppercase d-block fw-bolder my-2">
+        {{ lang.quantity }}
+    </small>
+    <div class="d-flex justify-content-start">
+        <input id="quantity" type="number" min="1" value="1"
+               pattern="^[1-9][0-9]*(\.[0-9]+)?$|^0\.[0-9]+$" class="form-control  w-50"
+               placeholder="Quantity"
+               aria-label="Quantity" {% if sec_attr[0].available == null %} disabled {% endif %}>
+    </div>
+</div>
+<!-- /Quantity -->

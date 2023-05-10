@@ -1,0 +1,18 @@
+<div id="cookieModal" class="modal fade r-border" aria-labelledby="cookieModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="cookieModalLabel" class="modal-title">{{ lang_layout.cookies_policy }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mr-3">
+                    {{ lang_layout.cookies_text }} <a href="{{ uripath }}/privacy">{{ lang_layout.cookies_policy }}</a>
+                </div>
+            </div>
+            <div class="modal-footer bg-gray">
+                <button id="closeCookies" class="btn btn-dark">{{ lang_layout.decline }}</button>
+                <button id="acceptCookies" class="btn btn-dark">{{ lang_layout.accept }}</button>
+            </div>
+        </div>
+    </div>
+</div>

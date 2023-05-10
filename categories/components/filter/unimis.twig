@@ -1,0 +1,12 @@
+<div v-if="filter.sector_id != ''" class="py-4 widget-filter border-top">
+    <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
+       data-bs-toggle="collapse" href="#filter-unimis" role="button" aria-expanded="true"
+       aria-controls="filter-unimis">
+        {{ lang.unimis }}
+    </a>
+    <div id="filter-unimis" class="collapse show mt-2 ps-2">
+        <select class="form-select" v-model="filter.unimis_id" @change="setAttribute">
+                <option v-for="unimi in unimis" :value="unimi.u_id">{_ unimi.name _}</option>
+        </select>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+/* From theme bundle */
+.page-loaded .nav-link,
+.page-loaded .navbar-brand {
+    transition: all 0.15s ease-in;
+}
+.page-link {
+    border-radius: 0.25rem;
+    transition: all 0.3s linear;
+}

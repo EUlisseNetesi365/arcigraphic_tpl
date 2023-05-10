@@ -1,0 +1,43 @@
+<tr v-for="(item,index) in cartData.items" class="container-item">
+
+    <!-- image -->
+    <td class="d-none d-sm-table-cell">
+        <picture class="d-block bg-light f-w-20">
+            <img class="img-fluid container-image" :src="{% if basepath != "" %} '{{ basepath }}' + {% endif %} JSON.parse(item.variant_images)[0].image"
+                 :alt="JSON.parse(item.variant_images)[0].alt">
+        </picture>
+    </td>
+    <!-- image -->
+    <!-- Details -->
+    <td>
+        <div class="ps-sm-3">
+            <h6 class="mb-2 fw-semibold">
+                <a v-if="item.v_alias" class="text-decoration-none container-link" :href="'{{ uripath }}/' + item.v_alias">{_ item.name _}</a>
+                <a v-else class="text-decoration-none container-link" :href="'{{ uripath }}/product/' + item.v_id">{_ item.name _}</a>
+            </h6>
+            <small class="d-flex align-baseline text-muted">
+                <input id="displayColor" name="displayColor" class="input-color-circle" type="color" :value="JSON.parse(item.custom_value).color" disabled>
+                &nbsp;/&nbsp;{_ JSON.parse(item.secondary_attributes)[0].attribute_value.value _}
+            </small>
+        </div>
+    </td>
+    <!-- Details -->
+
+    <!-- Qty -->
+    <td>
+        <div class="px-2 px-md-0">
+            <input type="number" ref="input" @change="changeQuantity(item.v4w_id, this.$refs.input[index].value, this.$refs.input[index])" :value="item.quantity"
+                   class="form-control" min="1" placeholder="Quantity" >
+        </div>
+    </td>
+    <!-- /Qty -->
+
+    <!-- Actions -->
+    <td class="f-h-0">
+        <div class="d-flex justify-content-between flex-column align-items-end h-100">
+            <i class="ri-close-circle-line delete-item text-dark" @click="deleteItem(item.v4w_id)"></i>
+            <p class="fw-bolder mt-3 m-sm-0 price">{_ numberFormat(item.total_price) _}</p>
+        </div>
+    </td>
+    <!-- /Actions -->
+</tr>

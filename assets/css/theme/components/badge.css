@@ -1,0 +1,17 @@
+/* From theme bundle */
+.badge-sale {
+    background: #db1a2a;
+    text-transform: uppercase;
+    font-size: 74%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 0.5rem;
+}
+
+.badge-cart {
+    position: absolute;
+    top: -15px;
+    right: -2px;
+}

@@ -1,0 +1,30 @@
+/* From bundle theme */
+.breadcrumb { font-size: 0.75rem; }
+
+.breadcrumb-item {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.breadcrumb-item,
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #a0a0a2;
+}
+.breadcrumb-light,
+.breadcrumb-light + .breadcrumb-item:before,
+.breadcrumb-light.active,
+.breadcrumb-light a {
+    color: #fff;
+}
+
+/* From Arcigraphic */
+.breadcrumb-custom-size {
+    padding-top: 20px;
+    top: 40px;
+    z-index: 80;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.breadcrumb-item, .breadcrumb-item a { color: #fff; }
